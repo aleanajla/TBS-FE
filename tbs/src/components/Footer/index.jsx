@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 // import bg_footer from '../../../public/images/bg_footer.png'
 
 export default function Footer() {
+
   return (
-    <>
-      <div
-        className="bg-white text-black p-10 flex flex-row justify-between w-full absolute bottom-0"
+    
+      <footer
+        className="bg-white text-black  px-10 py-12 flex flex-row max-w-screen-3xl mx-auto justify-between w-full bottom-0"
         style={{
           backgroundImage: 'url("/images/bg_footer.png")',
           backgroundSize: "cover",
@@ -117,7 +118,7 @@ export default function Footer() {
             </svg>
           </div>
         </div>
-      </div>
-    </>
+      </footer>
+    
   );
 }
