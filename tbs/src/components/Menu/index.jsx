@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Homepage () {
+export default function Menu () {
     return(
         <div className="flex rounded-lg p-5 flex-row text-white" style= {{backgroundColor: "#3430AA"}}>
             <div className="">
