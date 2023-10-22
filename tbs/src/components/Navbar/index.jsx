@@ -4,10 +4,10 @@ import React from "react";
 export default function Navbar () {
     return(
         <>
-            <div className="bg-white text-black pl-10 pr-10 pt-5 pb-5 flex flex-row items-center justify-between w-full top-0 border-b-2 border-grey-400 shadow-md">
+            <div className="bg-white h-10px text-black pl-10 pr-10 pt-5 pb-5 flex flex-row items-center justify-between w-full top-0 border-b-2 border-grey-400 shadow-md">
                 {/* Left Side */}
                 <div className="flex flex-row items-center gap-9">
-                    <div className="flex">
+                    <div className="flex w-10px">
                         <img src="/images/logo_tbs.png"/>
                     </div>
                     <div className="flex">
