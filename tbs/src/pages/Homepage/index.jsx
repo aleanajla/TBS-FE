@@ -9,7 +9,7 @@ import headerJob from "../../components/HeaderJob/headerJob";
 import HeaderJob from "../../components/HeaderJob/headerJob";
 import AssignTruck from "../../components/AssignTruck/assignTruck";
 import Timeslot from "../../components/Timeslot/timeslot";
-import ForgotPassword from "../../components/ForgotPassword/forgotPassword";
+import ForgotPassword from "../../components/ForgotPasswordForm/forgotPassword";
 import NewPassword from "../../components/NewPassword/newPassword";
 
 export default function Homepage() {
