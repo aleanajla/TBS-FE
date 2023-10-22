@@ -11,7 +11,7 @@ export default function SignUp() {
         height: "100vh",
       }}
     >
-      <div>
+      <div className="px-[54px]">
         <p className="text-white font-bold text-5xl w-80">WE UNLIMITED POTENTIAL .</p>
       </div>
       <div>
