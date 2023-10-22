@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     
       <footer
-        className="bg-white text-black  px-10 py-12 flex flex-row max-w-screen-3xl mx-auto justify-between w-full bottom-0"
+        className="bg-white text-black px-10 py-12 flex flex-row max-w-screen-3xl mx-auto justify-between w-full bottom-0"
         style={{
           backgroundImage: 'url("/images/bg_footer.png")',
           backgroundSize: "cover",
