@@ -1,7 +1,7 @@
 export default function Tabs() {
   return (
     <>
-      <div className="flex flex-wrap gap-5 justify-between">
+      <div className="mt-20 flex flex-wrap gap-5 justify-between">
         <div className="border border-orange-500 flex flex-row p-5 gap-5 items-center bg-orange-500 rounded-md max-w-md w-[300px] ">
           <div className="bg-white p-3 rounded-full">
             <svg
@@ -150,11 +150,11 @@ export default function Tabs() {
               <path
                 d="M13.3652 2.11414H5.97516C3.93516 2.11414 2.28516 3.76414 2.28516 5.80414V12.1941C2.28516 12.7441 2.73516 13.1941 3.28516 13.1941H12.4352C13.4552 13.1941 14.2852 12.3641 14.2852 11.3441V3.03414C14.2852 2.52414 13.8752 2.11414 13.3652 2.11414ZM9.88516 9.23414C9.73516 9.37414 9.54516 9.44414 9.35516 9.44414C9.16516 9.44414 8.97516 9.37414 8.82516 9.23414L8.29516 8.70414L7.74516 9.25414C7.59516 9.40414 7.40516 9.47414 7.21516 9.47414C7.02516 9.47414 6.83516 9.40414 6.68516 9.25414C6.39516 8.96414 6.39516 8.48414 6.68516 8.19414L7.23516 7.64414L6.70516 7.11414C6.41516 6.82414 6.41516 6.34414 6.70516 6.05414C7.00516 5.76414 7.47516 5.76414 7.77516 6.05414L8.29516 6.58414L8.79516 6.07414C9.09516 5.78414 9.56516 5.78414 9.86516 6.07414C10.1552 6.37414 10.1552 6.84414 9.86516 7.14414L9.35516 7.64414L9.88516 8.16414C10.1752 8.46414 10.1752 8.93414 9.88516 9.23414Z"
                 fill="#F64E60"
-              />
+              /> 
             </svg>
           </div>
           <div>
-            <p className="text-black font-bold">25</p>
+            <p className="text-gray font-bold">25</p>
             <p className="text-gray-500 text-sm">Cancelled</p>
           </div>
         </div>

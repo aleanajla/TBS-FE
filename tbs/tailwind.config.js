@@ -2,8 +2,14 @@
 module.exports = {
   content: ["./src/**/*.{html,js,jsx}"],
   theme: {
-    extend: {},
+    extend: {
+     
+    },
+    fontFamily: {
+          poppins: ["Poppins", "sans-serif"],
+    },
   },
+  
   plugins: [require('daisyui')],
   daisyui: {
     // themes: false,
@@ -14,7 +20,7 @@ module.exports = {
               mytheme: {
                    primary: "#064B82",
                    "primary-focus": "#3d4451",
-                   "primary-content": "#ffffff",
+                   "primary-content": "#ffffff", 
                    secondary: "#f000b8",
                    "secondary-focus": "#bd0091",
                    "secondary-content": "#ffffff",
