@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
 
 export default function SignUpForm() {
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+
   return (
     <>
       <div className="bg-white w-[827px] py-[53px] px-[51px] rounded-lg">
@@ -19,7 +23,7 @@ export default function SignUpForm() {
             <input 
               type="text" 
               id="username" 
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" 
               placeholder="Username" 
               required/>
           </div>
@@ -32,7 +36,7 @@ export default function SignUpForm() {
                   User Category
                 </label>
                 <input
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   id="userCategory"
                   type="text"
                   placeholder="User Category"
@@ -46,7 +50,7 @@ export default function SignUpForm() {
                   Number PMKU
                 </label>
                 <input
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   id="NumberPKWU"
                   type="text"
                   placeholder="Number PKWU"
@@ -62,7 +66,7 @@ export default function SignUpForm() {
                   Email
                 </label>
                 <input
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   id="NumberPKWU"
                   type="text"
                   placeholder="Email"
@@ -76,7 +80,7 @@ export default function SignUpForm() {
                   Phone Number
                 </label>
                 <input
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   id="phoneNumber"
                   type="text"
                   placeholder="Phone Number"
@@ -91,26 +95,64 @@ export default function SignUpForm() {
                 >
                   Password
                 </label>
-                <input
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  id="Password"
-                  type="text"
-                  placeholder="Password"
-                />
+                <div className="flex items-center">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    id="Password"
+                    placeholder="Password"
+                    required
+                  />
+                  {
+                    showPassword ?
+                      <AiOutlineEye
+                        onClick={() => setShowPassword(false)}
+                        className="absolute right-[550px] cursor-pointer colour-gray-500"
+                        size={24}
+                        color="grey"
+                      />
+                      :
+                      <AiOutlineEyeInvisible
+                        onClick={() => setShowPassword(true)}
+                        className="absolute right-[550px] cursor-pointer"
+                        size={24}
+                        color="grey"
+                      />
+                  }
+
+                </div>
               </div>
               <div className="w-full">
                 <label
                   class="block font-medium text-gray-900 my-2.5 text-sm"
                   for="confirmPassword"
-                >
+                  >
                   Confirm Password
                 </label>
-                <input
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  id="confirmPassword"
-                  type="text"
-                  placeholder="Confrim Password"
-                />
+                <div className="flex items-center">
+                  <input
+                    type = {showConfirmPassword ? "text" : "password"}
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    id="confirmPassword"
+                    placeholder="Confrim Password"
+                  />
+                  {
+                    showConfirmPassword ?
+                      <AiOutlineEye
+                        onClick={() => setShowConfirmPassword(false)}
+                        className="absolute right-[180px] cursor-pointer colour-gray-500"
+                        size={24}
+                        color="grey"
+                      />
+                      :
+                      <AiOutlineEyeInvisible
+                        onClick={() => setShowConfirmPassword(true)}
+                        className="absolute right-[180px] cursor-pointer"
+                        size={24}
+                        color="grey"
+                      />
+                  }
+                </div>
               </div>
             </div>
             <div className="flex flex-row justify-between items-center mt-10">
