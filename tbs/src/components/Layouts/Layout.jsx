@@ -7,7 +7,7 @@ export default function Layout( {children} ) {
         <>
         <div className="">
             <Navbar/>
-            <main className="p-10 relative">{children}</main>
+                <main className="px-10 py-16 relative">{children}</main>
             <Footer/>
         </div>
         </>

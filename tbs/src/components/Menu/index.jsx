@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom"
 
 export default function Menu () {
     return(
@@ -11,10 +12,12 @@ export default function Menu () {
                 <img src="/images/homepage_menu_logo.svg"/>
             </div>
             <div className="w-full p-4 flex flex-col r" style={{backgroundColor: "#2D2A86"}}>
-                <div className="w-32 flex flex-col items-center rounded-md p-2" style={{backgroundColor: "#38358F"}}>
-                    <img src="/images/homepage_mybooking_logo.svg"/>
-                    <p className="w-24 text-center">My Booking</p>
-                </div>
+                <Link to={"/capacityPlanning"}> 
+                    <button className="w-32 flex flex-col items-center rounded-md p-2" style={{backgroundColor: "#38358F"}}>
+                        <img src="/images/homepage_mybooking_logo.svg"/>
+                        <p className="w-24 text-center">My Booking</p>
+                    </button>
+                </Link>
             </div>
         </div>
     );

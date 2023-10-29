@@ -5,7 +5,7 @@ export default function ForgotPassword(){
     return(
     <>
         <div
-            className="flex flex-row justify-around items-center"
+            className="flex flex-row justify-between px-[95px] items-center"
             style={{
             backgroundImage: 'url("/images/login_bg.png")',
             backgroundSize: "cover",
