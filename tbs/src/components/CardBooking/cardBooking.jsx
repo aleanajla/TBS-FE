@@ -1,9 +1,10 @@
 import React from "react";
+import { ProgressBar } from "../ProgressBar";
 
 export default function CardBooking() {
     return (
     <>
-        <div className="mt-20 border-2 border-gray-300 rounded-md w-full">
+        <div className="border-2 border-gray-300 rounded-md w-full">
             {/* Header Request */}
             <div className="border-b-2 border-grey-400 w-full h-14 flex items-center">
                 <p className="font-medium text-gray text-md px-8">Request Id : 1117298388290202</p>
@@ -68,9 +69,11 @@ export default function CardBooking() {
                     </div>
                 </div>
                 <div className="flex flex-row items-center justify-between">
-                    <div className="py-5">
-                        <div>
-                            <progress class="progress w-68" value="3" max="20"></progress>
+                    <div className="py-5 ">
+                        <div className="w-full">
+                            <ProgressBar value={50} max={200}/>
+                            {/* <progress class="progress w-68" value="3" max="20"></progress> */}
+                            {/* <progress className="progress progress-red-500 bg-black rounded w-full" value="10" max="100"></progress> */}
                         </div>
                         <div className="flex flex-row pt-2.5 pb-1">
                             <div className="flex flex-row ">

@@ -3,15 +3,15 @@ import React from "react";
 export default function FilterSearch() {
   return (
     <>
-      <div className="border-2 border-gray-200 rounded-md p-5">
+      <div className="border-2 border-gray-200 rounded-lg p-6">
         <div
-          class="flex items-center mx-auto bg-white rounded-lg w-full mb-5"
+          class="flex items-center mx-auto w-full mb-5"
           x-data="{ search: '' }"
         >
           <div class="w-full">
             <input
               type="search"
-              class="w-full px-4 py-1 text-gray-800 rounded-full focus:outline-none"
+              class="w-full px-6 text-gray-800 bg-[#F8F8F8] py-4 rounded-xl focus:outline-none"
               placeholder="Search..."
               x-model="search"
             />

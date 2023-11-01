@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import ForgotPassword from './pages/ForgotPassword';
 import NewPassword from './pages/NewPassword';
 import CapacityPlanning from './pages/CapacityPlanning';
+import MyBooking from './pages/MyBooking';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route path="/forgotPassword" element={<ForgotPassword/>}/>
       <Route path="/newPassword" element={<NewPassword/>}/>
       <Route path='/capacityPlanning' element={<CapacityPlanning/>}/>
+      <Route path='myBooking' element={<MyBooking/>}/>
     </Routes>
   );
 }
