@@ -23,7 +23,6 @@ export default function CapacityPlanning() {
                 <DaySchedule />
                 <SlotSchedule />
             </div>
-            <DatePickerWithRange />
         </Layout>
     )
 }

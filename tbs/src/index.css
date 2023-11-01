@@ -79,5 +79,24 @@
     body {
         font-feature-settings: "rlig" 1, "calt" 1;
         font-family: "Poppins", sans-serif;
+        @apply min-h-[calc(100vh)]
+    }
+    #root {
+        @apply min-h-[calc(100vh)]
+    }
+}
+
+@layer utilities {
+    /* .collapse {
+        visibility: visible !important;
+    } */
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+    
+    /* For IE, Edge and Firefox */
+    .scrollbar-hide {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
     }
 }
