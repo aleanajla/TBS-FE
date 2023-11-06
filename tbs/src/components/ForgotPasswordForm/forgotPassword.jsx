@@ -1,9 +1,83 @@
 import React from "react";
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "src/components/ui/card"
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 
-export default function ForgotPasswordForm(){
-    return(
-    <>
-    <div className="bg-white w-[556px] rounded-lg h-[642px] flex items-center justify-center">
+export default function ForgotPasswordForm() {
+    return (
+        <Card className="w-[550px] min-h-[690px] py-3 px-[36px] rounded-lg">
+            <div className="h-full flex flex-col justify-center">
+                <CardHeader>
+                    <div className="flex justify-center mt-7 py-7">
+                        <img src="/images/logo_tbs.png" />
+                    </div>
+                    <CardTitle className="text-primary py-4 font-medium">Forgot Password</CardTitle>
+                    <CardDescription>That’s ok, just enter the email address you’ve used to register with us and we’ll send you a reset link!</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <form>
+                        <div className="w-full items-center gap-5">
+                            <div className="flex flex-col space-y-1.5">
+                                <Label htmlFor="username">Email</Label>
+                                <Input id="username" placeholder="Username" />
+                            </div>
+                            {/* <div className="w-full grid grid-cols-2 justify-between gap-6 items-center"> */}
+                            {/* <div className="space-y-1.5">
+                            <Label htmlFor="password">Password</Label>
+                            <Input id="password" placeholder="Password" type={showPassword ? "text" : "password"} className="p-3.5" />
+                            {
+                                showPassword ?
+                                    <AiOutlineEye
+                                        onClick={() => setShowPassword(false)}
+                                        className="absolute bottom-[427px] right-[760px] cursor-pointer colour-gray-500"
+                                        size={24}
+                                        color="grey"
+                                    />
+                                    :
+                                    <AiOutlineEyeInvisible
+                                        onClick={() => setShowPassword(true)}
+                                        className="absolute bottom-[427px] right-[760px] cursor-pointer"
+                                        size={24}
+                                        color="grey"
+                                    />
+                            }
+                        </div> */}
+                        </div>
+                        {/* <div className="flex justify-between items-center w-full pt-6">
+                        <div className="flex items-center space-x-2">
+                            <Checkbox id="terms" className="bg-white" />
+                            <Label htmlFor="terms" className="text-sm font-medium">Remember Me</Label>
+                        </div>
+                        <Link>
+                            <p className="text-sm font-medium text-primary">Forgot Password</p>
+                        </Link>
+                    </div> */}
+                    </form>
+                </CardContent>
+                <CardFooter className="flex flex-col">
+                    <button className="w-full py-3.5 px-6 rounded-full bg-primary text-white font-normal">
+                        Login
+                    </button>
+                    <button className="flex gap-5 place-content-center w-full py-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+                            <path d="M10.2418 5.93799L4.17175 12.008L10.2418 18.078" stroke="#064B82" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M21.1718 12.0078H4.3418" stroke="#064B82" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <p className="text-primary font-medium">Back to Sign In</p>
+                    </button>
+                </CardFooter>
+            </div>
+        </Card>
+    )
+}
+{/* <div className="bg-white w-[556px] rounded-lg h-[642px] flex items-center justify-center">
         <div>
             <div className="flex justify-center mb-10">
                 <img src="/images/logo_tbs.png" />
@@ -29,11 +103,4 @@ export default function ForgotPasswordForm(){
                     <button>Back to Sign In</button>
             </div>
         </div>
-    </div>
-    
-    
-    
-    
-    </>
-    )
-}
+    </div> */}
