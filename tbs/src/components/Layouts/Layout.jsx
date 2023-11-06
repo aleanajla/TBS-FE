@@ -7,7 +7,7 @@ export default function Layout({ children }) {
         <div className="flex flex-col justify-between min-h-[calc(100vh)]">
             <div>
                 <Navbar />
-                <main className="px-10 py-16 relative">{children}</main>
+                <main className="px-10 py-10 relative">{children}</main>
             </div>
             <Footer />
         </div>

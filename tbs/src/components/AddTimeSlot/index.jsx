@@ -29,7 +29,7 @@ export function AddTimeSlot() {
       </button>
       {
         open ?
-          <div className="fixed inset-0 bg-opacity-60 backdrop-blur-sm flex justify-center items-center bg-black">
+          <div className="absolute z-[999] inset-0 bg-opacity-60 backdrop-blur-sm flex justify-center items-center bg-black">
             <div className=" bg-white w-[947px] max-h-[720px] rounded-xl py-[31px] px-[47px] flex flex-col gap-4">
               <div className="flex flex-row-reverse">
                 <button className="btn" onClick={() => setOpen(false)}>
@@ -48,7 +48,6 @@ export function AddTimeSlot() {
                 <div className="border-b">
                   <div className="flex flex-col gap-2.5 pb-5">
                     <h2 className="font-medium">Timeslot</h2>
-                    {/* Panggil accordion */}
                     <AccordionTimeslot />
                     <AccordionTimeslot />
                     <button className="flex gap-x-2.5 items-center mt-[10px]">
@@ -63,11 +62,11 @@ export function AddTimeSlot() {
                 </div>
               </div>
               <div className="flex flex-row-reverse gap-3">
-                <button className="w-[118px] h-[53px] items-center justify-center text-sm rounded-full border border-primary text-primary">
-                  Cancel
-                </button>
                 <button className="w-[118px] h-[53px] items-center justify-center bg-primary text-sm rounded-full text-white">
                   Save
+                </button>
+                <button className="w-[118px] h-[53px] items-center justify-center text-sm rounded-full border border-primary text-primary">
+                  Cancel
                 </button>
               </div>
             </div>

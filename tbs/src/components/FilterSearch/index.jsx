@@ -36,7 +36,7 @@ export default function FilterSearch() {
             </button>
           </div>
         </div>
-        <div>
+        {/* <div>
           <p className="font-bold mb-2">Filter By: </p>
           <div className="dropdown">
             <label tabIndex={0} className="btn m-1 rounded-full border border-primary text-primary">
@@ -66,7 +66,7 @@ export default function FilterSearch() {
               </li>
             </ul>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );
