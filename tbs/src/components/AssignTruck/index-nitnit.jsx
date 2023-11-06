@@ -1,6 +1,21 @@
 import React from "react";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+  } from "src/components/ui/dialog"
+  import { Input } from "src/components/ui/input"
+  import { Label } from "src/components/ui/label"
+  import { DatePickerWithRange } from "../DatePicker"
+  import { useState } from "react"
 
-export default function AssignTruck(){
+export default function TruckSearching(){
+    const [open, setOpen] = useState(false)
+    
     return(
     <>
         <div className="flex place-content-center">

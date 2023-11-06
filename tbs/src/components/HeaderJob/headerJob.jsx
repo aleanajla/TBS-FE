@@ -3,16 +3,16 @@ import React from "react";
 export default function HeaderJob(){
     return(
     <>
-        <div className="py-4 px-6 bg-gray-100 w-full rounded-lg mt-20">
+        <div className="py-4 px-6 bg-gray-100 w-full rounded-lg">
             <div className="flex flex-row items-center gap-2">
-                <p className="font-semibold">REC000001 - MV AUZONIA</p>
-                <div className="bg-success rounded-full text-white font-semibold py-1 px-2">
+                <p className="font-medium">REC000001 - MV AUZONIA</p>
+                <div className="bg-success bg-[#0F9B71] rounded-full text-white font-medium py-1 px-2">
                     <p>3/20</p>
                 </div>
             </div>
 
             <div className="flex flex-row items-center gap-3 py-2.5">
-                <div className="px-4 py-0.5 bg-primary text-white rounded-md font-medium">
+                <div className="px-4 py-1 bg-primary text-white rounded-md font-medium">
                     <p>RECEIVING</p>
                 </div>
                 <div className="flex flex-row py-0.5 items-center gap-1">

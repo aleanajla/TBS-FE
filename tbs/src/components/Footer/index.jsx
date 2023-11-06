@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     
       <footer
-        className="bg-white text-black px-10 py-12 flex flex-row max-w-screen-3xl mx-auto justify-between w-full bottom-0"
+        className="bg-white text-black px-10 py-9 flex flex-row max-w-screen-3xl mx-auto justify-between w-full bottom-0"
         style={{
           backgroundImage: 'url("/images/bg_footer.png")',
           backgroundSize: "cover",
@@ -19,14 +19,14 @@ export default function Footer() {
         </div>
         {/* Middle */}
         <div className=" text-white">
-          <p className="text-lg font-bold">Company Address</p>
+          <p className="text-2xl font-medium">Company Address</p>
           <p className="text-md font-light mt-3">Jl.Boulevard Timur No 88</p>
           <p className="text-md font-light">RT5/RW2 Kelapa Gading Timur</p>
           <p className="text-md font-light">North Jakarta</p>
         </div>
         {/* Middle 2 */}
         <div className="text-white">
-          <p className="text-xl font-bold">Reach Us</p>
+          <p className="text-2xl font-medium">Reach Us</p>
           <div className="flex flex-row gap-3 items-center mt-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +51,7 @@ export default function Footer() {
         </div>
         {/* Right Side */}
         <div className="text-white">
-          <p className="text-xl font-bold">Social Media</p>
+          <p className="text-2xl font-medium">Social Media</p>
           <div className="flex flex-row gap-3 mt-5">
             <svg
               xmlns="http://www.w3.org/2000/svg"

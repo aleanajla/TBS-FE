@@ -12,8 +12,8 @@ export default function Navbar () {
                     </div>
                     <div className="flex">
                         <ul className="flex flex-row gap-7">
-                            <li className="font-semibold"><a>My Booking</a></li>
-                            <li className="font-semibold"><a>Help Center</a></li>
+                            <li className="font-medium"><a>My Booking</a></li>
+                            <li className="font-medium"><a>Help Center</a></li>
                         </ul>
                     </div>
                 </div>
@@ -25,12 +25,12 @@ export default function Navbar () {
                             <path d="M10.2943 18.6316C10.138 18.901 9.91372 19.1246 9.64384 19.2801C9.37396 19.4355 9.06798 19.5173 8.75653 19.5173C8.44508 19.5173 8.1391 19.4355 7.86922 19.2801C7.59933 19.1246 7.37503 18.901 7.21875 18.6316" stroke="#212121" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </div>
-                    <select className="select select-sm select-bordered w-auto max-w-xs bg-white rounded-full border-black font-semibold">
+                    <select className="select select-sm select-bordered w-auto bg-white rounded-full p-2 border-[1px] border-[#292D32] font-medium">
                         <option disabled selected>Terminal 09</option>
                         <option>-</option>
                         <option>-</option>
                     </select>
-                    <select className="select select-sm select-bordered w-auto max-w-xs bg-white rounded-full border-black font-semibold">
+                    <select className="select select-sm select-bordered w-auto bg-white rounded-full p-2 border-[1px] border-[#292D32] font-medium">
                         <option disabled selected>Judi Ginta</option>
                         <option>Profile</option>
                         <option>Log Out</option>
