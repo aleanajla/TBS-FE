@@ -1,13 +1,13 @@
-import { DropdownMenu } from "@radix-ui/react-dropdown-menu"
 import {
     Accordion,
     AccordionContent,
     AccordionItem,
     AccordionTrigger,
-} from "src/components/ui/accordion"
+} from "../ui/accordion"
 import { DropdownGenerateTimeslot, DropdownTime } from "../DropdownTime"
 import { InputCapacity } from "../InputCapacity"
 import { InputBuffer } from "../InputBuffer"
+import { DropdownMenu } from "../ui/dropdown-menu"
 
 export default function AccordionTimeslot() {
     return (
