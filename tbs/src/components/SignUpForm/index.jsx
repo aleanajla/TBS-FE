@@ -23,6 +23,115 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
 
+
+export default function SignUpForm() {
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+
+  return (
+    <Card className="w-[827px] py-3 px-[36px] rounded-lg">
+      <CardHeader>
+        <div className="flex justify-center mt-7">
+          <img src="/images/logo_tbs.png" />
+        </div>
+        <CardTitle className="text-primary py-4 font-bold">Sign Up</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <form>
+          <div className="grid grid-rows-4 w-full items-center gap-5">
+            <div className="flex flex-col space-y-1.5">
+              <Label htmlFor="username">Username</Label>
+              <Input id="username" placeholder="Username" />
+            </div>
+            <div className="w-full grid grid-cols-2 justify-between gap-6 items-center">
+              <div className="space-y-1.5">
+                <Label htmlFor="userCategory">User Category</Label>
+                <Select>
+                  <SelectTrigger id="userCategory" className="text-[#7D7D7D] p-3.5 py-6">
+                    <SelectValue placeholder="User Category" />
+                  </SelectTrigger>
+                  <SelectContent position="popper">
+                    <SelectItem value="next">Freight Forwarder</SelectItem>
+                    <SelectItem value="sveltekit">Trucking Company</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="pkmu">Number PKMU</Label>
+                <Input id="pkmu" placeholder="Number PKMU" className="p-3.5" />
+              </div>
+            </div>
+            <div className="w-full grid grid-cols-2 justify-between gap-8 items-center">
+              <div className="space-y-1.5">
+                <Label htmlFor="userCategory">Email</Label>
+                <Input id="email" placeholder="Email" className="p-3.5" />
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="phoneNumber">Phone Number</Label>
+                <Input id="phoneNumber" placeholder="Phone Number" className="p-3.5" />
+              </div>
+            </div>
+            <div className="w-full grid grid-cols-2 justify-between gap-6 items-center">
+              <div className="space-y-1.5">
+                <Label htmlFor="password">Password</Label>
+                <Input id="password" placeholder="Password" type={showPassword ? "text" : "password"} className="p-3.5" />
+                {
+                  showPassword ?
+                    <AiOutlineEye
+                      onClick={() => setShowPassword(false)}
+                      className="absolute bottom-[427px] right-[760px] cursor-pointer colour-gray-500"
+                      size={24}
+                      color="grey"
+                    />
+                    :
+                    <AiOutlineEyeInvisible
+                      onClick={() => setShowPassword(true)}
+                      className="absolute bottom-[427px] right-[760px] cursor-pointer"
+                      size={24}
+                      color="grey"
+                    />
+                }
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="confirmPasswprd">Confirm Password</Label>
+                <Input id="confirmPassword" placeholder="Confirm Password" type={showConfirmPassword ? "text" : "password"} className="p-3.5" />
+                {
+                  showConfirmPassword ?
+                    <AiOutlineEye
+                      onClick={() => setShowConfirmPassword(false)}
+                      className="absolute bottom-[427px] right-[400px] cursor-pointer"
+                      size={24}
+                      color="grey"
+                      />
+                      :
+                    <AiOutlineEyeInvisible
+                      onClick={() => setShowConfirmPassword(true)}
+                      className="absolute bottom-[427px] right-[400px] cursor-pointer"
+                      size={24}
+                      color="grey"
+                    />
+                }
+              </div>
+            </div>
+          </div>
+        </form>
+      </CardContent>
+      <CardFooter className="flex justify-between py-8">
+        {/* <Button variant="outline">Cancel</Button>
+        <Button>Deploy</Button> */}
+        <div className="flex flex-row gap-2">
+          <p>Already have Account?</p>
+          <Link className="text-primary font-medium">Login Here</Link>
+        </div>
+        <button className="w-[347px] py-3.5 px-6 rounded-full bg-primary text-white font-xs font-normal">
+          Sign Up
+        </button>
+
+      </CardFooter>
+    </Card>
+  )
+}
+
 // export default function SignUpForm() {
 //   const [showPassword, setShowPassword] = useState(false)
 //   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
@@ -190,113 +299,3 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
 //     </>
 //   );
 // }
-
-
-export default function SignUpForm() {
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-
-  return (
-    <Card className="w-[827px] py-3 px-[36px] rounded-lg">
-      <CardHeader>
-        <div className="flex justify-center mt-7">
-          <img src="/images/logo_tbs.png" />
-        </div>
-        <CardTitle className="text-primary py-4 font-bold">Sign Up</CardTitle>
-        {/* <CardDescription>Deploy your new project in one-click.</CardDescription> */}
-      </CardHeader>
-      <CardContent>
-        <form>
-          <div className="grid grid-rows-4 w-full items-center gap-5">
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="name">Username</Label>
-              <Input id="name" placeholder="Username" />
-            </div>
-            <div className="w-full grid grid-cols-2 justify-between gap-6 items-center">
-              <div className="space-y-1.5">
-                <Label htmlFor="userCategory">User Category</Label>
-                <Select>
-                  <SelectTrigger id="userCategory" className="text-[#7D7D7D] p-3.5 py-6">
-                    <SelectValue placeholder="User Category" />
-                  </SelectTrigger>
-                  <SelectContent position="popper">
-                    <SelectItem value="next">Freight Forwarder</SelectItem>
-                    <SelectItem value="sveltekit">Trucking Company</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="name">Number PKMU</Label>
-                <Input id="pkmu" placeholder="Number PKMU" className="p-3.5" />
-              </div>
-            </div>
-            <div className="w-full grid grid-cols-2 justify-between gap-8 items-center">
-              <div className="space-y-1.5">
-                <Label htmlFor="userCategory">Email</Label>
-                <Input id="email" placeholder="Email" className="p-3.5" />
-              </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="name">Phone Number</Label>
-                <Input id="pkmu" placeholder="Phone Number" className="p-3.5" />
-              </div>
-            </div>
-            <div className="w-full grid grid-cols-2 justify-between gap-6 items-center">
-              <div className="space-y-1.5">
-                <Label htmlFor="userCategory">Password</Label>
-                <Input id="pkmu" placeholder="Password" type={showPassword ? "text" : "password"} className="p-3.5" />
-                {
-                  showPassword ?
-                    <AiOutlineEye
-                      onClick={() => setShowPassword(false)}
-                      className="absolute bottom-[427px] right-[760px] cursor-pointer colour-gray-500"
-                      size={24}
-                      color="grey"
-                    />
-                    :
-                    <AiOutlineEyeInvisible
-                      onClick={() => setShowPassword(true)}
-                      className="absolute bottom-[427px] right-[760px] cursor-pointer"
-                      size={24}
-                      color="grey"
-                    />
-                }
-              </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="name">Confirm Password</Label>
-                <Input id="pkmu" placeholder="Confirm Password" type={showConfirmPassword ? "text" : "password"} className="p-3.5" />
-                {
-                  showConfirmPassword ?
-                    <AiOutlineEye
-                      onClick={() => setShowConfirmPassword(false)}
-                      className="absolute bottom-[427px] right-[400px] cursor-pointer"
-                      size={24}
-                      color="grey"
-                    />
-                    :
-                    <AiOutlineEyeInvisible
-                      onClick={() => setShowConfirmPassword(true)}
-                      className="absolute bottom-[427px] right-[400px] cursor-pointer"
-                      size={24}
-                      color="grey"
-                    />
-                }
-              </div>
-            </div>
-          </div>
-        </form>
-      </CardContent>
-      <CardFooter className="flex justify-between py-8">
-        {/* <Button variant="outline">Cancel</Button>
-        <Button>Deploy</Button> */}
-        <div className="flex flex-row gap-2">
-          <p>Already have Account?</p>
-          <Link className="text-primary font-medium">Login Here</Link>
-        </div>
-        <button className="w-[347px] py-3.5 px-6 rounded-full bg-primary text-white font-xs font-normal">
-          Sign Up
-        </button>
-
-      </CardFooter>
-    </Card>
-  )
-}
