@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
 import {
@@ -21,7 +21,8 @@ import {
 import { Checkbox } from "../ui/checkbox";
 import { LoginAction } from "src/config/redux/auth/action";
 import { useDispatch } from "react-redux";
-import { set } from "date-fns";
+
+
 
 export default function LoginForm() {
   const dispatch = useDispatch()
@@ -36,10 +37,9 @@ export default function LoginForm() {
     dispatch(LoginAction({Username: loginData.Username, Password: loginData.Password}))
   }
 
-  const onChange = (Event) => {
-    // Event.target.value
-    setLoginData({Username: Event.target.value, Password: Event.target.value})
-  }
+  const onChange = useCallback((e) => {
+		setLoginData({ ...loginData, [e.target.name]: e.target.value });
+	});
 
   return (
     <Card className="w-[550px] min-h-1/2 py-3 px-[36px] rounded-lg">
@@ -55,12 +55,12 @@ export default function LoginForm() {
           <div className="grid grid-rows-2 w-full items-center gap-5">
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="username">Username</Label>
-              <Input id="username" placeholder="Username" onChange = {onChange} value={loginData.Username}/>
+              <Input id="username" name="Username"placeholder="Username" onChange = {onChange} value={loginData.Username}/>
             </div>
             {/* <div className="w-full grid grid-cols-2 justify-between gap-6 items-center"> */}
             <div className="space-y-1.5">
               <Label htmlFor="password">Password</Label>
-              <Input id="password" placeholder="Password" type={showPassword ? "text" : "password"} onChange = {onChange} value={loginData.Password} className="p-3.5" />
+              <Input id="password" placeholder="Password" type={showPassword ? "text" : "password"} name="Password" onChange = {onChange} value={loginData.Password} className="p-3.5" />
               {
                 showPassword ?
                   <AiOutlineEye
