@@ -19,7 +19,7 @@ import {
   SelectValue,
 } from "src/components/ui/select"
 import { Checkbox } from "../ui/checkbox";
-import { LoginAction } from "src/config/redux/auth/action";
+import * as action from "../../config/redux/auth/action";
 import { useDispatch } from "react-redux";
 
 
@@ -34,7 +34,7 @@ export default function LoginForm() {
   })
 
   const onSubmitLogin = () => {
-    dispatch(LoginAction({Username: loginData.Username, Password: loginData.Password}))
+    dispatch(action.LoginAction({Username: loginData.Username, Password: loginData.Password}))
   }
 
   const onChange = useCallback((e) => {
