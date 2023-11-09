@@ -8,6 +8,14 @@ import { DropdownGenerateTimeslot, DropdownTime } from "../DropdownTime"
 import { InputCapacity } from "../InputCapacity"
 import { InputBuffer } from "../InputBuffer"
 import { DropdownMenu } from "../ui/dropdown-menu"
+import { Label } from "../ui/label"
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "../ui/select"
 
 export default function AccordionTimeslot() {
     return (
@@ -21,36 +29,38 @@ export default function AccordionTimeslot() {
                             <div className="flex flex-col gap-y-3 justify-between">
                                 <p className="font-medium">From</p>
                                 <div className="grid grid-cols-2 gap-2">
-                                    <DropdownTime />
-                                    <DropdownTime />
+                                    <DropdownTime/>
+                                    <DropdownTime/>
                                 </div>
                             </div>
-                            <div className="flex flex-col gap-y-3">
+                            <div className="flex flex-col gap-y-3 justify-between">
                                 <p className="font-medium">To</p>
                                 <div className="grid grid-cols-2 gap-2">
-                                    <DropdownTime />
-                                    <DropdownTime />
+                                    <DropdownTime/>
+                                    <DropdownTime/>
                                 </div>
                             </div>
                         </div>
-                        <div className="grid grid-cols-3 gap-2">
+                        <div className="grid grid-cols-3 gap-2 items-center">
                             <div className="flex flex-col gap-y-3">
                                 <p className="font-medium">Real Capacity</p>
-                                <div className="flex">
-                                    <InputCapacity />
-                                </div>
+                                <InputCapacity />
                             </div>
                             <div className="flex flex-col gap-y-3">
                                 <p className="font-medium">Buffer</p>
-                                <div className="flex gap-x-5">
-                                    <InputBuffer className="h-[51px]" />
-                                </div>
+                                <InputBuffer />
                             </div>
                             <div className="flex flex-col gap-y-3">
-                                <p className="font-medium">UoM</p>
-                                <div className="flex gap-x-5">
-                                    <DropdownTime />
-                                </div>
+                                <Label htmlFor="UoM">UoM</Label>
+                                <Select>
+                                    <SelectTrigger id="userCategory" className="text-[#7D7D7D] flex w-full rounded-md border border-input bg-background px-3 h-[47px] text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                                        <SelectValue placeholder="User Category" />
+                                    </SelectTrigger>
+                                    <SelectContent position="popper" className="z-[999]">
+                                        <SelectItem value="next">Container</SelectItem>
+                                        <SelectItem value="sveltekit">Truck</SelectItem>
+                                    </SelectContent>
+                                </Select>
                             </div>
                         </div>
 

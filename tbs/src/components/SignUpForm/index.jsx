@@ -102,8 +102,8 @@ export default function SignUpForm() {
                       className="absolute bottom-[427px] right-[400px] cursor-pointer"
                       size={24}
                       color="grey"
-                      />
-                      :
+                    />
+                    :
                     <AiOutlineEyeInvisible
                       onClick={() => setShowConfirmPassword(true)}
                       className="absolute bottom-[427px] right-[400px] cursor-pointer"
@@ -121,11 +121,13 @@ export default function SignUpForm() {
         <Button>Deploy</Button> */}
         <div className="flex flex-row gap-2">
           <p>Already have Account?</p>
-          <Link className="text-primary font-medium">Login Here</Link>
+          <Link to={"/login"} className="text-primary font-medium">Login Here</Link>
         </div>
-        <button className="w-[347px] py-3.5 px-6 rounded-full bg-primary text-white font-xs font-normal">
-          Sign Up
-        </button>
+        <Link to={"/login"}>
+          <button className="w-[347px] py-3.5 px-6 rounded-full bg-primary text-white font-xs font-normal">
+            Sign Up
+          </button>
+        </Link>
 
       </CardFooter>
     </Card>

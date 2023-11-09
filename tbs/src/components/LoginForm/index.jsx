@@ -19,10 +19,28 @@ import {
   SelectValue,
 } from "src/components/ui/select"
 import { Checkbox } from "../ui/checkbox";
+import { LoginAction } from "src/config/redux/auth/action";
+import { useDispatch } from "react-redux";
+import { set } from "date-fns";
 
 export default function LoginForm() {
+  const dispatch = useDispatch()
+
   const [showPassword, setShowPassword] = useState(false)
-  
+  const [loginData, setLoginData] = useState({
+    Username: "",
+    Password: ""
+  })
+
+  const onSubmitLogin = () => {
+    dispatch(LoginAction({Username: loginData.Username, Password: loginData.Password}))
+  }
+
+  const onChange = (Event) => {
+    // Event.target.value
+    setLoginData({Username: Event.target.value, Password: Event.target.value})
+  }
+
   return (
     <Card className="w-[550px] min-h-1/2 py-3 px-[36px] rounded-lg">
       <CardHeader>
@@ -37,12 +55,12 @@ export default function LoginForm() {
           <div className="grid grid-rows-2 w-full items-center gap-5">
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="username">Username</Label>
-              <Input id="username" placeholder="Username" />
+              <Input id="username" placeholder="Username" onChange = {onChange} value={loginData.Username}/>
             </div>
             {/* <div className="w-full grid grid-cols-2 justify-between gap-6 items-center"> */}
             <div className="space-y-1.5">
               <Label htmlFor="password">Password</Label>
-              <Input id="password" placeholder="Password" type={showPassword ? "text" : "password"} className="p-3.5" />
+              <Input id="password" placeholder="Password" type={showPassword ? "text" : "password"} onChange = {onChange} value={loginData.Password} className="p-3.5" />
               {
                 showPassword ?
                   <AiOutlineEye
@@ -66,16 +84,18 @@ export default function LoginForm() {
               <Checkbox id="terms" className="bg-white" />
               <Label htmlFor="terms" className="text-sm font-medium">Remember Me</Label>
             </div>
-            <Link>
+            <Link to={"/forgotPassword"}>
               <p className="text-sm font-medium text-primary">Forgot Password</p>
             </Link>
           </div>
         </form>
       </CardContent>
       <CardFooter className="flex items-center justify-center w-full py-10">
-        <button className="w-full py-3.5 px-6 rounded-full bg-primary text-white font-normal">
-          Login
-        </button>
+        <Link to={"/homepage"} className="w-full">
+          <button className="w-full py-3.5 px-6 rounded-full bg-primary text-white font-normal" onSubmit={onSubmitLogin}>
+            Login
+          </button>
+        </Link>
       </CardFooter>
     </Card>
   );

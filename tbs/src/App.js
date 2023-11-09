@@ -9,6 +9,7 @@ import NewPassword from './pages/NewPassword';
 import CapacityPlanning from './pages/CapacityPlanning';
 import MyBooking from './pages/MyBooking';
 import TimeSlot from './pages/Timeslot';
+import STID from './pages/STID';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <Route path='/capacityPlanning' element={<CapacityPlanning/>}/>
       <Route path='myBooking' element={<MyBooking/>}/>
       <Route path='timeslot' element={<TimeSlot/>}/>
+      <Route path='stid' element={<STID/>}/>
     </Routes>
   );
 }
