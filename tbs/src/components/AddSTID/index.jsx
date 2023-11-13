@@ -13,6 +13,8 @@ import { Label } from "src/components/ui/label"
 import { DatePickerWithRange } from "../DatePicker"
 import { useState } from "react"
 import AccordionTimeslot from "../AccordionTimeslot/Index"
+import { ChooseTruck } from "../ChooseTruck"
+import { ChooseDriver } from "../ChooseDriver"
 
 
 export function AddSTID() {
@@ -29,8 +31,8 @@ export function AddSTID() {
       </button>
       {
         open ?
-          <div className="absolute z-[999] inset-0 bg-opacity-60 backdrop-blur-sm flex justify-center items-center bg-black">
-            <div className=" bg-white w-[947px] max-h-[720px] rounded-xl py-[31px] px-[47px] flex flex-col gap-4">
+          <div className="absolute inset-0 bg-opacity-60 backdrop-blur-sm flex justify-center items-center bg-black">
+            <div className=" bg-white w-[700px] max-h-[720px] rounded-xl py-[31px] px-[47px] flex flex-col gap-2">
               <div className="flex flex-row-reverse">
                 <button className="btn" onClick={() => setOpen(false)}>
                   <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none">
@@ -39,28 +41,14 @@ export function AddSTID() {
                   </svg>
                 </button>
               </div>
-              <h1 className="text-lg font-medium">Add Timeslot</h1>
-              <div className="flex flex-col gap-4 scrollbar-hide overflow-y-scroll">
-                <div className="flex flex-col gap-2">
-                  <h2 className="font-medium">Date</h2>
-                  <DatePickerWithRange />
-                </div>
-                <div className="border-b">
-                  <div className="flex flex-col gap-2.5 pb-5">
-                    <h2 className="font-medium">Timeslot</h2>
-                    <AccordionTimeslot />
-                    <AccordionTimeslot />
-                    <button className="flex gap-x-2.5 items-center mt-[10px]">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-                        <path d="M12 22.5076C17.5 22.5076 22 18.0076 22 12.5076C22 7.00757 17.5 2.50757 12 2.50757C6.5 2.50757 2 7.00757 2 12.5076C2 18.0076 6.5 22.5076 12 22.5076Z" stroke="#064B82" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M8 12.5076H16" stroke="#064B82" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M12 16.5076V8.50757" stroke="#064B82" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                      </svg>
-                      <p className="text-sm">Timeslot</p>
-                    </button>
-                  </div>
-                </div>
+              <h1 className="text-lg font-semibold text-primary">Add STID</h1>
+              <p className="font-medium text-gray-400">Choose your truck and driver to associate them!</p>
+              <div className="flex justify-center items-center py-8 gap-14">
+                <ChooseTruck />
+                -
+                <ChooseDriver />
               </div>
+
               <div className="flex flex-row-reverse gap-3">
                 <button className="w-[118px] h-[53px] items-center justify-center bg-primary text-sm rounded-full text-white">
                   Save
