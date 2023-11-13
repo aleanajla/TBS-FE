@@ -10,6 +10,8 @@ import {
 } from "src/components/ui/table"
 import { Switch } from "src/components/ui/switch"
 import ChooseTimeslot from "../ChooseTimeslot/index-nitnit";
+import { ChooseSTID } from "../chooseSTID";
+import { ChooseDriver } from "../ChooseDriver";
 
 
 export default function TableValue() {
@@ -64,14 +66,14 @@ export default function TableValue() {
             <TableHeader>
                 <TableRow>
                     {/* <div className="w-full flex justify-between bg-[#F5F5F5]"> */}
-                        <TableHead className="text-center">No</TableHead>
-                        <TableHead className="text-center" >Kontainer</TableHead>
-                        <TableHead className="text-center">Slot Waktu</TableHead>
-                        <TableHead className="text-center">STID</TableHead>
-                        <TableHead className="text-center">Driver</TableHead>
-                        <TableHead className="text-center">Dual Move</TableHead>
-                        <TableHead className="text-center">Combo Truck</TableHead>
-                        <TableHead className="text-center">Action</TableHead>
+                    <TableHead className="text-center">No</TableHead>
+                    <TableHead className="text-center" >Kontainer</TableHead>
+                    <TableHead className="text-center">Slot Waktu</TableHead>
+                    <TableHead className="text-center">STID</TableHead>
+                    <TableHead className="text-center">Driver</TableHead>
+                    <TableHead className="text-center">Dual Move</TableHead>
+                    <TableHead className="text-center">Combo Truck</TableHead>
+                    <TableHead className="text-center">Action</TableHead>
                     {/* </div> */}
                 </TableRow>
             </TableHeader>
@@ -80,9 +82,21 @@ export default function TableValue() {
                     <TableRow className="-z-10" key={job.no}>
                         <TableCell className="text-center">{job.no}</TableCell>
                         <TableCell className="text-center font-medium text-gray-400">{job.container}</TableCell>
-                        <TableCell className="flex items-center justify-center"><ChooseTimeslot /></TableCell>
-                        <TableCell className="text-center">{job.STID}</TableCell>
-                        <TableCell className="text-center">{job.Driver}</TableCell>
+                        <TableCell>
+                            <div className="flex place-content-center">
+                                <ChooseTimeslot />
+                            </div>
+                        </TableCell>
+                        <TableCell>
+                            <div className="flex place-content-center">
+                                <ChooseSTID />
+                            </div>
+                        </TableCell>
+                        <TableCell>
+                            <div className="flex place-content-center">
+                                <ChooseDriver />
+                            </div>
+                        </TableCell>
                         <TableCell className="text-center">
                             <Switch id="airplane-mode" />
                         </TableCell>

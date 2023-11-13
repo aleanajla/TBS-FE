@@ -12,7 +12,7 @@ export default function Menu () {
                 <img src="/images/homepage_menu_logo.svg"/>
             </div>
             <div className="w-full p-4 flex flex-col r" style={{backgroundColor: "#2D2A86"}}>
-                <Link to={"/capacityPlanning"}> 
+                <Link to={"/myBooking"}> 
                     <button className="w-32 flex flex-col items-center rounded-md p-2" style={{backgroundColor: "#38358F"}}>
                         <img src="/images/homepage_mybooking_logo.svg"/>
                         <p className="w-24 text-center">My Booking</p>
