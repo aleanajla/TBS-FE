@@ -1,8 +1,8 @@
 export default function Tabs() {
   return (
     <>
-      <div className="mt-20 flex flex-wrap gap-5 justify-between">
-        <div className="border border-orange-500 flex flex-row p-5 gap-5 items-center bg-orange-500 rounded-md max-w-md w-[300px] ">
+      <div className="grid grid-cols-4 w-full gap-12 pt-5">
+        <div className="border border-orange-500 flex flex-row p-5 gap-5 items-center bg-orange-500 rounded-xl max-w-md">
           <div className="bg-white p-3 rounded-full">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -46,11 +46,11 @@ export default function Tabs() {
             </svg>
           </div>
           <div className="text-white">
-            <p className="font-bold">25</p>
+            <p className="font-medium">25</p>
             <p className="text-sm">Request</p>
           </div>
         </div>
-        <div className="border-2 border-gray-300 flex flex-row p-5 gap-5 items-center rounded-md w-[300px]">
+        <div className="border-2 border-gray-300 flex flex-row p-5 gap-5 items-center rounded-xl">
           <div className="bg-sky-100 p-3 rounded-full">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -82,11 +82,11 @@ export default function Tabs() {
             </svg>
           </div>
           <div>
-            <p className="text-black font-bold">25</p>
+            <p className="text-black font-medium">25</p>
             <p className="text-gray-500 text-sm">Available Booking Slot</p>
           </div>
         </div>
-        <div className="border-2 border-gray-300 flex flex-row p-5 gap-5 items-center rounded-md w-[300px]">
+        <div className="border-2 border-gray-300 flex flex-row p-5 gap-5 items-center rounded-xl">
           <div className="bg-green-100 p-3 rounded-full">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -118,11 +118,11 @@ export default function Tabs() {
             </svg>
           </div>
           <div>
-            <p className="text-black font-bold">25</p>
+            <p className="text-black font-medium">25</p>
             <p className="text-gray-500 text-sm">Completed</p>
           </div>
         </div>
-        <div className="border-2 border-gray-300 flex flex-row p-5 gap-5 items-center rounded-md w-[300px]">
+        <div className="border-2 border-gray-300 flex flex-row p-5 gap-5 items-center rounded-xl">
           <div className="bg-red-100 p-3 rounded-full">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -154,7 +154,7 @@ export default function Tabs() {
             </svg>
           </div>
           <div>
-            <p className="text-gray font-bold">25</p>
+            <p className="text-gray font-medium">25</p>
             <p className="text-gray-500 text-sm">Cancelled</p>
           </div>
         </div>
