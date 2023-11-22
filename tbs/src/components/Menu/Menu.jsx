@@ -14,7 +14,7 @@ export function Menu () {
                     <p className="font-bold text-3xl mb-3">WE BUILD DIGITAL EXPERIENCE.</p>
                     <p className="font-normal">Find your terminal service</p>
                 </div>
-                <img src="/images/homepage_menu_logo.svg"/>
+                <img src="/images/homepage_menu_logo.svg" />
             </div>
             <div className="w-full p-4 flex flex-col r" style={{backgroundColor: "#2D2A86"}}>
                 {

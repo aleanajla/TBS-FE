@@ -10,6 +10,9 @@ import CapacityPlanning from './pages/CapacityPlanning';
 import MyBooking from './pages/MyBooking';
 import TimeSlot from './pages/Timeslot';
 import STID from './pages/STID';
+import TransportOrder from './pages/TransportOder';
+import Profile from './pages/Profile';
+import ForgotPasswordForm from './components/ForgotPasswordForm/forgotPassword';
 import Header from './components/Header';
 
 function App() {
@@ -24,9 +27,11 @@ function App() {
       <Route path="/forgotPassword" element={<ForgotPassword/>}/>
       <Route path="/newPassword" element={<NewPassword/>}/>
       <Route path='/capacityPlanning' element={<CapacityPlanning/>}/>
-      <Route path='myBooking' element={<MyBooking/>}/>
-      <Route path='timeslot' element={<TimeSlot/>}/>
-      <Route path='stid' element={<STID/>}/>
+      <Route path='/myBooking' element={<MyBooking/>}/>
+      <Route path='/timeslot' element={<TimeSlot/>}/>
+      <Route path='/stid' element={<STID/>}/>
+      <Route path='/transportOder' element={<TransportOrder/>}/>
+      <Route path='/profile' element={<Profile/>}/>
     </Routes>
     </>
   );
