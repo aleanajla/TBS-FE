@@ -3,8 +3,10 @@ import { Login } from "./actionType";
 
 import * as actionType from './actionType'
 
+const userToken = localStorage.getItem("token") ?? null
+
 const initializeState = {
-    user: { username: "", isLoggedIn: false }
+    user: { username: "", token: userToken, isLoggedIn: false, Role_ID: "" }
 }
 
 const AuthReducer = (state = initializeState, {type, payload}) => {
@@ -12,11 +14,19 @@ const AuthReducer = (state = initializeState, {type, payload}) => {
         case actionType.Login:
             return {
                 ...state,
-                // user: { username: action.payload, isLoggedIn: true }
+                // user: { username: action.payload, isLoggedIn: true },
                 user: {
                     ...state.user,
                     ...payload,
-                    isLoggedIn: true,
+                    isLoggedIn: true
+                },
+            }
+        case actionType.SetUser:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    ...payload,
                 },
             }
         default: 

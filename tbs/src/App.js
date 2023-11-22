@@ -13,9 +13,13 @@ import STID from './pages/STID';
 import TransportOrder from './pages/TransportOder';
 import Profile from './pages/Profile';
 import ForgotPasswordForm from './components/ForgotPasswordForm/forgotPassword';
+import Header from './components/Header';
 
 function App() {
   return (
+    <>
+    <Header/>
+
     <Routes>
       <Route path="/homepage" element={<Homepage/>} />
       <Route path="/signUp" element={<SignUp/>} />
@@ -29,6 +33,7 @@ function App() {
       <Route path='/transportOder' element={<TransportOrder/>}/>
       <Route path='/profile' element={<Profile/>}/>
     </Routes>
+    </>
   );
 }
 

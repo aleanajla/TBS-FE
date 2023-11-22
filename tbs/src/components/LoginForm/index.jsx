@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
 import {
   Card,
@@ -20,21 +20,33 @@ import {
 } from "src/components/ui/select"
 import { Checkbox } from "../ui/checkbox";
 import * as action from "../../config/redux/auth/action";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 
 
 export default function LoginForm() {
   const dispatch = useDispatch()
+  const {Auth} = useSelector((state) => state)
+  const navigate = useNavigate()
 
   const [showPassword, setShowPassword] = useState(false)
+  const [error, setError] = useState("")
   const [loginData, setLoginData] = useState({
     Username: "",
     Password: ""
   })
 
-  const onSubmitLogin = () => {
-    dispatch(action.LoginAction({Username: loginData.Username, Password: loginData.Password}))
+  const onSubmitLogin = async(event) => {
+    event.preventDefault();
+    const result = await dispatch(action.LoginAction({Username: loginData.Username, Password: loginData.Password}))
+    
+    // panggil auth untuk navigate
+    // isloggedIn true routing ke home kl false stay at login
+    // navigate('/homepage')
+    if(result.error) {
+      setError(result.message)
+    }
+    
   }
 
   const onChange = useCallback((e) => {
@@ -49,9 +61,10 @@ export default function LoginForm() {
         </div>
         <CardTitle className="text-primary py-4 font-bold">Sign In</CardTitle>
         <CardDescription>Welcome back Please login to your account.</CardDescription>
+        {error.length>0 && <div className="text-red-500">{error}</div>}
       </CardHeader>
       <CardContent>
-        <form>
+        <form  onSubmit={onSubmitLogin}>
           <div className="grid grid-rows-2 w-full items-center gap-5">
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="username">Username</Label>
@@ -88,15 +101,15 @@ export default function LoginForm() {
               <p className="text-sm font-medium text-primary">Forgot Password</p>
             </Link>
           </div>
+          <CardFooter className="flex items-center justify-center w-full py-10">
+            {/* <Link to={"/homepage"} className="w-full"> */}
+              <button type="submit" className="w-full py-3.5 px-6 rounded-full bg-primary text-white font-normal">
+                Login
+              </button>
+            {/* </Link> */}
+          </CardFooter>
         </form>
       </CardContent>
-      <CardFooter className="flex items-center justify-center w-full py-10">
-        <Link to={"/homepage"} className="w-full">
-          <button className="w-full py-3.5 px-6 rounded-full bg-primary text-white font-normal" onSubmit={onSubmitLogin}>
-            Login
-          </button>
-        </Link>
-      </CardFooter>
     </Card>
   );
 }

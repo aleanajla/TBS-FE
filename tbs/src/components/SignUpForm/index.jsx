@@ -1,7 +1,6 @@
+import * as React from "react";
 
-import * as React from "react"
-
-import { Button } from "src/components/ui/button"
+import { Button } from "src/components/ui/button";
 import {
   Card,
   CardContent,
@@ -9,24 +8,51 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "src/components/ui/card"
-import { Input } from "src/components/ui/input"
-import { Label } from "src/components/ui/label"
+} from "src/components/ui/card";
+import { Input } from "src/components/ui/input";
+import { Label } from "src/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "src/components/ui/select"
-import { useState } from "react";
+} from "src/components/ui/select";
+import { useState, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
-
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 export default function SignUpForm() {
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const [registerData, setRegisterData] = useState({
+    Username: "",
+    Password: "",
+    Confirm_Password: "",
+    PMKU: "",
+    Name: "",
+    Phone_Number: "",
+    Email: "",
+    Role_ID: 0
+  })
+
+  const onSubmitLogin = async(event) => {
+    event.preventDefault();
+    // const result = await dispatch(action.LoginAction({Username: loginData.Username, Password: loginData.Password}))
+    
+    // panggil auth untuk navigate
+    // isloggedIn true routing ke home kl false stay at login
+    // navigate('/homepage')
+    // if(result.error) {
+    //   setError(result.message)
+    // }
+    
+  }
+
+  const onChange = useCallback((e) => {
+		setRegisterData({ ...registerData, [e.target.name]: e.target.value });
+	});
 
   return (
     <Card className="w-[827px] py-3 px-[36px] rounded-lg">
@@ -37,101 +63,137 @@ export default function SignUpForm() {
         <CardTitle className="text-primary py-4 font-bold">Sign Up</CardTitle>
       </CardHeader>
       <CardContent>
-        <form>
+        <form onSubmit={onSubmitLogin}>
           <div className="grid grid-rows-4 w-full items-center gap-5">
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="username">Username</Label>
-              <Input id="username" placeholder="Username" />
+              <Input id="username" name="Username" placeholder="Username" />
             </div>
             <div className="w-full grid grid-cols-2 justify-between gap-6 items-center">
               <div className="space-y-1.5">
-                <Label htmlFor="userCategory">User Category</Label>
+                <Label htmlFor="Role_ID">User Category</Label>
                 <Select>
-                  <SelectTrigger id="userCategory" className="text-[#7D7D7D] p-3.5 py-6">
+                  <SelectTrigger
+                    id="userCategory"
+                    name="userCategory"
+                    className="text-[#7D7D7D] p-3.5 py-6"
+                  >
                     <SelectValue placeholder="User Category" />
                   </SelectTrigger>
                   <SelectContent position="popper">
-                    <SelectItem value="next">Freight Forwarder</SelectItem>
-                    <SelectItem value="sveltekit">Trucking Company</SelectItem>
+                    <SelectItem value="1">
+                      Freight Forwarder
+                    </SelectItem>
+                    <SelectItem value="2">
+                      Trucking Company
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               <div className="space-y-1.5">
                 <Label htmlFor="pkmu">Number PKMU</Label>
-                <Input id="pkmu" placeholder="Number PKMU" className="p-3.5" />
+                <Input
+                  id="pkmu"
+                  name="PMKU"
+                  placeholder="Number PKMU"
+                  className="p-3.5"
+                />
               </div>
             </div>
             <div className="w-full grid grid-cols-2 justify-between gap-8 items-center">
               <div className="space-y-1.5">
                 <Label htmlFor="userCategory">Email</Label>
-                <Input id="email" placeholder="Email" className="p-3.5" />
+                <Input
+                  id="email"
+                  name="Email"
+                  placeholder="Email"
+                  className="p-3.5"
+                />
               </div>
               <div className="space-y-1.5">
                 <Label htmlFor="phoneNumber">Phone Number</Label>
-                <Input id="phoneNumber" placeholder="Phone Number" className="p-3.5" />
+                <Input
+                  id="phoneNumber"
+                  name="Phone_Number"
+                  placeholder="Phone Number"
+                  className="p-3.5"
+                />
               </div>
             </div>
             <div className="w-full grid grid-cols-2 justify-between gap-6 items-center">
               <div className="space-y-1.5">
                 <Label htmlFor="password">Password</Label>
-                <Input id="password" placeholder="Password" type={showPassword ? "text" : "password"} className="p-3.5" />
-                {
-                  showPassword ?
-                    <AiOutlineEye
-                      onClick={() => setShowPassword(false)}
-                      className="absolute bottom-[427px] right-[760px] cursor-pointer colour-gray-500"
-                      size={24}
-                      color="grey"
-                    />
-                    :
-                    <AiOutlineEyeInvisible
-                      onClick={() => setShowPassword(true)}
-                      className="absolute bottom-[427px] right-[760px] cursor-pointer"
-                      size={24}
-                      color="grey"
-                    />
-                }
+                <Input
+                  id="password"
+                  name="Password"
+                  placeholder="Password"
+                  type={showPassword ? "text" : "password"}
+                  className="p-3.5"
+                />
+                {showPassword ? (
+                  <AiOutlineEye
+                    onClick={() => setShowPassword(false)}
+                    className="absolute bottom-[427px] right-[760px] cursor-pointer colour-gray-500"
+                    size={24}
+                    color="grey"
+                  />
+                ) : (
+                  <AiOutlineEyeInvisible
+                    onClick={() => setShowPassword(true)}
+                    className="absolute bottom-[427px] right-[760px] cursor-pointer"
+                    size={24}
+                    color="grey"
+                  />
+                )}
               </div>
               <div className="space-y-1.5">
                 <Label htmlFor="confirmPasswprd">Confirm Password</Label>
-                <Input id="confirmPassword" placeholder="Confirm Password" type={showConfirmPassword ? "text" : "password"} className="p-3.5" />
-                {
-                  showConfirmPassword ?
-                    <AiOutlineEye
-                      onClick={() => setShowConfirmPassword(false)}
-                      className="absolute bottom-[427px] right-[400px] cursor-pointer"
-                      size={24}
-                      color="grey"
-                    />
-                    :
-                    <AiOutlineEyeInvisible
-                      onClick={() => setShowConfirmPassword(true)}
-                      className="absolute bottom-[427px] right-[400px] cursor-pointer"
-                      size={24}
-                      color="grey"
-                    />
-                }
+                <Input
+                  id="confirmPassword"
+                  name="Confirm_Password"
+                  placeholder="Confirm Password"
+                  type={showConfirmPassword ? "text" : "password"}
+                  className="p-3.5"
+                />
+                {showConfirmPassword ? (
+                  <AiOutlineEye
+                    onClick={() => setShowConfirmPassword(false)}
+                    className="absolute bottom-[427px] right-[400px] cursor-pointer"
+                    size={24}
+                    color="grey"
+                  />
+                ) : (
+                  <AiOutlineEyeInvisible
+                    onClick={() => setShowConfirmPassword(true)}
+                    className="absolute bottom-[427px] right-[400px] cursor-pointer"
+                    size={24}
+                    color="grey"
+                  />
+                )}
               </div>
             </div>
+          </div>
+          <div className="flex justify-between py-8">
+            <div className="flex flex-row gap-2">
+              <p>Already have Account?</p>
+              <Link to={"/login"} className="text-primary font-medium">
+                Login Here
+              </Link>
+            </div>
+            <Link>
+              <button className="w-[347px] py-3.5 px-6 rounded-full bg-primary text-white font-xs font-normal" type="submit">
+                Sign Up
+              </button>
+            </Link>
           </div>
         </form>
       </CardContent>
       <CardFooter className="flex justify-between py-8">
         {/* <Button variant="outline">Cancel</Button>
         <Button>Deploy</Button> */}
-        <div className="flex flex-row gap-2">
-          <p>Already have Account?</p>
-          <Link to={"/login"} className="text-primary font-medium">Login Here</Link>
-        </div>
-        <Link to={"/login"}>
-          <button className="w-[347px] py-3.5 px-6 rounded-full bg-primary text-white font-xs font-normal">
-            Sign Up
-          </button>
-        </Link>
-
       </CardFooter>
     </Card>
-  )
+  );
 }
 
 // export default function SignUpForm() {
