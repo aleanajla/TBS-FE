@@ -10,9 +10,13 @@ import CapacityPlanning from './pages/CapacityPlanning';
 import MyBooking from './pages/MyBooking';
 import TimeSlot from './pages/Timeslot';
 import STID from './pages/STID';
+import Header from './components/Header';
 
 function App() {
   return (
+    <>
+    <Header/>
+
     <Routes>
       <Route path="/homepage" element={<Homepage/>} />
       <Route path="/signUp" element={<SignUp/>} />
@@ -24,6 +28,7 @@ function App() {
       <Route path='timeslot' element={<TimeSlot/>}/>
       <Route path='stid' element={<STID/>}/>
     </Routes>
+    </>
   );
 }
 

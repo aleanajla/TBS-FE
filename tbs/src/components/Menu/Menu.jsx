@@ -1,7 +1,12 @@
+import { Role } from "../../lib/utils";
 import React from "react";
 import {Link} from "react-router-dom"
+import { MenuJPT } from "./menuJPT";
+import { MenuTC } from "./menuTC";
+import { useSelector } from "react-redux";
 
-export default function Menu () {
+export function Menu () {
+    const {Role_ID} = useSelector((state) => state.Auth.user)
     return(
         <div className="flex rounded-lg p-5 flex-row text-white" style= {{backgroundColor: "#3430AA"}}>
             <div className="">
@@ -12,12 +17,12 @@ export default function Menu () {
                 <img src="/images/homepage_menu_logo.svg"/>
             </div>
             <div className="w-full p-4 flex flex-col r" style={{backgroundColor: "#2D2A86"}}>
-                <Link to={"/myBooking"}> 
-                    <button className="w-32 flex flex-col items-center rounded-md p-2" style={{backgroundColor: "#38358F"}}>
-                        <img src="/images/homepage_mybooking_logo.svg"/>
-                        <p className="w-24 text-center">My Booking</p>
-                    </button>
-                </Link>
+                {
+                    Role_ID == Role.FreightForwarder && <MenuJPT/>
+                }
+                {
+                    Role_ID == Role.TruckingCompany && <MenuTC/>
+                }
             </div>
         </div>
     );
