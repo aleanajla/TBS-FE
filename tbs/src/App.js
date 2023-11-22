@@ -12,6 +12,7 @@ import TimeSlot from './pages/Timeslot';
 import STID from './pages/STID';
 import TransportOrder from './pages/TransportOder';
 import Profile from './pages/Profile';
+import ForgotPasswordForm from './components/ForgotPasswordForm/forgotPassword';
 
 function App() {
   return (
