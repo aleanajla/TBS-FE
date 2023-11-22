@@ -21,7 +21,7 @@ import SearchBar from "../SearchBar"
 
 export function Tab() {
   return (
-    <Tabs defaultValue="account" className="bg-white">
+    <Tabs defaultValue="request" className="bg-white">
       <TabsList className="grid w-full grid-cols-4 gap-8">
         <TabsTrigger value="request" className="data-[state=active]:bg-[#FFA621] data-[state=active]:text-white">
           <div className="flex gap-4 items-center">

@@ -11,6 +11,7 @@ import MyBooking from './pages/MyBooking';
 import TimeSlot from './pages/Timeslot';
 import STID from './pages/STID';
 import TransportOrder from './pages/TransportOder';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
       <Route path='/timeslot' element={<TimeSlot/>}/>
       <Route path='/stid' element={<STID/>}/>
       <Route path='/transportOder' element={<TransportOrder/>}/>
+      <Route path='/profile' element={<Profile/>}/>
     </Routes>
   );
 }
