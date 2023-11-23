@@ -13,13 +13,14 @@ const Header = () => {
   useEffect(() => {
     if(token){
         dispatch(action.GetUserDetails({ token }))
-        if (pathname.startsWith('/login')) {
+        if (pathname === '/') {
             navigate('/homepage')
         }
+
     } else {
         // redirect to login
-        if (!pathname.startsWith('/login') && !pathname.startsWith('/newPassword') && !pathname.startsWith('/resetPassword')) {
-            navigate('/login')
+        if (!pathname === '/' && !pathname.startsWith('/newPassword') && !pathname.startsWith('/resetPassword')) {
+            navigate('/')
         }
     }
   }, [])
