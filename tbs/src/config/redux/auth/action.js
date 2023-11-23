@@ -15,8 +15,11 @@ export const LoginAction = (payload) => {
                     Password : payload.Password
                 }
             })
-            dispatch({type: Login, payload:{username: response.data.payload.Username, token: response.data.token}})
+
+            const { username, Role_ID } = response.data.payload;
+            dispatch({type: Login, payload:{username, Role_ID, token: response.data.token}})
             localStorage.setItem("token", response.data.token)
+            
             return {
                 error : false,
                 message: "Succesfully Login"

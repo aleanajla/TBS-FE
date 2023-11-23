@@ -1,14 +1,72 @@
-import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useState, useCallback } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import qs from "qs";
+import axios from "axios";
+
 
 export default function NewPasswordForm(){
     const [showPassword, setShowPassword] = useState(false)
     const {search} = useLocation()
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+    const navigate = useNavigate();
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false)    
+    const [error, setError] = useState("")
+    const [newPasswordData, setNewPasswordData] = useState({
+        password: "",
+        confirm_password: ""
+    })
+    const token = qs.parse(search.replace("?", ""))?.token ?? null;
 
-    console.log(qs.parse(search.replace("?", "")))
+    console.log(token)
+    // if (!token) {
+    //     navigate('/login')
+    // }
+
+    
+    const onSubmitNewPassword = async (event) => {
+        event.preventDefault();
+        let result = { error: false, message: "" }
+        
+        try {
+            let response = await axios({
+                method: "patch",
+                // url: `${API_LOCAL}/api/users/login`,
+                url: "http://localhost:3000/api/auth/user/change-password",
+                data: newPasswordData,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+            })
+
+            console.log(response)
+
+            result = {
+                error: false,
+                message: "Done!"
+            }
+        } catch (error) {
+            if (error.response.status == 404) {
+                result = {
+                    error: true,
+                    message: error.response.data
+                }
+            }
+            result = {
+                error: true,
+                message: error.message
+            };
+        }
+
+        if (result.error) {
+            setError(result.message)
+        }
+
+    }
+
+    const onChange = useCallback((e) => {
+        setNewPasswordData({...newPasswordData, [e.target.name]: e.target.value})
+    });
+
 
     return(
     <>
@@ -21,7 +79,7 @@ export default function NewPasswordForm(){
                 <h1 className="text-primary font-bold text-2xl mb-3.5">New Password</h1>
                 <p className="font-normal text-gray-500 text-sm">Please make sure your new password must be different<br/>from previous used passwords.</p>
             </div>
-            <form>
+            <form onSubmit={onSubmitNewPassword}>
                 <div className="my-6">
                     <div>
                         <label 
@@ -35,6 +93,8 @@ export default function NewPasswordForm(){
                                 id="newPassword" 
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" 
                                 placeholder="Enter Password" 
+                                name="password"
+                                onChange={onChange}
                                 required
                             />
                             {
@@ -67,7 +127,9 @@ export default function NewPasswordForm(){
                                 id="confirmNewOassword" 
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3.5 dark:bg-white dark:border-gray-300 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" 
                                 placeholder="Confirm Password" 
+                                name="confirm_password"
                                 required
+                                onChange={onChange}
                             />
                             {
                                 showConfirmPassword ?
@@ -88,7 +150,7 @@ export default function NewPasswordForm(){
                         </div>
                     </div>
                     <div className="mt-6">
-                        <button className="bg-primary w-full py-3.5 text-white font-xs font-normal rounded-lg">Reset Password</button>
+                        <button type="submit" className="bg-primary w-full py-3.5 text-white font-xs font-normal rounded-lg">Reset Password</button>
                     </div>
                 </div>
                 <div className="flex gap-5 place-content-center w-full">
