@@ -4,6 +4,7 @@ import {Link} from "react-router-dom"
 import { MenuJPT } from "./menuJPT";
 import { MenuTC } from "./menuTC";
 import { useSelector } from "react-redux";
+import { MenuTerminal } from ".";
 
 export function Menu () {
     const {Role_ID} = useSelector((state) => state.Auth.user)
@@ -16,12 +17,15 @@ export function Menu () {
                 </div>
                 <img src="/images/homepage_menu_logo.svg" />
             </div>
-            <div className="w-full p-4 flex flex-col r" style={{backgroundColor: "#2D2A86"}}>
+            <div className="w-full p-4 flex flex-row gap-6" style={{backgroundColor: "#2D2A86"}}>
                 {
                     Role_ID == Role.FreightForwarder && <MenuJPT/>
                 }
                 {
                     Role_ID == Role.TruckingCompany && <MenuTC/>
+                }
+                {
+                    Role_ID == Role.Terminal && <MenuTerminal/>
                 }
             </div>
         </div>
