@@ -21,9 +21,9 @@ function App() {
     <Header/>
 
     <Routes>
+      <Route path="/" element={<Login/>} />
       <Route path="/homepage" element={<Homepage/>} />
       <Route path="/signUp" element={<SignUp/>} />
-      <Route path="/login" element={<Login/>} />
       <Route path="/forgotPassword" element={<ForgotPassword/>}/>
       <Route path="/newPassword" element={<NewPassword/>}/>
       <Route path='/capacityPlanning' element={<CapacityPlanning/>}/>

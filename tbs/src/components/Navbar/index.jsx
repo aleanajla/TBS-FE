@@ -1,14 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "src/components/ui/select";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "src/components/ui/button";
 import {
   DropdownMenu,
@@ -27,9 +18,17 @@ import {
 import { ChevronDown } from "lucide-react";
 
 import Profile from "src/pages/Profile";
+import { useSelector } from "react-redux";
 // import logo_tbs from '../../../public/images/logo_tbs.png'
 
 export default function Navbar() {
+  const {username} = useSelector((state) => state.Auth.user)
+  const navigate = useNavigate()
+
+  const logout = () => {
+      localStorage.removeItem('token')
+      navigate('/')
+  }
   return (
     <>
       <div className="bg-white h-10px text-black pl-10 pr-10 pt-5 pb-5 flex flex-row items-center justify-between w-full top-0 border-b-2 border-grey-400 shadow-md">
@@ -83,7 +82,7 @@ export default function Navbar() {
               className="w-[150px] rounded-full border border-[#212121] px-4 justify-between py-4"
             >
               <Button variant="outline" className="py-4">
-                <p>Judi Ginta</p>
+                <p>{username}</p>
                 <img src="/images/chevronDown.svg" />
               </Button>
             </DropdownMenuTrigger>
@@ -92,7 +91,7 @@ export default function Navbar() {
                 <span>Profile</span>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <span>Logout</span>
+                <span><button onClick={logout}>Logout</button></span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
