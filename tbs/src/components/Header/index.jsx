@@ -18,7 +18,7 @@ const Header = () => {
         }
     } else {
         // redirect to login
-        if (!pathname.startsWith('/login')) {
+        if (!pathname.startsWith('/login') && !pathname.startsWith('/newPassword') && !pathname.startsWith('/resetPassword')) {
             navigate('/login')
         }
     }

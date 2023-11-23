@@ -26,7 +26,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function LoginForm() {
   const dispatch = useDispatch()
-  const {Auth} = useSelector((state) => state)
+  const { Auth } = useSelector((state) => state)
   const navigate = useNavigate()
 
   const [showPassword, setShowPassword] = useState(false)
@@ -36,22 +36,23 @@ export default function LoginForm() {
     Password: ""
   })
 
-  const onSubmitLogin = async(event) => {
+  const onSubmitLogin = async (event) => {
     event.preventDefault();
-    const result = await dispatch(action.LoginAction({Username: loginData.Username, Password: loginData.Password}))
-    
+    const result = await dispatch(action.LoginAction({ Username: loginData.Username, Password: loginData.Password }))
+
     // panggil auth untuk navigate
     // isloggedIn true routing ke home kl false stay at login
-    // navigate('/homepage')
-    if(result.error) {
+    if (result.error) {
       setError(result.message)
+    } else {
+      navigate('/homepage')
     }
-    
+
   }
 
   const onChange = useCallback((e) => {
-		setLoginData({ ...loginData, [e.target.name]: e.target.value });
-	});
+    setLoginData({ ...loginData, [e.target.name]: e.target.value });
+  });
 
   return (
     <Card className="w-[550px] min-h-1/2 py-3 px-[36px] rounded-lg">
@@ -61,35 +62,37 @@ export default function LoginForm() {
         </div>
         <CardTitle className="text-primary py-4 font-bold">Sign In</CardTitle>
         <CardDescription>Welcome back Please login to your account.</CardDescription>
-        {error.length>0 && <div className="text-red-500">{error}</div>}
+        {error.length > 0 && <div className="text-red-500">{error}</div>}
       </CardHeader>
       <CardContent>
-        <form  onSubmit={onSubmitLogin}>
+        <form onSubmit={onSubmitLogin}>
           <div className="grid grid-rows-2 w-full items-center gap-5">
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="username">Username</Label>
-              <Input id="username" name="Username"placeholder="Username" onChange = {onChange} value={loginData.Username}/>
+              <Input id="username" name="Username" placeholder="Username" onChange={onChange} value={loginData.Username} />
             </div>
             {/* <div className="w-full grid grid-cols-2 justify-between gap-6 items-center"> */}
-            <div className="space-y-1.5">
+            <div className="space-y-1.5 relative">
               <Label htmlFor="password">Password</Label>
-              <Input id="password" placeholder="Password" type={showPassword ? "text" : "password"} name="Password" onChange = {onChange} value={loginData.Password} className="p-3.5" />
-              {
-                showPassword ?
-                  <AiOutlineEye
-                    onClick={() => setShowPassword(false)}
-                    className="absolute bottom-[427px] right-[760px] cursor-pointer colour-gray-500"
-                    size={24}
-                    color="grey"
-                  />
-                  :
-                  <AiOutlineEyeInvisible
-                    onClick={() => setShowPassword(true)}
-                    className="absolute bottom-[427px] right-[760px] cursor-pointer"
-                    size={24}
-                    color="grey"
-                  />
-              }
+              <div className="relative">
+                <Input id="password" placeholder="Password" type={showPassword ? "text" : "password"} name="Password" onChange={onChange} value={loginData.Password} className="p-3.5" />
+                {
+                  showPassword ?
+                    <AiOutlineEye
+                      onClick={() => setShowPassword(false)}
+                      className="absolute top-1/2 -translate-y-1/2 right-4 cursor-pointer colour-gray-500"
+                      size={24}
+                      color="grey"
+                    />
+                    :
+                    <AiOutlineEyeInvisible
+                      onClick={() => setShowPassword(true)}
+                      className="absolute -translate-y-1/2 right-4 top-1/2 cursor-pointer"
+                      size={24}
+                      color="grey"
+                    />
+                }
+              </div>
             </div>
           </div>
           <div className="flex justify-between items-center w-full pt-6">
@@ -102,11 +105,9 @@ export default function LoginForm() {
             </Link>
           </div>
           <CardFooter className="flex items-center justify-center w-full py-10">
-            {/* <Link to={"/homepage"} className="w-full"> */}
-              <button type="submit" className="w-full py-3.5 px-6 rounded-full bg-primary text-white font-normal">
-                Login
-              </button>
-            {/* </Link> */}
+            <button type="submit" className="w-full py-3.5 px-6 rounded-full bg-primary text-white font-normal">
+              Login
+            </button>
           </CardFooter>
         </form>
       </CardContent>
