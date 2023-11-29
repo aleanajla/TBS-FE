@@ -14,6 +14,7 @@ import TransportOrder from './pages/TransportOder';
 import Profile from './pages/Profile';
 import ForgotPasswordForm from './components/ForgotPasswordForm/forgotPassword';
 import Header from './components/Header';
+import ChangePassword from './pages/ChangePassword';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
       <Route path='/stid' element={<STID/>}/>
       <Route path='/transportOder' element={<TransportOrder/>}/>
       <Route path='/profile' element={<Profile/>}/>
+      <Route path='/changePassword' element={<ChangePassword/>}/>
     </Routes>
     </>
   );

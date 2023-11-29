@@ -17,7 +17,7 @@ export default function CardBooking() {
                             <img src="/images/vesselLogo.png" alt="" />
                         </div>
                         <div>
-                            <div className="flex flex-row gap-4 flex items-center">
+                            <div className="flex flex-row gap-4 items-center">
                                 <p className="font-medium text-md">MV PAROS</p>
                                 <div className="px-4 py-0.5 bg-primary text-white rounded-md font-medium" >
                                     <p>RECEIVING</p>
