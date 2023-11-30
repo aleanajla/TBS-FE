@@ -38,26 +38,9 @@ export function ProfileMenu() {
                         <p>Change Password</p>
                     </div>
                 </TabsTrigger>
-                <TabsTrigger value="completed" className="data-[state=active]:bg-[#0F9B71] data-[state=active]:text-white py-4">
-                    <div className="flex gap-4 items-center">
-                        <p>Logout</p>
-                    </div>
-                </TabsTrigger>
             </TabsList>
-
             <TabsContent value="profile" className="mt-0 ml-60 border rounded-lg p-11">
                 <div className="flex flex-col gap-5">
-                    <div className="border-b">
-                        <div className="flex gap-4 items-center justify-between">
-                            {/* <p className="font-medium text-lg">Edit My Profile</p> */}
-                            <Avatar className="w-32 h-auto mb-5">
-                                <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                            </Avatar>
-                            <Button className="border px-4 py-6 bg-primary">
-                                <p className="text-white font-medium">Change Photo</p>
-                            </Button>
-                        </div>
-                    </div>
                     <div className="flex flex-col py-5 gap-4">
                         <div className="flex gap-4 items-center">
                             <div className="p-3 rounded-full bg-[#F5F5F5]">

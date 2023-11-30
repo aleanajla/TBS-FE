@@ -19,12 +19,18 @@ import {
   SelectValue,
 } from "src/components/ui/select";
 import { useState, useCallback } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import axios from "axios";
+import * as action from "../../config/redux/auth/action";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function SignUpForm() {
+  const dispatch = useDispatch()
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [error, setError] = useState("")
+  const navigate = useNavigate()
 
   const [registerData, setRegisterData] = useState({
     Username: "",
@@ -37,16 +43,34 @@ export default function SignUpForm() {
     Role_ID: 0
   })
 
-  const onSubmitLogin = async(event) => {
+  const onSubmitRegister = async(event) => {
     event.preventDefault();
-    // const result = await dispatch(action.LoginAction({Username: loginData.Username, Password: loginData.Password}))
-    
-    // panggil auth untuk navigate
-    // isloggedIn true routing ke home kl false stay at login
-    // navigate('/homepage')
-    // if(result.error) {
-    //   setError(result.message)
-    // }
+    try{
+      const response = await axios({
+        method: "post",
+        url: "http://localhost:3000/api/users/register",
+        data: {
+          Username: registerData.Username,
+          Password: registerData.Password,
+          Confirm_Password: registerData.Confirm_Password,
+          PMKU: registerData.PMKU,
+          Name: registerData.Name,
+          Phone_Number: registerData.Phone_Number,
+          Email: registerData.Email,
+          Role_ID: registerData.Role_ID
+        }
+      })
+      console.log(response);
+      // const result = await dispatch(action.LoginAction({Username: registerData.Username, Password: registerData.Password}))
+      // navigate('/homepage')
+      // if(result.error) {
+      //   setError(result.message)
+      // }
+    }
+    catch(error){
+      setError(error)
+      console.log(error);
+    }
     
   }
 
@@ -61,13 +85,14 @@ export default function SignUpForm() {
           <img src="/images/logo_tbs.png" />
         </div>
         <CardTitle className="text-primary py-4 font-bold">Sign Up</CardTitle>
+        <div className="text-red-500">{error}</div>
       </CardHeader>
       <CardContent>
-        <form onSubmit={onSubmitLogin}>
+        <form onSubmit={onSubmitRegister}>
           <div className="grid grid-rows-4 w-full items-center gap-5">
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="username">Username</Label>
-              <Input id="username" name="Username" placeholder="Username" />
+              <Input id="username" name="Username" placeholder="Username" onChange={onChange} value={registerData.Username}/>
             </div>
             <div className="w-full grid grid-cols-2 justify-between gap-6 items-center">
               <div className="space-y-1.5">
@@ -77,6 +102,7 @@ export default function SignUpForm() {
                     id="userCategory"
                     name="userCategory"
                     className="text-[#7D7D7D] p-3.5 py-6"
+                    onChange={onChange} value={registerData.Role_ID}
                   >
                     <SelectValue placeholder="User Category" />
                   </SelectTrigger>
@@ -97,6 +123,7 @@ export default function SignUpForm() {
                   name="PMKU"
                   placeholder="Number PKMU"
                   className="p-3.5"
+                  onChange={onChange} value={registerData.PMKU}
                 />
               </div>
             </div>
@@ -108,6 +135,7 @@ export default function SignUpForm() {
                   name="Email"
                   placeholder="Email"
                   className="p-3.5"
+                  onChange={onChange} value={registerData.Email}
                 />
               </div>
               <div className="space-y-1.5">
@@ -117,6 +145,7 @@ export default function SignUpForm() {
                   name="Phone_Number"
                   placeholder="Phone Number"
                   className="p-3.5"
+                  onChange={onChange} value={registerData.Phone_Number}
                 />
               </div>
             </div>
@@ -129,6 +158,7 @@ export default function SignUpForm() {
                   placeholder="Password"
                   type={showPassword ? "text" : "password"}
                   className="p-3.5"
+                  onChange={onChange} value={registerData.Password}
                 />
                 {showPassword ? (
                   <AiOutlineEye
@@ -154,6 +184,7 @@ export default function SignUpForm() {
                   placeholder="Confirm Password"
                   type={showConfirmPassword ? "text" : "password"}
                   className="p-3.5"
+                  onChange={onChange} value={registerData.Confirm_Password}
                 />
                 {showConfirmPassword ? (
                   <AiOutlineEye
@@ -180,11 +211,9 @@ export default function SignUpForm() {
                 Login Here
               </Link>
             </div>
-            <Link>
-              <button className="w-[347px] py-3.5 px-6 rounded-full bg-primary text-white font-xs font-normal" type="submit">
-                Sign Up
-              </button>
-            </Link>
+            <button className="w-[347px] py-3.5 px-6 rounded-full bg-primary text-white font-xs font-normal" type="submit">
+              Sign Up
+            </button>
           </div>
         </form>
       </CardContent>

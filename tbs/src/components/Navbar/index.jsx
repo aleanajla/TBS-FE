@@ -29,6 +29,11 @@ export default function Navbar() {
       localStorage.removeItem('token')
       navigate('/')
   }
+
+  const goToProfile = () => {
+    navigate('/profile')
+  }
+
   return (
     <>
       <div className="bg-white h-10px text-black pl-10 pr-10 pt-5 pb-5 flex flex-row items-center justify-between w-full top-0 border-b-2 border-grey-400 shadow-md">
@@ -88,7 +93,7 @@ export default function Navbar() {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-[150px] text-black">
               <DropdownMenuItem className="text-black">
-                <span>Profile</span>
+                <span><button onClick={goToProfile}>Profile</button></span>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <span><button onClick={logout}>Logout</button></span>

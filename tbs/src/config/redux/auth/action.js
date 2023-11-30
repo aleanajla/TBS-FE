@@ -54,13 +54,15 @@ export const GetUserDetails = (payload) => {
             // TODO: Handle error
 
 
-            const { Username, Role_ID } = response.data;
+            const { Username, Role_ID, id, Customer_ID } = response.data;
 
             dispatch({type: SetUser, payload: {
                 
                     username: Username,
                     isLoggedIn: true,
-                    Role_ID: Role_ID
+                    Role_ID: Role_ID,
+                    id : id,
+                    Customer_ID: Customer_ID
                 
             }})
         } catch (error) {
