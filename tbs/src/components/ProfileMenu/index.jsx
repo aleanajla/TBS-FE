@@ -1,31 +1,26 @@
-import { Button } from "src/components/ui/button"
-import CardBooking from "../CardBooking/cardBooking"
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "src/components/ui/card"
 import { Input } from "src/components/ui/input"
 import { Label } from "src/components/ui/label"
-import {
-    Tabs,
-    TabsContent,
-    TabsList,
-    TabsTrigger,
-} from "src/components/ui/tabs"
-import FilterSearch from "../FilterSearch/index"
-import SearchBar from "../SearchBar"
-import {
-    Avatar,
-    AvatarFallback,
-    AvatarImage,
-} from "src/components/ui/avatar"
 import { useState } from "react"
+import { useSelector } from "react-redux"
+import axios from "axios"
 
 export function ProfileMenu() {
+    const {id} = useSelector((state) => state.Auth.user)
+    const [data, setData] = useState([])
+
+    const getData = async() => {
+        try{
+            const response = await axios({
+                method: "get",
+                url: `http://localhost:3000/api/view/profile/${id}`
+            })
+            setData(()=>setData(response.data))
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
+
     return (
         <div className="flex flex-col gap-10">
             <div className="border px-10 py-10 rounded-lg">

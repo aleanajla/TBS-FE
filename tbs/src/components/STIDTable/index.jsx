@@ -1,4 +1,6 @@
-import React from "react";
+import axios, { Axios } from "axios";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 import {
     Table,
@@ -10,82 +12,59 @@ import {
     TableRow,
 } from "src/components/ui/table"
 
-const stids = [
-    {
-        no: "1",
-        STID: "C100010",
-        namaDriver: "Yogi M Irshad",
-        phoneNumber: "0829839283",
-        platNomor: "B 3498 CDR",
-        size: "40"
-    },
-    {
-        no: "2",
-        STID: "C100010",
-        namaDriver: "Yahya",
-        platNomor: "B 3498 LK",
-        size: "40"
-    },
-    {
-        no: "3",
-        STID: "C100212",
-        namaDriver: "Saiful",
-        platNomor: "B 3498 YTC",
-        size: "40"
-    },
-    {
-        no: "4",
-        STID: "C100546",
-        namaDriver: "Mahmud",
-        platNomor: "B 3498 DFR",
-        size: "40"
-    },
-    {
-        no: "5",
-        STID: "C100093",
-        namaDriver: "Asep",
-        platNomor: "B 3498 IO",
-        size: "40"
-    },
-    {
-        no: "1",
-        STID: "C100010",
-        namaDriver: "Yogi M Irshad",
-        phoneNumber: "0829839283",
-        platNomor: "B 3498 CDR",
-        size: "40"
-    },
-    {
-        no: "2",
-        STID: "C100010",
-        namaDriver: "Yahya",
-        platNomor: "B 3498 LK",
-        size: "40"
-    },
-    {
-        no: "3",
-        STID: "C100212",
-        namaDriver: "Saiful",
-        platNomor: "B 3498 YTC",
-        size: "40"
-    },
-    {
-        no: "4",
-        STID: "C100546",
-        namaDriver: "Mahmud",
-        platNomor: "B 3498 DFR",
-        size: "40"
-    },
-    {
-        no: "5",
-        STID: "C100093",
-        namaDriver: "Asep",
-        platNomor: "B 3498 IO",
-        size: "40"
-    }
-]
 
 export function STIDtable() {
+    const [STID, setSTID] = useState([])
+    const {id} = useSelector((state) => state.Auth.user)
+
+    const deleteData = async (id_data) => {
+        try{
+            const result = await axios({
+                method: "post",
+                url: "http://localhost:3000/api/users/delete/stid",
+                data: {
+                    id: id_data
+                }
+            })
+            console.log(result);
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
+
+    const getData = async () => {
+        try{
+            const result = await axios({
+                method: "get",
+                url: `http://localhost:3000/api/users/view/stid/${id}`
+            })
+
+            setSTID(() => result.data)
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
+
+    const editData = async () => {
+        try{
+            const response = await axios ({
+                method: "post",
+                url: "/users/update/stid",
+                data: {
+                    
+                }
+            })
+        }
+        catch (error){
+
+        }
+    }
+
+    useEffect(()=> {
+        getData()
+    })
     return (
         <Table >
             {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
@@ -94,27 +73,25 @@ export function STIDtable() {
                     <TableHead className="text-center">No</TableHead>
                     <TableHead className="text-center">STID</TableHead>
                     <TableHead className="text-center">Driver</TableHead>
-                    {/* <TableHead className="text-center">Phone Number</TableHead> */}
                     <TableHead className="text-center">Plat Number</TableHead>
                     <TableHead className="text-center">Truck Size</TableHead>
                     <TableHead className="text-center">Action</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody className="px-0">
-                {stids.map((stid) => (
-                    <TableRow key={stid.no}>
-                        <TableCell className="text-center">{stid.no}</TableCell>
-                        <TableCell className="text-center">{stid.STID}</TableCell>
-                        <TableCell className="text-center">{stid.namaDriver}</TableCell>
-                        {/* <TableCell className="text-center">{stid.phoneNumber}</TableCell> */}
-                        <TableCell className="text-center">{stid.platNomor}</TableCell>
-                        <TableCell className="text-center">{stid.size}</TableCell>
+                {STID.map((stid, index) => (
+                    <TableRow key={stid.id}>
+                        <TableCell className="text-center">{index+1}</TableCell>
+                        <TableCell className="text-center">{stid.STID_Number}</TableCell>
+                        <TableCell className="text-center">{stid.masterDriver.Driver_Name}</TableCell>
+                        <TableCell className="text-center">{stid.masterTruck.Plat_Number}</TableCell>
+                        <TableCell className="text-center">{stid.masterTruck.Size}</TableCell>
                         <TableCell className="text-center">
                             <div className="flex items-center justify-center gap-4">
                                 <button className=" bg-primary text-white px-8 py-2 rounded-lg text-sm">
                                     <p>Edit</p>
                                 </button>
-                                <button className="bg-[#FF234F] p-2 rounded-md">
+                                <button className="bg-[#FF234F] p-2 rounded-md" onClick={() => deleteData(stid.id)}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
                                         <path d="M15.75 4.48499C13.2525 4.23749 10.74 4.10999 8.235 4.10999C6.75 4.10999 5.265 4.18499 3.78 4.33499L2.25 4.48499" stroke="white" stroke-width="1.11429" stroke-linecap="round" stroke-linejoin="round" />
                                         <path d="M6.375 3.7275L6.54 2.745C6.66 2.0325 6.75 1.5 8.0175 1.5H9.9825C11.25 1.5 11.3475 2.0625 11.46 2.7525L11.625 3.7275" stroke="white" stroke-width="1.11429" stroke-linecap="round" stroke-linejoin="round" />

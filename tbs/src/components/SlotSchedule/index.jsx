@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 export default function SlotSchedule(){
+    const {date} = useSelector((state) => state.CapacityPlanning.Date);
+    
     return(
     <>
         <div className="bg-primary w-full h-auto p-[44px] rounded-lg">
@@ -8,7 +11,7 @@ export default function SlotSchedule(){
                 <div className="flex items-center gap-[15px]">
                     <h1 className="text-white font-semibold text-2xl">TODAY</h1>
                     <div className="bg-white h-[25px] w-[2px]"/>
-                    <h2 className="text-white font-normal text-xl">12 September 2022</h2>
+                    <h2 className="text-white font-normal text-xl">{date}</h2>
                 </div>
                 <button className="flex bg-white py-[15px] px-[35px] rounded-lg">
                     <p className="text-primary text-md font-semibold">Edit</p>

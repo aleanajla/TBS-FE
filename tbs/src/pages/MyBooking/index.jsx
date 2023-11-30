@@ -13,7 +13,6 @@ export default function MyBooking() {
             </div>
             <div className="flex flex-col gap-7">
                 <CardBooking/>
-                <CardBooking/>
             </div>
         </Layout>
     )

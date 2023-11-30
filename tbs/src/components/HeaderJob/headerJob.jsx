@@ -1,19 +1,19 @@
 import React from "react";
 
-export default function HeaderJob(){
+export default function HeaderJob({data}){
     return(
     <>
         <div className="py-4 px-6 bg-gray-100 w-full rounded-lg">
             <div className="flex flex-row items-center gap-2">
-                <p className="font-medium">REC000001 - MV AUZONIA</p>
+                <p className="font-medium">{data.No_Request} - {data.Vessel_Name.toUpperCase()}</p>
                 <div className="bg-success bg-[#0F9B71] rounded-full text-white font-medium py-1 px-2">
-                    <p>3/20</p>
+                    <p>3/{data.Qty}</p>
                 </div>
             </div>
 
             <div className="flex flex-row items-center gap-3 py-2.5">
                 <div className="px-4 py-1 bg-primary text-white rounded-md font-medium">
-                    <p>RECEIVING</p>
+                    <p>{data.Service_Name.toUpperCase()}</p>
                 </div>
                 <div className="flex flex-row py-0.5 items-center gap-1">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19" viewBox="0 0 20 19" fill="none">
@@ -28,18 +28,18 @@ export default function HeaderJob(){
                         <path d="M7.44559 10.7749H7.45274" stroke="#064B82" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M7.44559 13.0249H7.45274" stroke="#064B82" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    <p className="text-primary font-medium  ">Closing Time: Fri, Jan 15, 2022 (12:00) </p>
+                    <p className="text-primary font-medium  ">{data.Closing_Time} </p>
                 </div>
             </div>
 
             <div className="flex flex-row gap-2.5">
                 <div className="flex flex-row">
                     <p className="font-medium text-gray-500">Port: </p>
-                    <p className="pl-1 text-gray-500">Pelabuhan Tanjung Priok</p>
+                    <p className="pl-1 text-gray-500">{data.Port_Name}</p>
                 </div>
                 <div className="flex flex-row">
                     <p className="font-medium text-gray-500">Terminal: </p>
-                    <p className="pl-1 text-gray-500">Jakarta Internation Container Terminal II (JICT II)</p>
+                    <p className="pl-1 text-gray-500">{data.Terminal_Name}</p>
                 </div>
             </div>
 
