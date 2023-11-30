@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
     Dialog,
     DialogContent,
@@ -12,9 +12,32 @@ import { Input } from "src/components/ui/input"
 import { Label } from "src/components/ui/label"
 import { DatePickerWithRange } from "../DatePicker"
 import { useState } from "react"
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 export default function AssignTruck() {
     const [open, setOpen] = useState(false)
+    const [trucking, setTrucking] = useState("")
+    const [dataTrucking, setDataTrucking] = useState([])
+    const { id } = useSelector((state) => state.Auth.user);
+
+    const getTruckingCompany = async () => {
+        try{
+            const response = await axios({
+                method: "get",
+                url: "http://localhost:3000/api/users/view/trucking"
+            })
+            console.log(response);
+            setDataTrucking(()=> response.data)
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        getTruckingCompany();
+    })
 
     return (
         <>

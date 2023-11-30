@@ -17,33 +17,33 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "src/components/ui/popover"
-
-const frameworks = [
-    {
-        value: "1",
-        label: "B 3498 CDR",
-    },
-    {
-        value: "2",
-        label: "B 3498 BKS",
-    },
-    {
-        value: "3",
-        label: "B 3498 RFJ",
-    },
-    {
-        value: "4",
-        label: "B 3498 KLD",
-    },
-    {
-        value: "5",
-        label: "B 3498 FN",
-    },
-]
+import { useSelector } from "react-redux"
+import axios from "axios"
 
 export function ChooseTruck() {
     const [open, setOpen] = React.useState(false)
     const [value, setValue] = React.useState("")
+    const [dataTruck, setDataTruck] = React.useState([])
+    const {Customer_ID} = useSelector((state) => state.Auth.user)
+
+    const getDataTruck = async() => {
+        try{
+            let response = await axios({
+                method: "get",
+                url: `http://localhost:3000/api/users/trucks/${Customer_ID}`
+            })
+            setDataTruck(()=> response.data)
+            console.log(dataTruck);
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
+
+    // React.useEffect(()=> {
+    //     getDataTruck();
+    //     console.log("value: ",value);
+    // }, [])
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
@@ -55,7 +55,7 @@ export function ChooseTruck() {
                     className="w-[250px] justify-between text-gray-500"
                 >
                     {value
-                        ? frameworks.find((framework) => framework.value === value)?.label
+                        ? dataTruck.find((truck) => truck.id === value)?.Plat_Number
                         : "Truck"}
                         
                     {/* <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" /> */}
@@ -66,22 +66,22 @@ export function ChooseTruck() {
                     <CommandInput placeholder="Search truck..." />
                     <CommandEmpty>No framework found.</CommandEmpty>
                     <CommandGroup>
-                        {frameworks.map((framework) => (
+                        {dataTruck.map((truck) => (
                             <CommandItem
-                                key={framework.value}
-                                value={framework.value}
-                                onSelect={(currentValue) => {
-                                    setValue(currentValue === value ? "" : currentValue)
+                                key={truck.id}
+                                value={truck.id}
+                                onSelect={() => {
+                                    setValue(truck.id === value ? "" : truck.id)
                                     setOpen(false)
                                 }}
                             >
                                 <Check
                                     className={cn(
                                         "mr-2 h-4 w-4",
-                                        value === framework.value ? "opacity-100" : "opacity-0"
+                                        value === truck.id ? "opacity-100" : "opacity-0"
                                     )}
                                 />
-                                {framework.label}
+                                {truck.Plat_Number}
                             </CommandItem>
                         ))}
                     </CommandGroup>

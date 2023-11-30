@@ -17,33 +17,33 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "src/components/ui/popover"
-
-const frameworks = [
-    {
-        value: "1",
-        label: "Asep Kurniawan",
-    },
-    {
-        value: "2",
-        label: "Saiful Makmur",
-    },
-    {
-        value: "3",
-        label: "Budi Lukman",
-    },
-    {
-        value: "4",
-        label: "Nurjaya Muhammad",
-    },
-    {
-        value: "5",
-        label: "Udin Sukmana",
-    },
-]
+import { useSelector } from "react-redux"
+import axios from "axios"
 
 export function ChooseDriver() {
     const [open, setOpen] = React.useState(false)
     const [value, setValue] = React.useState("")
+
+    const [dataDriver, setDataDriver] = React.useState([])
+    const {Customer_ID} = useSelector((state) => state.Auth.user)
+
+    const getDataDriver = async({stidToDriver}) => {
+        try{
+            let response = await axios({
+                method: "get",
+                url: `http://localhost:3000/api/users/drivers/${Customer_ID}`
+            })
+            setDataDriver(()=> response.data)
+            console.log(dataDriver);
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
+
+    // React.useEffect(()=> {
+    //     getDataDriver();
+    // }, [])
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
@@ -55,7 +55,7 @@ export function ChooseDriver() {
                     className="w-[250px] justify-between text-gray-500"
                 >
                     {value
-                        ? frameworks.find((framework) => framework.value === value)?.label
+                        ? dataDriver.find((driver) => driver.id === value)?.Driver_Name
                         : "Driver"}
                     {/* <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" /> */}
                 </Button>
@@ -65,22 +65,22 @@ export function ChooseDriver() {
                     <CommandInput placeholder="Search driver..." />
                     <CommandEmpty>No framework found.</CommandEmpty>
                     <CommandGroup>
-                        {frameworks.map((framework) => (
+                        {dataDriver.map((driver) => (
                             <CommandItem
-                                key={framework.value}
-                                value={framework.value}
-                                onSelect={(currentValue) => {
-                                    setValue(currentValue === value ? "" : currentValue)
+                                key={driver.id}
+                                value={driver.id}
+                                onSelect={() => {
+                                    setValue(driver.id === value ? "" : driver.id)
                                     setOpen(false)
                                 }}
                             >
                                 <Check
                                     className={cn(
                                         "mr-2 h-4 w-4",
-                                        value === framework.value ? "opacity-100" : "opacity-0"
+                                        value === driver.id ? "opacity-100" : "opacity-0"
                                     )}
                                 />
-                                {framework.label}
+                                {driver.Driver_Name}
                             </CommandItem>
                         ))}
                     </CommandGroup>

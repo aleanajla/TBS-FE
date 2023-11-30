@@ -44,7 +44,8 @@ export default function LoginForm() {
     // isloggedIn true routing ke home kl false stay at login
     if (result.error) {
       setError(result.message)
-    } else {
+    } 
+    else {
       navigate('/homepage')
     }
 

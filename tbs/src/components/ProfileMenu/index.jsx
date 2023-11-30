@@ -27,32 +27,30 @@ import { useState } from "react"
 
 export function ProfileMenu() {
     return (
-        <div className="flex flex-col gap-10">
-            <div className="border px-10 py-10 rounded-lg">
-                <div className="border-b flex justify-between items-center">
-                    <div className="flex items-center gap-4 pb-5">
-                        <div className="bg-[#F5F5F5] p-3 rounded-full">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
-                                <path d="M12.2636 10.8701C12.1636 10.8601 12.0436 10.8601 11.9336 10.8701C9.55357 10.7901 7.66357 8.84006 7.66357 6.44006C7.66357 3.99006 9.64357 2.00006 12.1036 2.00006C14.5536 2.00006 16.5436 3.99006 16.5436 6.44006C16.5336 8.84006 14.6436 10.7901 12.2636 10.8701Z" stroke="#212121" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M7.26349 14.5601C4.84349 16.1801 4.84349 18.8201 7.26349 20.4301C10.0135 22.2701 14.5235 22.2701 17.2735 20.4301C19.6935 18.8101 19.6935 16.1701 17.2735 14.5601C14.5335 12.7301 10.0235 12.7301 7.26349 14.5601Z" stroke="#212121" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                        </div>
-                        <p className="text-xl font-medium">User Information</p>
+        <Tabs defaultValue="profile" className="h-[200px]">
+            <TabsList className="grid grid-row-4 gap-2 items-start w-[200px]">
+                <TabsTrigger value="profile" className="data-[state=active]:bg-[#FFA621] data-[state=active]:text-white py-4">
+                    <div className="flex gap-4 items-center">
+                        <p>Edit my profile</p>
                     </div>
-                    {/* <div className="bg-primary mb-5 py-4 px-6 rounded-lg shadow-sm">
-                        <p className="text-white">Edit Profile</p>
-                    </div> */}
-                </div>
-                <div className="py-10">
-                    <div className="grid grid-rows-3 grid-cols-2 gap-6">
-                        <div className="flex flex-col gap-4">
-                            <Label className="text-md">Full Name</Label>
-                            <Input
-                                type="text"
-                                id="name"
-                                value="Alea Najla Syukur"
-                                className="bg-[#BDBDBD] py-6 text-md"
-                                disabled />
+                </TabsTrigger>
+                <TabsTrigger value="changePassword" className="data-[state=active]:bg-[#064B82] data-[state=active]:text-white py-4">
+                    <div className="flex gap-4 items-center">
+                        <p>Change Password</p>
+                    </div>
+                </TabsTrigger>
+            </TabsList>
+            <TabsContent value="profile" className="mt-0 ml-60 border rounded-lg p-11">
+                <div className="flex flex-col gap-5">
+                    <div className="flex flex-col py-5 gap-4">
+                        <div className="flex gap-4 items-center">
+                            <div className="p-3 rounded-full bg-[#F5F5F5]">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+                                    <path d="M12.2636 10.8701C12.1636 10.8601 12.0436 10.8601 11.9336 10.8701C9.55357 10.7901 7.66357 8.84006 7.66357 6.44006C7.66357 3.99006 9.64357 2.00006 12.1036 2.00006C14.5536 2.00006 16.5436 3.99006 16.5436 6.44006C16.5336 8.84006 14.6436 10.7901 12.2636 10.8701Z" stroke="#212121" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M7.26349 14.5601C4.84349 16.1801 4.84349 18.8201 7.26349 20.4301C10.0135 22.2701 14.5235 22.2701 17.2735 20.4301C19.6935 18.8101 19.6935 16.1701 17.2735 14.5601C14.5335 12.7301 10.0235 12.7301 7.26349 14.5601Z" stroke="#212121" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                            <p className="font-medium">User Information</p>
                         </div>
                         <div className="flex flex-col gap-4">
                             <Label className="text-md">Username</Label>
