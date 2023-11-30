@@ -23,6 +23,7 @@ import {
     AvatarFallback,
     AvatarImage,
 } from "src/components/ui/avatar"
+import { useState } from "react"
 
 export function ProfileMenu() {
     return (
@@ -51,46 +52,136 @@ export function ProfileMenu() {
                             </div>
                             <p className="font-medium">User Information</p>
                         </div>
-                        <div className="grid grid-cols-2 grid-rows-3 gap-4">
-                            <div className="flex flex-col space-y-1.5">
-                                <p>Username</p>
-
-                            </div>
+                        <div className="flex flex-col gap-4">
+                            <Label className="text-md">Username</Label>
+                            <Input
+                                type="text"
+                                id="username"
+                                value="Aleanajla12"
+                                className="bg-[#BDBDBD] py-6 text-md"
+                                disabled />
+                        </div>
+                        <div className="flex flex-col gap-4">
+                            <Label className="text-md">Phone Number</Label>
+                            <Input
+                                type="text"
+                                id="phoneNumber"
+                                value="081627485932"
+                                className="bg-[#BDBDBD] py-6 text-md"
+                                disabled />
+                        </div>
+                        <div className="flex flex-col gap-4">
+                            <Label className="text-md">Email</Label>
+                            <Input
+                                type="email"
+                                id="email"
+                                value="aleanajla12@gmail.com"
+                                className="bg-[#BDBDBD] py-6 text-md"
+                                disabled />
+                        </div>
+                        <div className="flex flex-col gap-4">
+                            <Label className="text-md">Role</Label>
+                            <Input
+                                type="text"
+                                id="role"
+                                value="Trucking Company"
+                                className="bg-[#BDBDBD] py-6 text-md"
+                                disabled />
+                        </div>
+                        <div className="flex flex-col gap-4">
+                            <Label className="text-md">Address</Label>
+                            <Input
+                                type="text"
+                                id="address"
+                                value="Jln Puri Ayu 12"
+                                className="bg-[#BDBDBD] py-6 text-md"
+                                disabled />
                         </div>
                     </div>
                 </div>
-            </TabsContent>
-            <TabsContent value="changePassword" className="mt-0 ml-72 border rounded-lg p-11">
-                <div className="flex flex-col gap-6">
-                    <div className="border-b">
-                        <p className="font-medium text-[18px] pb-5">Change Password</p>
+            </div>
+            <div className="border px-10 py-10 rounded-lg">
+                <div className="border-b flex justify-between items-center">
+                    <div className="flex items-center gap-4 pb-5">
+                        <div className="bg-[#F5F5F5] p-3 rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M11.9582 2.86489L20.5832 6.31487C20.9186 6.44903 21.1869 6.85152 21.1869 7.20611V10.3878C21.1869 10.9149 20.7557 11.3461 20.2286 11.3461H2.9786C2.45151 11.3461 2.02026 10.9149 2.02026 10.3878V7.20611C2.02026 6.85152 2.2886 6.44903 2.62402 6.31487L11.249 2.86489C11.4407 2.78822 11.7665 2.78822 11.9582 2.86489Z" stroke="#212121" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M21.1869 21.8878H2.02026V19.0128C2.02026 18.4857 2.45151 18.0544 2.9786 18.0544H20.2286C20.7557 18.0544 21.1869 18.4857 21.1869 19.0128V21.8878Z" stroke="#212121" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M3.93677 18.0544V11.3461" stroke="#212121" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M7.77026 18.0544V11.3461" stroke="#212121" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M11.6035 18.0544V11.3461" stroke="#212121" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M15.4368 18.0544V11.3461" stroke="#212121" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M19.2703 18.0544V11.3461" stroke="#212121" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M1.06177 21.8878H22.1451" stroke="#212121" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M11.6035 8.95027C12.3974 8.95027 13.041 8.30668 13.041 7.51277C13.041 6.71886 12.3974 6.07527 11.6035 6.07527C10.8096 6.07527 10.166 6.71886 10.166 7.51277C10.166 8.30668 10.8096 8.95027 11.6035 8.95027Z" stroke="#212121" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <p className="text-xl font-medium">Company Information</p>
                     </div>
-                    <form className="flex flex-col gap-4">
-                        <div className="grid grid-cols-2 gap-8">
-                            <div className="space-y-1.5">
-                                <Label htmlFor="password" className="py-2 font-medium">Password</Label>
-                                <Input id="password" placeholder="Old Password" className="p-3.5" />
-                            </div>
-                            <div className="space-y-1.5">
-                                <Label htmlFor="password">New Password</Label>
-                                <Input id="password" placeholder="New Password" className="p-3.5" />
-                            </div>
-                        </div>
-                        <div className="grid grid-cols-2 gap-8">
-                            <div className="space-y-1.5">
-                                <Label htmlFor="password">Password</Label>
-                                <Input id="password" placeholder="Old Password" className="p-3.5" />
-                            </div>
-                        </div>
-                        <div className="flex flex-row-reverse">
-                            <button className="bg-primary py-3 px-8 text-white rounded-lg">
-                                <p>Save</p>
-                            </button>
-                        </div>
-                    </form>
+                    {/* <div className="bg-primary mb-5 py-4 px-6 rounded-lg shadow-sm">
+                        <p className="text-white">Edit Profile</p>
+                    </div> */}
                 </div>
-            </TabsContent>
-        </Tabs >
+                <div className="py-10">
+                    <div className="grid grid-rows-3 grid-cols-2 gap-6">
+                        <div className="flex flex-col gap-4">
+                            <Label className="text-md">Company Name</Label>
+                            <Input
+                                type="text"
+                                id="companyName"
+                                value="Samudera Indonesia"
+                                className="bg-[#BDBDBD] py-6 text-md"
+                                disabled />
+                        </div>
+                        <div className="flex flex-col gap-4">
+                            <Label className="text-md">Company Type</Label>
+                            <Input
+                                type="text"
+                                id="companyType"
+                                value="Freight Forwarder"
+                                className="bg-[#BDBDBD] py-6 text-md"
+                                disabled />
+                        </div>
+                        <div className="flex flex-col gap-4">
+                            <Label className="text-md">PKMU</Label>
+                            <Input
+                                type="text"
+                                id="pkmu"
+                                value="122.687.039"
+                                className="bg-[#BDBDBD] py-6 text-md"
+                                disabled />
+                        </div>
+                        <div className="flex flex-col gap-4">
+                            <Label className="text-md">Email</Label>
+                            <Input
+                                type="email"
+                                id="email"
+                                value="adminSamudera@samudera.ac.id"
+                                className="bg-[#BDBDBD] py-6 text-md"
+                                disabled />
+                        </div>
+                        <div className="flex flex-col gap-4">
+                            <Label className="text-md">Address</Label>
+                            <Input
+                                type="text"
+                                id="address"
+                                value="Kelapa Gadfing, Boulevard 5, Jakarta Utara"
+                                className="bg-[#BDBDBD] py-6 text-md"
+                                disabled />
+                        </div>
+                        <div className="flex flex-col gap-4">
+                            <Label className="text-md">NIB</Label>
+                            <Input
+                                type="text"
+                                id="nib"
+                                value="843893901"
+                                className="bg-[#BDBDBD] py-6 text-md"
+                                disabled />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 

@@ -18,6 +18,10 @@ import {
 } from "src/components/ui/tabs"
 import FilterSearch from "../FilterSearch/index"
 import SearchBar from "../SearchBar"
+import CardRequest from "../CardRequest"
+import CardOnGoing from "../CardOnGoing"
+import CardComplete from "../CardComplete"
+import CardCancelled from "../CardCancelled"
 
 export function Tab() {
   return (
@@ -102,8 +106,8 @@ export function Tab() {
         </div>
         <div className="flex flex-col gap-5">
           <p className="font-medium">Available Job Order</p>
-          <CardBooking />
-          <CardBooking />
+          <CardRequest/>
+          <CardRequest/>
         </div>
 
       </TabsContent>
@@ -114,8 +118,7 @@ export function Tab() {
         </div>
         <div className="flex flex-col gap-5">
           <p className="font-medium">Available Booking Timeslot</p>
-          <CardBooking />
-          <CardBooking />
+          <CardOnGoing/>
         </div>
       </TabsContent>
 
@@ -125,8 +128,7 @@ export function Tab() {
         </div>
         <div className="flex flex-col gap-5">
           <p className="font-medium">Completed Job</p>
-          <CardBooking />
-          <CardBooking />
+          <CardComplete/>
         </div>
       </TabsContent>
 
@@ -136,8 +138,7 @@ export function Tab() {
         </div>
         <div className="flex flex-col gap-5">
           <p className="font-medium">Cancelled Job</p>
-          <CardBooking />
-          <CardBooking />
+          <CardCancelled/>
         </div>
       </TabsContent>
 

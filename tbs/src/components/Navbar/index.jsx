@@ -95,6 +95,9 @@ export default function Navbar() {
               <DropdownMenuItem className="text-black">
                 <span><button onClick={goToProfile}>Profile</button></span>
               </DropdownMenuItem>
+              <DropdownMenuItem className="text-black">
+                <span>Change Password</span>
+              </DropdownMenuItem>
               <DropdownMenuItem>
                 <span><button onClick={logout}>Logout</button></span>
               </DropdownMenuItem>
