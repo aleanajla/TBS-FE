@@ -1,7 +1,32 @@
+import axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function CardRequest() {
+export default function CardRequest({data}) {
+    const reject = async () => {
+        try {
+            const response = await axios({
+                method: "post",
+                url: `http://localhost:3000/api/users/update/rejectAssignJob/${data.id}`
+            })
+            console.log(response);
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
+    const accept = async () => {
+        try{
+            const response = await axios({
+                method: "post",
+                url: `http://localhost:3000/api/users/update/acceptAssignJob/${data.id}`
+            })
+            console.log(response);
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
     return (
         <>
             <div className="border-2 border-gray-300 rounded-md w-full">
@@ -9,7 +34,7 @@ export default function CardRequest() {
                 <div className="border-b-2 border-grey-400 w-full h-14 flex items-center justify-between px-8">
                     <div className="flex items-center gap-4">
                         <div>
-                            <p className="font-medium text-gray text-md">Request Id : 1117298388290202</p>
+                            <p className="font-medium text-gray text-md">Request ID : {data.No_Request}</p>
                         </div>
                         <div className="flex items-center bg-[#F3F3F3] rounded-md p-2">
                             <p className="font-medium text-gray text-md px-8 text-primary">PT PRIMA INDONESIA</p>
@@ -22,7 +47,7 @@ export default function CardRequest() {
                             <path d="M10.4301 2.98004L5.09014 5.94004C3.88014 6.61004 2.89014 8.29004 2.89014 9.67004V15.32C2.89014 16.7 3.88014 18.38 5.09014 19.05L10.4301 22.02C11.5701 22.65 13.4401 22.65 14.5801 22.02L19.9201 19.05C21.1301 18.38 22.1201 16.7 22.1201 15.32V9.67004C22.1201 8.29004 21.1301 6.61004 19.9201 5.94004L14.5801 2.97004C13.4301 2.34004 11.5701 2.34004 10.4301 2.98004Z" stroke="#7D7D7D" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                         <p className="font-medium">Qty Container</p>
-                        <p className="bg-[#F64E60] py-2 px-3 rounded-full font-medium text-white">20</p>
+                        <p className="bg-[#F64E60] py-2 px-3 rounded-full font-medium text-white">{data.Qty}</p>
                     </div>
                 </div>
                 {/* Detail */}
@@ -33,9 +58,9 @@ export default function CardRequest() {
                         </div>
                         <div>
                             <div className="flex flex-row gap-4 flex items-center">
-                                <p className="font-medium text-md">MV PAROS</p>
+                                <p className="font-medium text-md">{data.Vessel_Name}</p>
                                 <div className="px-4 py-0.5 bg-primary text-white rounded-md font-medium" >
-                                    <p>RECEIVING</p>
+                                    <p>{data.Service_Name}</p>
                                 </div>
                             </div>
                             <div>
@@ -53,7 +78,7 @@ export default function CardRequest() {
                                             <path d="M6.22049 10.2749H6.22723" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                             <path d="M6.22049 12.5249H6.22723" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>
-                                        <p>Created Date: Fri, Jan 15, 2022 (12:00) </p>
+                                        <p>Created Date: {data.createdAt} </p>
                                     </div>
                                     <div className="flex flex-row items-center gap-x-1.5">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -68,28 +93,28 @@ export default function CardRequest() {
                                             <path d="M6.22049 10.2749H6.22723" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                             <path d="M6.22049 12.5249H6.22723" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>
-                                        <p>Closing Time: Fri, Jan 15, 2022 (12:00) </p>
+                                        <p>Closing Time: {data.Closing_Time} </p>
                                     </div>
                                 </div>
                             </div>
                             <div className="flex flex-row gap-2.5">
                                 <div className="flex flex-row">
                                     <p className="font-medium text-gray-500">Port: </p>
-                                    <p className="pl-1 text-gray-500">Pelabuhan Tanjung Priok</p>
+                                    <p className="pl-1 text-gray-500">{data.Port_Name}</p>
                                 </div>
                                 <div className="flex flex-row">
                                     <p className="font-medium text-gray-500">Terminal: </p>
-                                    <p className="pl-1 text-gray-500">Jakarta Internation Container Terminal II (JICT II)</p>
+                                    <p className="pl-1 text-gray-500">{data.Terminal_Name}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className="flex flex-row items-center justify-between w-full">
                         <div className="flex flex-row-reverse py-4 gap-2 w-full">
-                            <button className="bg-primary text-white h-12 px-12 rounded-md items-center ">
+                            <button className="bg-primary text-white h-12 px-12 rounded-md items-center" onClick={accept}>
                                 <p className="font-medium">Accept</p>
                             </button>
-                            <button className="bg-white text-[#F64E60] border border-[#F64E60] h-12 px-12 rounded-md items-center ">
+                            <button className="bg-white text-[#F64E60] border border-[#F64E60] h-12 px-12 rounded-md items-center"onClick={reject}>
                                 <p className="font-medium">Reject</p>
                             </button>
                         </div>

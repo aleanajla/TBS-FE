@@ -164,6 +164,7 @@ export default function CardBooking() {
                           stroke-linejoin="round"
                         />
                       </svg>
+                      <p>{bookings.createdAt}</p>
                     </div>
                     <div className="flex flex-row items-center gap-x-1.5">
                       <svg
