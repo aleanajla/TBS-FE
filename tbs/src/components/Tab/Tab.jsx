@@ -22,8 +22,50 @@ import CardRequest from "../CardRequest"
 import CardOnGoing from "../CardOnGoing"
 import CardComplete from "../CardComplete"
 import CardCancelled from "../CardCancelled"
+import { useEffect, useState } from "react"
+import axios from "axios"
+import { useSelector } from "react-redux"
 
 export function Tab() {
+  const {Customer_ID} = useSelector((state)=> state.Auth.user)
+  const [dataRequest, setDataRequest] = useState([])
+  const [dataCancel, setDataCancel] = useState([])
+
+  const getDataRequest = async() => {
+    try{
+      const response = await axios({
+        method: "get",
+        url: `http://localhost:3000/api/users/view/requestTP/${Customer_ID}`
+      })
+
+      console.log(response.data);
+      setDataRequest(()=>response.data)
+    }
+    catch(error){
+      console.log(error);
+    }
+  }
+
+  const getDataCancel = async() => {
+    try{
+      const response = await axios({
+        method: "get",
+        url: `http://localhost:3000/api/users/view/cancelTP/${Customer_ID}`
+      })
+      console.log(response.data);
+      setDataCancel(()=>response.data)
+    }
+    catch(error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(()=> {
+    getDataRequest();
+    getDataCancel();
+  },[])
+
+
   return (
     <Tabs defaultValue="request" className="bg-white">
       <TabsList className="grid w-full grid-cols-4 gap-8">
@@ -106,8 +148,9 @@ export function Tab() {
         </div>
         <div className="flex flex-col gap-5">
           <p className="font-medium">Available Job Order</p>
-          <CardRequest/>
-          <CardRequest/>
+            {dataRequest.map((requests)=> (
+              <CardRequest data={{id:requests.id, ID_Request: requests.ID_Request, No_Request: requests.request.No_Request, Qty: requests.request.Qty, Vessel_Name: requests.request.Vessel_Name, Port_Name: requests.request.Port_Name, Terminal_Name: requests.request.Terminal_Name, Service_Name: requests.request.Service_Name, createdAt: requests.request.createdAt, Closing_Time: requests.request.Closing_Time}}/>
+            ))}
         </div>
 
       </TabsContent>
@@ -138,7 +181,9 @@ export function Tab() {
         </div>
         <div className="flex flex-col gap-5">
           <p className="font-medium">Cancelled Job</p>
-          <CardCancelled/>
+          {dataCancel.map((data)=>(
+            <CardCancelled data={{id:data.id, ID_Request: data.ID_Request, No_Request: data.request.No_Request, Qty: data.request.Qty, Vessel_Name: data.request.Vessel_Name, Port_Name: data.request.Port_Name, Terminal_Name: data.request.Terminal_Name, Service_Name: data.request.Service_Name, createdAt: data.request.createdAt, Closing_Time: data.request.Closing_Time}}/>
+          ))}
         </div>
       </TabsContent>
 
