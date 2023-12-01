@@ -45,6 +45,7 @@ export function ProfileMenu() {
                             {/* <div className="bg-primary mb-5 py-4 px-6 rounded-lg shadow-sm">
                                 <p className="text-white">Edit Profile</p>
                             </div> */}
+       
                         </div>
 
                         <div className="py-10">

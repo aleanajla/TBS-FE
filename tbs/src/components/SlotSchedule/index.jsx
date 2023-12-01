@@ -23,7 +23,7 @@ export default function SlotSchedule(){
     useEffect(() => {
         getDetailSlot()
     })
-    
+
     return(
     <>
         <div className="bg-primary w-full h-auto p-[44px] rounded-lg">
