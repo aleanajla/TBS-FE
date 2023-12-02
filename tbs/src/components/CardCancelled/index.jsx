@@ -32,7 +32,7 @@ export default function CardCancelled({data}) {
                             <img src="/images/vesselLogo.png" alt="" />
                         </div>
                         <div>
-                            <div className="flex flex-row gap-4 flex items-center">
+                            <div className="flex flex-row gap-4 items-center">
                                 <p className="font-medium text-md">{data.Vessel_Name}</p>
                                 <div className="px-4 py-0.5 bg-primary text-white rounded-md font-medium" >
                                     <p>{data.Service_Name}</p>
@@ -74,12 +74,10 @@ export default function CardCancelled({data}) {
                             </div>
                             <div className="flex flex-row gap-2.5">
                                 <div className="flex flex-row">
-                                    <p className="font-medium text-gray-500">Port: </p>
-                                    <p className="pl-1 text-gray-500">{data.Port_Name}</p>
+                                    <p className="font-medium text-gray-500">Port: {data.Port_Name}</p>
                                 </div>
                                 <div className="flex flex-row">
-                                    <p className="font-medium text-gray-500">Terminal: </p>
-                                    <p className="pl-1 text-gray-500">{data.Terminal_Name}</p>
+                                    <p className="font-medium text-gray-500">Terminal: {data.Terminal_Name}</p>
                                 </div>
                             </div>
                         </div>
