@@ -1,15 +1,3 @@
-import { Button } from "src/components/ui/button"
-import CardBooking from "../CardBooking/cardBooking"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "src/components/ui/card"
-import { Input } from "src/components/ui/input"
-import { Label } from "src/components/ui/label"
 import {
   Tabs,
   TabsContent,
@@ -30,6 +18,8 @@ export function Tab() {
   const {Customer_ID} = useSelector((state)=> state.Auth.user)
   const [dataRequest, setDataRequest] = useState([])
   const [dataCancel, setDataCancel] = useState([])
+  const [dataOnGoing, setDataOnGoing] = useState([])
+  const [dataCompleted, setDataCompleted] = useState([])
 
   const getDataRequest = async() => {
     try{
@@ -60,9 +50,37 @@ export function Tab() {
     }
   }
 
+  const getDataOnGoing = async() => {
+    try {
+      const response = await axios({
+        method:"get",
+        url: `http://localhost:3000/api/users/view/onGoingTP/${Customer_ID}`
+      })
+      console.log(response.data);
+      setDataOnGoing(()=>response.data)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const getDataCompleted = async() => {
+    try {
+      const response = await axios({
+        method:"get",
+        url: `http://localhost:3000/api/users/view/completedTP/${Customer_ID}`
+      })
+      console.log(response.data);
+      setDataCompleted(()=>response.data)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(()=> {
     getDataRequest();
     getDataCancel();
+    getDataOnGoing();
+    getDataCompleted();
   },[])
 
 
@@ -89,7 +107,7 @@ export function Tab() {
             </div>
           </div>
         </TabsTrigger>
-        <TabsTrigger value="availableBoookingSlot" className="data-[state=active]:bg-[#064B82] data-[state=active]:text-white">
+        <TabsTrigger value="onGoing" className="data-[state=active]:bg-[#064B82] data-[state=active]:text-white">
           <div className="flex gap-4 items-center">
             <div className="rounded-full bg-[#CDF1FF] p-3">
               <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
@@ -102,7 +120,7 @@ export function Tab() {
             </div>
             <div className="flex flex-col text-left gap-1">
               <p className="font-semibold text-[16px]">25</p>
-              <p>Available Booking Slot</p>
+              <p>On Going</p>
             </div>
           </div>
         </TabsTrigger>
@@ -155,13 +173,15 @@ export function Tab() {
 
       </TabsContent>
 
-      <TabsContent value="availableBoookingSlot">
+      <TabsContent value="onGoing">
         <div className="py-6">
           <FilterSearch />
         </div>
         <div className="flex flex-col gap-5">
-          <p className="font-medium">Available Booking Timeslot</p>
-          <CardOnGoing/>
+          <p className="font-medium">On Going Booking Timeslot</p>
+          {dataOnGoing.map((data)=> (
+              <CardOnGoing data={{id:data.id, ID_Request: data.ID_Request, No_Request: data.request.No_Request, Qty: data.request.Qty, Vessel_Name: data.request.Vessel_Name, Port_Name: data.request.Port_Name, Terminal_Name: data.request.Terminal_Name, Service_Name: data.request.Service_Name, createdAt: data.request.createdAt, Closing_Time: data.request.Closing_Time}}/>
+            ))}
         </div>
       </TabsContent>
 
@@ -171,7 +191,9 @@ export function Tab() {
         </div>
         <div className="flex flex-col gap-5">
           <p className="font-medium">Completed Job</p>
-          <CardComplete/>
+          {dataCompleted.map((data)=> (
+              <CardComplete data={{id:data.id, ID_Request: data.ID_Request, No_Request: data.request.No_Request, Qty: data.request.Qty, Vessel_Name: data.request.Vessel_Name, Port_Name: data.request.Port_Name, Terminal_Name: data.request.Terminal_Name, Service_Name: data.request.Service_Name, createdAt: data.request.createdAt, Closing_Time: data.request.Closing_Time}}/>
+            ))}
         </div>
       </TabsContent>
 
