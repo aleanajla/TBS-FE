@@ -15,73 +15,133 @@ import axios from "axios"
 import { useSelector } from "react-redux"
 
 export function Tab() {
-  const {Customer_ID} = useSelector((state)=> state.Auth.user)
+  const { Customer_ID } = useSelector((state) => state.Auth.user)
   const [dataRequest, setDataRequest] = useState([])
   const [dataCancel, setDataCancel] = useState([])
   const [dataOnGoing, setDataOnGoing] = useState([])
   const [dataCompleted, setDataCompleted] = useState([])
+  const [totalRequest, setTotalRequest] = useState([])
+  const [totalOnGoing, setTotalOnGoing] = useState([])
+  const [totalCompleted, setTotalCompleted] = useState([])
+  const [totalRejected, setTotalRejected] = useState([])
 
-  const getDataRequest = async() => {
-    try{
+  const getTotalRequest = async () => {
+    try {
+      const response = await axios({
+        method: "get",
+        url: `http://localhost:3000/api/users/view/countingRequest/${Customer_ID}`
+      })
+      // console.log(response.data);
+      setTotalRequest(response.data.totalRequest);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const getTotalOnGoing = async () => {
+    try {
+      const response = await axios({
+        method: "get",
+        url: `http://localhost:3000/api/users/view/countingOnGoing/${Customer_ID}`
+      })
+      // console.log(response.data)
+      setTotalOnGoing(response.data.totalOnGoing)
+    } catch (error) {
+
+    }
+  }
+
+  const getTotalCompleted = async () => {
+    try {
+      const response = await axios({
+        method: "get",
+        url: `http://localhost:3000/api/users/view/countingCompleted/${Customer_ID}`
+      })
+      // console.log(response.data)
+      setTotalCompleted(response.data.totalCompleted)
+    } catch (error) {
+      
+    }
+  }
+
+  const getTotalRejected = async () => {
+    try {
+      const response = await axios({
+        method: "get",
+        url: `http://localhost:3000/api/users/view/countingRejected/${Customer_ID}`
+      })
+      // console.log(response.data)
+      setTotalRejected(response.data.totalRejected)
+    } catch (error) {
+      
+    }
+  }  
+
+  const getDataRequest = async () => {
+    try {
       const response = await axios({
         method: "get",
         url: `http://localhost:3000/api/users/view/requestTP/${Customer_ID}`
       })
 
       console.log(response.data);
-      setDataRequest(()=>response.data)
+      setDataRequest(() => response.data)
     }
-    catch(error){
+    catch (error) {
       console.log(error);
     }
   }
 
-  const getDataCancel = async() => {
-    try{
+  const getDataCancel = async () => {
+    try {
       const response = await axios({
         method: "get",
         url: `http://localhost:3000/api/users/view/cancelTP/${Customer_ID}`
       })
       console.log(response.data);
-      setDataCancel(()=>response.data)
+      setDataCancel(() => response.data)
     }
-    catch(error) {
+    catch (error) {
       console.log(error);
     }
   }
 
-  const getDataOnGoing = async() => {
+  const getDataOnGoing = async () => {
     try {
       const response = await axios({
-        method:"get",
+        method: "get",
         url: `http://localhost:3000/api/users/view/onGoingTP/${Customer_ID}`
       })
       console.log(response.data);
-      setDataOnGoing(()=>response.data)
+      setDataOnGoing(() => response.data)
     } catch (error) {
       console.log(error);
     }
   }
 
-  const getDataCompleted = async() => {
+  const getDataCompleted = async () => {
     try {
       const response = await axios({
-        method:"get",
+        method: "get",
         url: `http://localhost:3000/api/users/view/completedTP/${Customer_ID}`
       })
       console.log(response.data);
-      setDataCompleted(()=>response.data)
+      setDataCompleted(() => response.data)
     } catch (error) {
       console.log(error);
     }
   }
 
-  useEffect(()=> {
+  useEffect(() => {
     getDataRequest();
     getDataCancel();
     getDataOnGoing();
     getDataCompleted();
-  },[])
+    getTotalRequest();
+    getTotalOnGoing();
+    getTotalCompleted();
+    getTotalRejected();
+  }, [])
 
 
   return (
@@ -102,7 +162,7 @@ export function Tab() {
               </svg>
             </div>
             <div className="flex flex-col text-left gap-1">
-              <p className="font-semibold text-[16px]">25</p>
+              <p className="font-semibold text-[16px]">{totalRequest}</p>
               <p>Request</p>
             </div>
           </div>
@@ -119,7 +179,7 @@ export function Tab() {
               </svg>
             </div>
             <div className="flex flex-col text-left gap-1">
-              <p className="font-semibold text-[16px]">25</p>
+              <p className="font-semibold text-[16px]">{totalOnGoing}</p>
               <p>On Going</p>
             </div>
           </div>
@@ -136,7 +196,7 @@ export function Tab() {
               </svg>
             </div>
             <div className="flex flex-col text-left gap-1">
-              <p className="font-semibold text-[16px]">25</p>
+              <p className="font-semibold text-[16px]">{totalCompleted}</p>
               <p>Completed</p>
             </div>
           </div>
@@ -153,7 +213,7 @@ export function Tab() {
               </svg>
             </div>
             <div className="flex flex-col text-left gap-1">
-              <p className="font-semibold text-[16px] ">25</p>
+              <p className="font-semibold text-[16px] ">{totalRejected}</p>
               <p>Cancelled</p>
             </div>
           </div>
@@ -166,9 +226,9 @@ export function Tab() {
         </div>
         <div className="flex flex-col gap-5">
           <p className="font-medium">Available Job Order</p>
-            {dataRequest.map((requests)=> (
-              <CardRequest data={{id:requests.id, ID_Request: requests.ID_Request, No_Request: requests.request.No_Request, Qty: requests.request.Qty, Vessel_Name: requests.request.Vessel_Name, Port_Name: requests.request.Port_Name, Terminal_Name: requests.request.Terminal_Name, Service_Name: requests.request.Service_Name, createdAt: requests.request.createdAt, Closing_Time: requests.request.Closing_Time}}/>
-            ))}
+          {dataRequest.map((requests) => (
+            <CardRequest data={{ id: requests.id, ID_Request: requests.ID_Request, No_Request: requests.request.No_Request, Qty: requests.request.Qty, Vessel_Name: requests.request.Vessel_Name, Port_Name: requests.request.Port_Name, Terminal_Name: requests.request.Terminal_Name, Service_Name: requests.request.Service_Name, createdAt: requests.request.createdAt, Closing_Time: requests.request.Closing_Time }} />
+          ))}
         </div>
 
       </TabsContent>
@@ -179,9 +239,9 @@ export function Tab() {
         </div>
         <div className="flex flex-col gap-5">
           <p className="font-medium">On Going Booking Timeslot</p>
-          {dataOnGoing.map((data)=> (
-              <CardOnGoing data={{id:data.id, ID_Request: data.ID_Request, No_Request: data.request.No_Request, Qty: data.request.Qty, Vessel_Name: data.request.Vessel_Name, Port_Name: data.request.Port_Name, Terminal_Name: data.request.Terminal_Name, Service_Name: data.request.Service_Name, createdAt: data.request.createdAt, Closing_Time: data.request.Closing_Time}}/>
-            ))}
+          {dataOnGoing.map((data) => (
+            <CardOnGoing data={{ id: data.id, ID_Request: data.ID_Request, No_Request: data.request.No_Request, Qty: data.request.Qty, Vessel_Name: data.request.Vessel_Name, Port_Name: data.request.Port_Name, Terminal_Name: data.request.Terminal_Name, Service_Name: data.request.Service_Name, createdAt: data.request.createdAt, Closing_Time: data.request.Closing_Time }} />
+          ))}
         </div>
       </TabsContent>
 
@@ -191,9 +251,9 @@ export function Tab() {
         </div>
         <div className="flex flex-col gap-5">
           <p className="font-medium">Completed Job</p>
-          {dataCompleted.map((data)=> (
-              <CardComplete data={{id:data.id, ID_Request: data.ID_Request, No_Request: data.request.No_Request, Qty: data.request.Qty, Vessel_Name: data.request.Vessel_Name, Port_Name: data.request.Port_Name, Terminal_Name: data.request.Terminal_Name, Service_Name: data.request.Service_Name, createdAt: data.request.createdAt, Closing_Time: data.request.Closing_Time}}/>
-            ))}
+          {dataCompleted.map((data) => (
+            <CardComplete data={{ id: data.id, ID_Request: data.ID_Request, No_Request: data.request.No_Request, Qty: data.request.Qty, Vessel_Name: data.request.Vessel_Name, Port_Name: data.request.Port_Name, Terminal_Name: data.request.Terminal_Name, Service_Name: data.request.Service_Name, createdAt: data.request.createdAt, Closing_Time: data.request.Closing_Time }} />
+          ))}
         </div>
       </TabsContent>
 
@@ -203,8 +263,8 @@ export function Tab() {
         </div>
         <div className="flex flex-col gap-5">
           <p className="font-medium">Cancelled Job</p>
-          {dataCancel.map((data)=>(
-            <CardCancelled data={{id:data.id, ID_Request: data.ID_Request, No_Request: data.request.No_Request, Qty: data.request.Qty, Vessel_Name: data.request.Vessel_Name, Port_Name: data.request.Port_Name, Terminal_Name: data.request.Terminal_Name, Service_Name: data.request.Service_Name, createdAt: data.request.createdAt, Closing_Time: data.request.Closing_Time}}/>
+          {dataCancel.map((data) => (
+            <CardCancelled data={{ id: data.id, ID_Request: data.ID_Request, No_Request: data.request.No_Request, Qty: data.request.Qty, Vessel_Name: data.request.Vessel_Name, Port_Name: data.request.Port_Name, Terminal_Name: data.request.Terminal_Name, Service_Name: data.request.Service_Name, createdAt: data.request.createdAt, Closing_Time: data.request.Closing_Time }} />
           ))}
         </div>
       </TabsContent>
