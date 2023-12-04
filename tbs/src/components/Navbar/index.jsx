@@ -34,6 +34,10 @@ export default function Navbar() {
     navigate('/profile')
   }
 
+  const goToChangePassword = () => {
+    navigate('/changePassword')
+  }
+
   return (
     <>
       <div className="bg-white h-10px text-black pl-10 pr-10 pt-5 pb-5 flex flex-row items-center justify-between w-full top-0 border-b-2 border-grey-400 shadow-md">
@@ -96,7 +100,7 @@ export default function Navbar() {
                 <span><button onClick={goToProfile}>Profile</button></span>
               </DropdownMenuItem>
               <DropdownMenuItem className="text-black">
-                <span>Change Password</span>
+                <span><button onClick={goToChangePassword}>Change Password</button></span>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <span><button onClick={logout}>Logout</button></span>

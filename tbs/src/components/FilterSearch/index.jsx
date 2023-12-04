@@ -1,6 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
+import { debounce } from 'lodash';
+import axios from "axios";
 
 export default function FilterSearch() {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const performSearch = async () => {
+    try {
+      const response = await axios({
+        method: "post",
+        url: "http://localhost:3000/api/users/search/assignJob",
+        params: {
+          searchTC: searchTerm
+        }
+      })
+      console.log('Searching for:', searchTerm);
+    } catch (error) {
+      console.error('Error during API call:', error);
+    }
+  };
+
+  const debouncedSearch = debounce(performSearch, 300); 
+
+  const handleInputChange = (event) => {
+    const newSearchTerm = event.target.value;
+    setSearchTerm(newSearchTerm);
+    debouncedSearch(newSearchTerm);
+  };
+
   return (
     <>
       <div className="border-2 border-gray-200 rounded-lg p-6">
@@ -14,6 +41,7 @@ export default function FilterSearch() {
               class="w-full px-6 text-gray-800 bg-[#F8F8F8] py-4 rounded-xl focus:outline-none"
               placeholder="Search..."
               x-model="search"
+              onChange={handleInputChange}
             />
           </div>
           <div>
@@ -36,37 +64,6 @@ export default function FilterSearch() {
             </button>
           </div>
         </div>
-        {/* <div>
-          <p className="font-bold mb-2">Filter By: </p>
-          <div className="dropdown">
-            <label tabIndex={0} className="btn m-1 rounded-full border border-primary text-primary">
-              Port{" "}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="9"
-                height="6"
-                viewBox="0 0 9 6"
-                fill="none"
-              >
-                <path
-                  d="M4.245 5.66L0 1.41475L1.41567 0L4.245 2.8305L7.07433 0L8.49 1.41475L4.245 5.66Z"
-                  fill="#064B82"
-                />
-              </svg>
-            </label>
-            <ul
-              tabIndex={0}
-              className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-            >
-              <li>
-                <a>Item 1</a>
-              </li>
-              <li>
-                <a>Item 2</a>
-              </li>
-            </ul>
-          </div>
-        </div> */}
       </div>
     </>
   );
