@@ -8,12 +8,7 @@ export default function MyBooking() {
     return (
         <Layout>
             <h3 className="font-medium">Daftar Pesanan</h3>
-            <div className="py-6">
-                <FilterSearch />
-            </div>
-            <div className="flex flex-col gap-7">
-                <CardBooking/>
-            </div>
+            <CardBooking/>
         </Layout>
     )
 }
