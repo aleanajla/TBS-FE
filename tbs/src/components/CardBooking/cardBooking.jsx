@@ -53,6 +53,12 @@ export default function CardBooking() {
   useEffect(() => {
     getDataBooking();
   });
+  
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleInputChange = (e) => {
+      setSearchTerm(e.target.value);
+  };
 
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -61,6 +67,7 @@ export default function CardBooking() {
   };
 
   return (
+
     <>
       <div className="py-6">
         <div className="border-2 border-gray-200 rounded-lg p-6">
@@ -105,7 +112,7 @@ export default function CardBooking() {
             {/* Header Request */}
             <div className="border-b-2 border-grey-400 w-full h-14 flex items-center">
               <p className="font-medium text-gray text-md px-8">
-                Request Id : {bookings.No_Request}
+                Request ID : {bookings.No_Request}
               </p>
             </div>
             {/* Detail */}
