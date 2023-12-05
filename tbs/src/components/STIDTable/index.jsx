@@ -11,6 +11,7 @@ import {
     TableHeader,
     TableRow,
 } from "src/components/ui/table"
+import { EditSTID } from "../EditSTID";
 
 
 export function STIDtable() {
@@ -88,9 +89,7 @@ export function STIDtable() {
                         <TableCell className="text-center">{stid.masterTruck.Size}</TableCell>
                         <TableCell className="text-center">
                             <div className="flex items-center justify-center gap-4">
-                                <button className=" bg-primary text-white px-8 py-2 rounded-lg text-sm">
-                                    <p>Edit</p>
-                                </button>
+                                <EditSTID data={{id: stid.id, Plat_Number: stid.masterTruck.Plat_Number}}/>
                                 <button className="bg-[#FF234F] p-2 rounded-md" onClick={() => deleteData(stid.id)}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
                                         <path d="M15.75 4.48499C13.2525 4.23749 10.74 4.10999 8.235 4.10999C6.75 4.10999 5.265 4.18499 3.78 4.33499L2.25 4.48499" stroke="white" stroke-width="1.11429" stroke-linecap="round" stroke-linejoin="round" />

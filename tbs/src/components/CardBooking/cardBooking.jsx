@@ -53,15 +53,14 @@ export default function CardBooking() {
   useEffect(() => {
     getDataBooking();
   });
-  
+
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleInputChange = (e) => {
-      setSearchTerm(e.target.value);
+    setSearchTerm(e.target.value);
   };
 
   return (
-
     <>
       <div className="py-6">
         <div className="border-2 border-gray-200 rounded-lg p-6">
