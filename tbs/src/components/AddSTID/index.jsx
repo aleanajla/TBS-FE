@@ -29,12 +29,16 @@ export function AddSTID() {
   const [openDriver, setOpenDriver] = useState(false);
   const [openTruck, setOpenTruck] = useState(false);
   const [error, setError] = useState("");
+  const [search, setSearch] = useState('')
 
   const getDataDriver = async () => {
     try {
       let response = await axios({
         method: "get",
         url: `http://localhost:3000/api/users/drivers/${Customer_ID}`,
+        params: {
+          search : search
+        }
       });
       setDataDriver(() => response.data);
       console.log(dataDriver);
@@ -48,6 +52,9 @@ export function AddSTID() {
       let response = await axios({
         method: "get",
         url: `http://localhost:3000/api/users/trucks/${Customer_ID}`,
+        params: {
+          search: search
+        }
       });
       setDataTruck(() => response.data);
       console.log(dataTruck);
@@ -73,7 +80,7 @@ export function AddSTID() {
       setTruck("");
       alert("Sucessfully Added!")
     } catch (error) {
-      console.log(error);
+      console.log(error.response.data);
       setError(error.response.data);
       setDriver("");
       setTruck("");
@@ -83,7 +90,11 @@ export function AddSTID() {
   React.useEffect(() => {
     getDataDriver();
     getDataTruck();
-  });
+  },[getDataDriver, getDataTruck]);
+
+  const handleInputChange = (e) => {
+    setSearch(e.target.value);
+  };
 
   return (
     <>
@@ -165,8 +176,8 @@ export function AddSTID() {
                   </PopoverTrigger>
                   <PopoverContent className="z-0 w-[250px] p-0">
                     <Command>
-                      <CommandInput placeholder="Search driver..." />
-                      <CommandEmpty>No framework found.</CommandEmpty>
+                      <CommandInput placeholder="Search driver..." onChange={handleInputChange}/>
+                      <CommandEmpty>Not Found.</CommandEmpty>
                       <CommandGroup>
                         {dataDriver.map((drivers) => (
                           <CommandItem
@@ -213,8 +224,8 @@ export function AddSTID() {
                   </PopoverTrigger>
                   <PopoverContent className="w-[250px] p-0">
                     <Command>
-                      <CommandInput placeholder="Search truck..." />
-                      <CommandEmpty>No framework found.</CommandEmpty>
+                      <CommandInput placeholder="Search truck..." onChange={handleInputChange}/>
+                      <CommandEmpty>Not Found.</CommandEmpty>
                       <CommandGroup>
                         {dataTruck.map((trucks) => (
                           <CommandItem

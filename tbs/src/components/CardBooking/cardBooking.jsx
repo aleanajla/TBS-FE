@@ -106,7 +106,7 @@ export default function CardBooking() {
             {/* Header Request */}
             <div className="border-b-2 border-grey-400 w-full h-14 flex items-center">
               <p className="font-medium text-gray text-md px-8">
-                Request Id : {bookings.No_Request}
+                Request ID : {bookings.No_Request}
               </p>
             </div>
             {/* Detail */}

@@ -17,6 +17,7 @@ import AccordionTimeslot from "../AccordionTimeslot/Index";
 export function AddTimeSlot() {
   const [open, setOpen] = useState(false);
   const [sections, setSections] = useState([]);
+  const [data, setData] = useState([])
 
   const addSection = () => {
     setSections((prevSections) => [
