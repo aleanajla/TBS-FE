@@ -60,12 +60,6 @@ export default function CardBooking() {
       setSearchTerm(e.target.value);
   };
 
-  const [searchTerm, setSearchTerm] = useState('');
-
-  const handleInputChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
   return (
 
     <>

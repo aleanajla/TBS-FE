@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate} from 'react-router-dom';
 import Homepage from './pages/Homepage';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
@@ -15,25 +15,46 @@ import Profile from './pages/Profile';
 import ForgotPasswordForm from './components/ForgotPasswordForm/forgotPassword';
 import Header from './components/Header';
 import ChangePassword from './pages/ChangePassword';
+import ProtectedRoutesUser from './components/ProtectedRoute';
+import { useSelector } from 'react-redux';
+import { Role } from './lib/utils';
 
 function App() {
+  const {Role_ID} = useSelector((state)=> state.Auth.user)
   return (
     <>
     <Header/>
-
     <Routes>
       <Route path="/" element={<Login/>} />
-      <Route path="/homepage" element={<Homepage/>} />
       <Route path="/signUp" element={<SignUp/>} />
       <Route path="/forgotPassword" element={<ForgotPassword/>}/>
       <Route path="/newPassword" element={<NewPassword/>}/>
-      <Route path='/capacityPlanning' element={<CapacityPlanning/>}/>
-      <Route path='/myBooking' element={<MyBooking/>}/>
-      <Route path='/timeslot' element={<TimeSlot/>}/>
-      <Route path='/stid' element={<STID/>}/>
-      <Route path='/transportOder' element={<TransportOrder/>}/>
-      <Route path='/profile' element={<Profile/>}/>
-      <Route path='/changePassword' element={<ChangePassword/>}/>
+
+      <Route element={<ProtectedRoutesUser/>}>
+        <Route path="/homepage" element={<Homepage/>} />
+        <Route path='/profile' element={<Profile/>}/>
+        <Route path='/changePassword' element={<ChangePassword/>}/>
+        {Role_ID === 1 && (
+          <>
+            <Route path='/myBooking' element={<MyBooking/>}/>
+            <Route path='/timeslot' element={<TimeSlot/>}/>
+            {/* <Route path="*" element={<Navigate to="/homepage" replace />}/> */}
+          </>
+        )}
+        {Role_ID === 2 && (
+          <>
+            <Route path='/stid' element={<STID/>}/>
+            <Route path='/transportOder' element={<TransportOrder/>}/>
+            {/* <Route path="*" element={<Navigate to="/homepage" replace />}/> */}
+          </>
+        )}
+        {Role_ID === 3 && (
+          <>
+            <Route path='/capacityPlanning' element={<CapacityPlanning/>}/>
+            {/* <Route path="*" element={<Navigate to="/homepage" replace />}/> */}
+          </>
+        )}
+      </Route>
     </Routes>
     </>
   );
