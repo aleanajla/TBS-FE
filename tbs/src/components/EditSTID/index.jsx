@@ -26,18 +26,27 @@ export function EditSTID({ data }) {
     const [driver, setDriver] = useState("");
     const [dataDriver, setDataDriver] = useState([]);
     const [openDriver, setOpenDriver] = useState(false);
+    const [search, setSearch] = useState('')
+
 
     const getDataDriver = async () => {
         try {
             let response = await axios({
                 method: "get",
                 url: `http://localhost:3000/api/users/drivers/${Customer_ID}`,
+                params: {
+                    search: search
+                }
             });
             setDataDriver(() => response.data);
             console.log(dataDriver);
         } catch (error) {
             console.log(error);
         }
+    };
+
+    const handleInputChange = (e) => {
+        setSearch(e.target.value);
     };
 
     const onSubmitForm = async (event) => {
@@ -64,7 +73,7 @@ export function EditSTID({ data }) {
 
     React.useEffect(() => {
         getDataDriver();
-    });
+    }, [getDataDriver]);
 
     return (
         <>
@@ -116,19 +125,15 @@ export function EditSTID({ data }) {
                             </div>
                             <div className="text-red-500 text-left">{error}</div>
                             <div className="flex justify-center items-center pt-4 pb-8 gap-14">
-                                {/* <Popover> */}
-                                    {/* <PopoverTrigger asChild> */}
-                                        <Button
-                                            variant="outline"
-                                            role="combobox"
-                                            aria-expanded={open}
-                                            disabled
-                                            className="w-[250px] justify-between bg-gray-200"
-                                        >
-                                            <p className="text-gray-800">{data.Plat_Number}</p>
-                                        </Button>
-                                    {/* </PopoverTrigger> */}
-                                {/* </Popover> */}
+                                <Button
+                                    variant="outline"
+                                    role="combobox"
+                                    aria-expanded={open}
+                                    disabled
+                                    className="w-[250px] justify-between bg-gray-200"
+                                >
+                                    <p className="text-gray-800">{data.Plat_Number}</p>
+                                </Button>
                                 -
                                 <Popover open={openDriver} onOpenChange={setOpenDriver}>
                                     <PopoverTrigger asChild>
@@ -147,8 +152,8 @@ export function EditSTID({ data }) {
                                     </PopoverTrigger>
                                     <PopoverContent className="z-0 w-[250px] p-0">
                                         <Command>
-                                            <CommandInput placeholder="Search driver..." />
-                                            <CommandEmpty>No framework found.</CommandEmpty>
+                                            <CommandInput placeholder="Search driver..." onChange={handleInputChange} />
+                                            <CommandEmpty>Not Found.</CommandEmpty>
                                             <CommandGroup>
                                                 {dataDriver.map((drivers) => (
                                                     <CommandItem

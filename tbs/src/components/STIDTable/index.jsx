@@ -11,6 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "src/components/ui/table";
+import { EditSTID } from "../EditSTID";
 
 export function STIDtable() {
   const [STID, setSTID] = useState([]);
@@ -52,19 +53,10 @@ export function STIDtable() {
     }
   };
 
-  const editData = async () => {
-    try {
-      const response = await axios({
-        method: "post",
-        url: "/users/update/stid",
-        data: {},
-      });
-    } catch (error) {}
-  };
-
   useEffect(() => {
     getData();
   }, [getData]);
+
   return (
     <div className="py-10 px-4 flex flex-col gap-8 border rounded-lg">
       <div
@@ -128,9 +120,7 @@ export function STIDtable() {
               </TableCell>
               <TableCell className="text-center">
                 <div className="flex items-center justify-center gap-4">
-                  <button className=" bg-primary text-white px-8 py-2 rounded-lg text-sm">
-                    <p>Edit</p>
-                  </button>
+                  <EditSTID data={{ id: stid.id, Plat_Number: stid.masterTruck.Plat_Number }} />
                   <button
                     className="bg-[#FF234F] p-2 rounded-md"
                     onClick={() => deleteData(stid.id)}
@@ -186,4 +176,5 @@ export function STIDtable() {
         </TableBody>
       </Table>
     </div>
-  );
+  )
+}
