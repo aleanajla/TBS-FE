@@ -71,8 +71,6 @@ export default function TableValue() {
                     <TableHead className="text-center">Slot Waktu</TableHead>
                     <TableHead className="text-center">STID</TableHead>
                     <TableHead className="text-center">Driver</TableHead>
-                    <TableHead className="text-center">Dual Move</TableHead>
-                    <TableHead className="text-center">Combo Truck</TableHead>
                     <TableHead className="text-center">Action</TableHead>
                     {/* </div> */}
                 </TableRow>
@@ -96,12 +94,6 @@ export default function TableValue() {
                             <div className="flex place-content-center">
                                 <ChooseDriver />
                             </div>
-                        </TableCell>
-                        <TableCell className="text-center">
-                            <Switch id="airplane-mode" />
-                        </TableCell>
-                        <TableCell className="text-center">
-                            <Switch id="comboTruck" />
                         </TableCell>
                         <TableCell className="text-center">
                             <button className=" bg-primary text-white px-8 py-2 rounded-lg text-sm">

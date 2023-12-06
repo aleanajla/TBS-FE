@@ -116,7 +116,7 @@ export default function CardBooking() {
                   <img src="/images/vesselLogo.png" alt="" />
                 </div>
                 <div>
-                  <div className="flex flex-row gap-4 flex items-center">
+                  <div className="flex flex-row gap-4 items-center">
                     <p className="font-medium text-md">
                       {bookings.Vessel_Name.toUpperCase()}
                     </p>
