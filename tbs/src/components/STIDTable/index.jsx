@@ -176,5 +176,5 @@ export function STIDtable() {
         </TableBody>
       </Table>
     </div>
-  )
+  );
 }
