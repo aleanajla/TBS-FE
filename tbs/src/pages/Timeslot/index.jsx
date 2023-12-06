@@ -36,7 +36,7 @@ export default function TimeSlot() {
       <HeaderJob data={data}/>
       <div>
         <AssignTruck data={data}/>
-        <TableTimeslot/>
+        {/* <TableTimeslot/> */}
       </div>
     </Layout>
   );

@@ -37,7 +37,7 @@ export function AddSTID() {
         method: "get",
         url: `http://localhost:3000/api/users/drivers/${Customer_ID}`,
         params: {
-          search : search
+          search: search
         }
       });
       setDataDriver(() => response.data);
@@ -90,7 +90,7 @@ export function AddSTID() {
   React.useEffect(() => {
     getDataDriver();
     getDataTruck();
-  },[getDataDriver, getDataTruck]);
+  }, [getDataDriver, getDataTruck]);
 
   const handleInputChange = (e) => {
     setSearch(e.target.value);
@@ -169,14 +169,14 @@ export function AddSTID() {
                     >
                       {driver
                         ? dataDriver.find((drivers) => drivers.id === driver)
-                            ?.Driver_Name
+                          ?.Driver_Name
                         : "Driver"}
                       {/* <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" /> */}
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="z-0 w-[250px] p-0">
                     <Command>
-                      <CommandInput placeholder="Search driver..." onChange={handleInputChange}/>
+                      <CommandInput placeholder="Search driver..." onChange={handleInputChange} />
                       <CommandEmpty>Not Found.</CommandEmpty>
                       <CommandGroup>
                         {dataDriver.map((drivers) => (
@@ -216,7 +216,7 @@ export function AddSTID() {
                     >
                       {truck
                         ? dataTruck.find((trucks) => trucks.id === truck)
-                            ?.Plat_Number
+                          ?.Plat_Number
                         : "Truck"}
 
                       {/* <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" /> */}
@@ -224,7 +224,7 @@ export function AddSTID() {
                   </PopoverTrigger>
                   <PopoverContent className="w-[250px] p-0">
                     <Command>
-                      <CommandInput placeholder="Search truck..." onChange={handleInputChange}/>
+                      <CommandInput placeholder="Search truck..." onChange={handleInputChange} />
                       <CommandEmpty>Not Found.</CommandEmpty>
                       <CommandGroup>
                         {dataTruck.map((trucks) => (

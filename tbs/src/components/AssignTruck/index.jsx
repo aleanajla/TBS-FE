@@ -16,6 +16,7 @@ import {
     CommandInput,
     CommandItem,
 } from "src/components/ui/command";
+import TableTimeslot from "../TableTimeslot";
 
 export default function AssignTruck({ data }) {
     const [open, setOpen] = useState(false)
@@ -24,6 +25,7 @@ export default function AssignTruck({ data }) {
     const [error, setError] = useState("");
     const [search, setSearch] = useState('')
     const [openTrucking, setOpenTrucking] = useState(false);
+    const [statusRequest, setStatusRequest] = useState("")
 
     const handleInputChange = (e) => {
         setSearch(e.target.value);
@@ -39,6 +41,19 @@ export default function AssignTruck({ data }) {
             setDataTrucking(() => response.data)
         }
         catch (error) {
+            console.log(error);
+        }
+    }
+
+    const getRequestTruckingCompany = async () => {
+        try {
+            const response = await axios({
+                method: "get",
+                url: "http://localhost:3000/api/users/search/reqTrucking/:id"
+            })
+            console.loh(response)
+            setStatusRequest(() => response.data)
+        } catch (error) {
             console.log(error);
         }
     }
@@ -72,7 +87,10 @@ export default function AssignTruck({ data }) {
     return (
         <>
             <div className="w-full flex flex-row-reverse py-7">
-                <button className="bg-primary py-3 px-6 rounded-lg text-white btn items-center justify-center" onClick={() => setOpen(true)}>
+                <button
+                    className="bg-primary py-3 px-6 rounded-lg text-white btn items-center justify-center"
+                    onClick={() => setOpen(true)}
+                >
                     <p>Assign Trucking Company</p>
                 </button>
             </div>
@@ -111,7 +129,6 @@ export default function AssignTruck({ data }) {
                                                                     ? dataTrucking.find((truckings) => truckings.id === trucking)
                                                                         ?.Company_Name
                                                                     : "Trucking"}
-                                                                {/* <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" /> */}
                                                             </Button>
                                                         </PopoverTrigger>
                                                         <PopoverContent className="z-0 p-0">
@@ -168,6 +185,7 @@ export default function AssignTruck({ data }) {
                     :
                     ""
             }
+            <TableTimeslot />
         </>
     )
 }
