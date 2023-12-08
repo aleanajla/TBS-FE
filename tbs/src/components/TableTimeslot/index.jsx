@@ -3,19 +3,19 @@ import SearchBar from "../SearchBar";
 import StatusJob from "../StatusJob";
 import TableValue from "../TableValue";
 
-export default function TableTimeslot() {
+export default function TableTimeslot({data}) {
     return (
         <>
             <div className="w-full border rounded-lg">
                 <div className="p-4 flex flex-col gap-6">
                     <div className="flex justify-between">
                         <div className="flex flex-row items-center gap-3">
-                            <p className="font-medium text-sm">PT Maritim Luas Tbk</p>
+                            <p className="font-medium text-sm">{data.Customer_Name}</p>
                             <div className="bg-[#0F9B71] rounded-full text-white font-medium py-1 px-2">
                                 <p className="text-sm">3/20</p>
                             </div>
                         </div>
-                        <StatusJob />
+                        <StatusJob status={{Status_Name: data.Status_Name}} />
                     </div>
                     <SearchBar />
                     <div className="flex gap-2 items-center">
@@ -23,7 +23,7 @@ export default function TableTimeslot() {
                         <p>Tuntas</p>
                     </div>
                 </div>
-                <TableValue />
+                <TableValue data={data} />
             </div>
 
         </>

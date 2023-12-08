@@ -25,7 +25,7 @@ export default function AssignTruck({ data }) {
     const [error, setError] = useState("");
     const [search, setSearch] = useState('')
     const [openTrucking, setOpenTrucking] = useState(false);
-    const [statusRequest, setStatusRequest] = useState("")
+    const [statusRequest, setStatusRequest] = useState([])
 
     const handleInputChange = (e) => {
         setSearch(e.target.value);
@@ -49,9 +49,9 @@ export default function AssignTruck({ data }) {
         try {
             const response = await axios({
                 method: "get",
-                url: "http://localhost:3000/api/users/search/reqTrucking/:id"
+                url: `http://localhost:3000/api/users/search/reqTrucking/${data.id}`
             })
-            console.loh(response)
+            console.log(response)
             setStatusRequest(() => response.data)
         } catch (error) {
             console.log(error);
@@ -60,7 +60,8 @@ export default function AssignTruck({ data }) {
 
     useEffect(() => {
         getTruckingCompany();
-    })
+        getRequestTruckingCompany();
+    },[])
 
     const onSubmitForm = async (event) => {
         event.preventDefault();
@@ -173,7 +174,7 @@ export default function AssignTruck({ data }) {
                                                 <p>Batal</p>
                                             </div>
                                         </button>
-                                        <button className="w-28 py-3.5 bg-primary text-white rounded-lg font-medium">
+                                        <button className="w-28 py-3.5 bg-primary text-white rounded-lg font-medium" type="submit">
                                             <p>Simpan</p>
                                         </button>
                                     </div>
@@ -185,7 +186,7 @@ export default function AssignTruck({ data }) {
                     :
                     ""
             }
-            <TableTimeslot />
+            <TableTimeslot data={statusRequest}/>
         </>
     )
 }
