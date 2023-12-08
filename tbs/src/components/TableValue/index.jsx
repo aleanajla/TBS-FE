@@ -16,50 +16,6 @@ import axios from "axios";
 
 
 export default function TableValue({data}) {
-    // const jobs = [
-    //     {
-    //         no: "1",
-    //         container: "HCBD1100114",
-    //         // slotWaktu: "$250.00",
-    //         STID: "C100010 - B 3498 CDR",
-    //         Driver: "IDJKT - Yogi M Ishad",
-    //     },
-    //     {
-    //         no: "2",
-    //         container: "HCBD1100115",
-    //         // slotWaktu: "$250.00",
-    //         STID: "C100010 - B 3498 CDR",
-    //         Driver: "IDJKT - Yogi M Ishad",
-    //     },
-    //     {
-    //         no: "3",
-    //         container: "HCBD1100116",
-    //         // slotWaktu: "$250.00",
-    //         STID: "C100010 - B 3498 CDR",
-    //         Driver: "IDJKT - Yogi M Ishad",
-    //     },
-    //     {
-    //         no: "3",
-    //         container: "HCBD1100117",
-    //         // slotWaktu: "$250.00",
-    //         STID: "C100010 - B 3498 CDR",
-    //         Driver: "IDJKT - Yogi M Ishad",
-    //     },
-    //     {
-    //         no: "4",
-    //         container: "HCBD1100118",
-    //         // slotWaktu: "$250.00",
-    //         STID: "C100010 - B 3498 CDR",
-    //         Driver: "IDJKT - Yogi M Ishad",
-    //     },
-    //     {
-    //         no: "5",
-    //         container: "HCBD1100119",
-    //         // slotWaktu: "$250.00",
-    //         STID: "C100010 - B 3498 CDR",
-    //         Driver: "IDJKT - Yogi M Ishad",
-    //     },
-    // ]
 
     const [dataBooking, setDataBooking] = useState([])
 

@@ -7,6 +7,7 @@ export default function DaySchedule() {
   const itemsPerPage = 7;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   const dispatch = useDispatch();
+  const [selectedDate, setSelectedDate] = useState(0)
 
   const generateDates = () => {
     const today = new Date();
@@ -42,8 +43,9 @@ export default function DaySchedule() {
     );
   };
 
-  const handleClick = (date) => {
+  const handleClick = (date, index) => {
     dispatch({ type: 'SELECTED_DATE', payload: {date} });
+    setSelectedDate(index);
   };
 
   return (
@@ -81,13 +83,13 @@ export default function DaySchedule() {
           return (
             <button
               key={index}
-              className="w-[151px] h-[64px] shadow-sm rounded-lg border-[1px] border-[#BDBDBD]"
-              onClick={()=>handleClick(date.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }))}
+              className={`w-[151px] h-[64px] shadow-sm rounded-lg border-[1px] border-[#BDBDBD] bg-${selectedDate=== index ? 'primary': 'white'}`}
+              onClick={()=>handleClick(date.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),index)}
             >
-              <p className="font-medium text-sm text-[#7D7D7D]">
+              <p className={`font-medium text-sm text-${selectedDate === index ? 'white' :'[#7D7D7D]'}`}>
                 {date.toLocaleDateString(undefined, { day: "numeric" })}
               </p>
-              <p className="font-medium text-sm text-[#7D7D7D]">
+              <p className={`font-medium text-sm text-${selectedDate === index ? 'white' :'[#7D7D7D]'}`}>
                 {date.toLocaleDateString(undefined, { weekday: "long" })}
               </p>
             </button>

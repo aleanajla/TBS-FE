@@ -17,6 +17,7 @@ import {
     CommandItem,
 } from "src/components/ui/command";
 import TableTimeslot from "../TableTimeslot";
+import { id } from "date-fns/locale";
 
 export default function AssignTruck({ data }) {
     const [open, setOpen] = useState(false)
@@ -26,6 +27,7 @@ export default function AssignTruck({ data }) {
     const [search, setSearch] = useState('')
     const [openTrucking, setOpenTrucking] = useState(false);
     const [statusRequest, setStatusRequest] = useState([])
+    const [isButtonDisabled, setButtonDisabled] = useState(false);
 
     const handleInputChange = (e) => {
         setSearch(e.target.value);
@@ -59,9 +61,11 @@ export default function AssignTruck({ data }) {
     }
 
     useEffect(() => {
+        disabledButton()
         getTruckingCompany();
         getRequestTruckingCompany();
     },[])
+    
 
     const onSubmitForm = async (event) => {
         event.preventDefault();
@@ -85,12 +89,21 @@ export default function AssignTruck({ data }) {
         }
     };
 
+    const disabledButton = () => {
+        if(statusRequest.ID_Status === 2) {
+            setButtonDisabled(true)
+        }
+        setButtonDisabled(false)
+    }
+
     return (
         <>
             <div className="w-full flex flex-row-reverse py-7">
+                {/* tinggal ganti warna jadi abu2 kl di disabled */}
                 <button
-                    className="bg-primary py-3 px-6 rounded-lg text-white btn items-center justify-center"
-                    onClick={() => setOpen(true)}
+                    className={`bg-${statusRequest.ID_Status === 2 ? 'secondary':  'primary'} py-3 px-6 rounded-lg text-${statusRequest.ID_Status === 2 ? 'primary' : 'white'} btn items-center justify-center`}
+                    onClick={() => statusRequest.ID_Status===2 ? setOpen(false) :setOpen(true)}
+                    disabled={isButtonDisabled} 
                 >
                     <p>Assign Trucking Company</p>
                 </button>
