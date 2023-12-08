@@ -29,8 +29,6 @@ export default function SlotSchedule(){
         <div className="bg-primary w-full h-auto p-[44px] rounded-lg">
             <div className="flex justify-between">
                 <div className="flex items-center gap-[15px]">
-                    <h1 className="text-white font-semibold text-2xl">TODAY</h1>
-                    <div className="bg-white h-[25px] w-[2px]"/>
                     <h2 className="text-white font-normal text-xl">{date}</h2>
                 </div>
                 <button className="flex bg-white py-[15px] px-[35px] rounded-lg">
