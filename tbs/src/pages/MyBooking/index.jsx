@@ -6,9 +6,9 @@ import React from "react";
 
 export default function MyBooking() {
     return (
-        <Layout>
+        <>
             <h3 className="font-medium">Daftar Pesanan</h3>
-            <CardBooking/>
-        </Layout>
+            <CardBooking />
+        </>
     )
 }
