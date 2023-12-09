@@ -6,10 +6,7 @@ import { ChangePasswordComponent } from "src/components/ChangePassword";
 export default function ChangePassword() {
     return (
         <div>
-            <Layout>
-                <ChangePasswordComponent/>
-            </Layout>
-
+            <ChangePasswordComponent />
         </div>
     )
 }

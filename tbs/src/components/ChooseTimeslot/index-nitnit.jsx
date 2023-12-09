@@ -1,7 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import RadialProgress from "../RadialProgress";
+import axios from "axios";
+import TableValue from "../TableValue";
+import { useDispatch, useSelector } from "react-redux";
+import DayTimeslot from "../DayTimeslot";
+import DetailTimeslot from "../DetailTimeslot";
 
 export default function ChooseTimeslot() {
     const [open, setOpen] = useState(false)
+    const progressValue = 75
 
     return (
         <>
@@ -13,9 +20,9 @@ export default function ChooseTimeslot() {
             </button>
             {
                 open ?
-                    <div className="absolute z-[999] inset-0 bg-opacity-60 backdrop-blur-sm flex justify-center items-center bg-black">
+                    <div className="fixed z-[999] inset-0 bg-opacity-60 backdrop-blur-sm flex justify-center items-center bg-black">
                         {/* <div className="flex place-content-center"> */}
-                        <div className="rounded-lg p-8 bg-white w-[947px] max-h-[720px]">
+                        <div className="rounded-lg p-8 bg-white w-[1047px] max-h-[720px]">
                             <div className="border-b-2 border-gray-400">
                                 <div className="pb-4">
                                     <div className="pb-6 w-full">
@@ -32,38 +39,24 @@ export default function ChooseTimeslot() {
                                             <p className="text-gray-500 text-sm">Select the days of the week to be active</p>
                                         </div>
                                     </div>
-                                    {/*Days timeslot*/}
-                                    <div>
-                                        <div className="w-28 py-5 px-2 bg-white border border-gray-400 rounded-lg flex flex-col justify-item-center items-center font-medium text-gray-500">
-                                            <p className="text-xs">30 Sept 2023</p>
-                                            <p className="text-md">Today</p>
-                                        </div>
-                                    </div>
+                                    <DayTimeslot />
                                 </div>
                             </div>
-                            {/*Timeslot*/}
-                            <div className="pt-4 flex justify-between">
-                                <div className="w-1/2 mr-4">
-                                    <div className="flex justify-between p-4 bg-white border border-gray-400 rounded-lg flex flex-row">
-                                        <div>
-                                            <p>00.01-04.00</p>
-                                            <p>150/200</p>
-                                            <p>CONTAINER</p>
+                            {/* <div className="pt-4 flex justify-between"> */}
+                                {/* <div className="w-1/2 mr-4"> */}
+                                    <DetailTimeslot/>
+                                    {/* <div className="flex justify-between p-4 bg-white border border-gray-400 rounded-lg items-center flex-row">
+                                        <div className="flex flex-col gap-2">
+                                            <p className="text-[#7D7D7D] text-lg font-medium">00.01-04.00</p>
+                                            <p className="text-2xl font-semibold">31/50</p>
+                                            <p className="text-[#7D7D7D] text-md font-medium">CONTAINER</p>
                                         </div>
-                                        <div className="radial-progress text-primary" style={{ "--value": 70 }}>70%</div>
-                                    </div>
-                                </div>
-                                <div className="w-1/2">
-                                    <div className="flex justify-between p-4 bg-white border border-gray-400 rounded-lg flex flex-row">
-                                        <div>
-                                            <p>00.01-04.00</p>
-                                            <p>150/200</p>
-                                            <p>CONTAINER</p>
+                                        <div className="flex items-center justify-center">
+                                            <RadialProgress progress={progressValue} />
                                         </div>
-                                        <div className="radial-progress text-primary" style={{ "--value": 70 }}>70%</div>
-                                    </div>
-                                </div>
-                            </div>
+                                    </div> */}
+                                {/* </div> */}
+                            {/* </div> */}
                         </div>
                     </div>
                     :

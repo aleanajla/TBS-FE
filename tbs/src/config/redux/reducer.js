@@ -4,7 +4,7 @@ import CapacityReducer from "./capacityPlanning/reducer";
 
 const reducer = combineReducers({
     Auth: AuthReducer,
-    CapacityPlanning: CapacityReducer
+    CapacityPlanning: CapacityReducer,
 })
 
 export default reducer

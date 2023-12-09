@@ -15,7 +15,7 @@ export default function TimeSlot() {
   }
 
   return (
-    <Layout>
+    <>
       <div>
         <button className="flex gap-4 items-center pb-7" onClick={onClickBack}>
           <svg
@@ -33,11 +33,11 @@ export default function TimeSlot() {
           <p className="font-medium text-md">My Booking</p>
         </button>
       </div>
-      <HeaderJob data={data}/>
+      <HeaderJob data={data} />
       <div>
-        <AssignTruck data={data}/>
+        <AssignTruck data={data} />
         {/* <TableTimeslot/> */}
       </div>
-    </Layout>
-  );
+    </>
+  )
 }

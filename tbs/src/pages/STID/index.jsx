@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 
 export default function STID() {
   return (
-    <Layout>
       <div className="flex flex-col gap-10">
         <div>
           <Link to={"/homepage"} className="flex gap-4 items-center pb-7">
@@ -43,6 +42,5 @@ export default function STID() {
         </div>
         <STIDtable />
       </div>
-    </Layout>
-  );
+  )
 }
