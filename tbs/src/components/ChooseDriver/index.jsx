@@ -27,7 +27,7 @@ export function ChooseDriver() {
     const [dataDriver, setDataDriver] = React.useState([])
     const {Customer_ID} = useSelector((state) => state.Auth.user)
 
-    const getDataDriver = async({stidToDriver}) => {
+    const getDataDriver = async() => {
         try{
             let response = await axios({
                 method: "get",
@@ -41,9 +41,9 @@ export function ChooseDriver() {
         }
     }
 
-    // React.useEffect(()=> {
-    //     getDataDriver();
-    // }, [])
+    React.useEffect(()=> {
+        getDataDriver();
+    }, [])
 
     return (
         <Popover open={open} onOpenChange={setOpen}>

@@ -4,14 +4,16 @@ import HeaderJob from "../../components/HeaderJob/headerJob";
 import AssignTruck from "../../components/AssignTruck";
 import TableTimeslot from "../../components/TableTimeslot";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function TimeSlot() {
   const location = useLocation();
   const data = location.state;
   const navigate = useNavigate()
+  const {Role_ID} = useSelector((state)=> state.Auth.user)
 
   const onClickBack = () => {
-    navigate('/myBooking')
+    Role_ID === 1 ? navigate('/myBooking') : navigate('/transportOder')
   }
 
   return (
@@ -30,7 +32,16 @@ export default function TimeSlot() {
               fill="black"
             />
           </svg>
-          <p className="font-medium text-md">My Booking</p>
+          {Role_ID===1 && (
+            <>
+              <p className="font-medium text-md">My Booking</p>
+            </>
+          )}
+          {Role_ID===2 && (
+            <>
+              <p className="font-medium text-md">Transport Oder</p>
+            </>
+          )}
         </button>
       </div>
       <HeaderJob data={data} />

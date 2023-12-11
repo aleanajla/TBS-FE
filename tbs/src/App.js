@@ -24,42 +24,42 @@ function App() {
   const { Role_ID } = useSelector((state) => state.Auth.user)
   return (
     <>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/signUp" element={<SignUp />} />
-        <Route path="/forgotPassword" element={<ForgotPassword />} />
-        <Route path="/newPassword" element={<NewPassword />} />
-      </Routes>
-      <Layout>
-        <Routes>
-          <Route element={<ProtectedRoutesUser />}>
-            <Route path="/homepage" element={<Homepage />} />
-            <Route path='/profile' element={<Profile />} />
-            <Route path='/changePassword' element={<ChangePassword />} />
-            {Role_ID === 1 && (
-              <>
-                <Route path='/myBooking' element={<MyBooking />} />
-                <Route path='/timeslot' element={<TimeSlot />} />
-                {/* <Route path="*" element={<Navigate to="/homepage" replace />}/> */}
-              </>
-            )}
-            {Role_ID === 2 && (
-              <>
-                <Route path='/stid' element={<STID />} />
-                <Route path='/transportOder' element={<TransportOrder />} />
-                {/* <Route path="*" element={<Navigate to="/homepage" replace />}/> */}
-              </>
-            )}
-            {Role_ID === 3 && (
-              <>
-                <Route path='/capacityPlanning' element={<CapacityPlanning />} />
-                {/* <Route path="*" element={<Navigate to="/homepage" replace />}/> */}
-              </>
-            )}
-          </Route>
-        </Routes>
-      </Layout>
+    <Header/>
+    <Routes>
+      <Route path="/" element={<Login/>} />
+      <Route path="/signUp" element={<SignUp/>} />
+      <Route path="/forgotPassword" element={<ForgotPassword/>}/>
+      <Route path="/newPassword" element={<NewPassword/>}/>
+
+      <Route element={<ProtectedRoutesUser/>}>
+        <Route path="/homepage" element={<Homepage/>} />
+        <Route path='/profile' element={<Profile/>}/>
+        <Route path='/changePassword' element={<ChangePassword/>}/>
+        {Role_ID === 1 && (
+          <>
+            <Route path='/myBooking' element={<MyBooking/>}/>
+            {/* <Route path="*" element={<Navigate to="/homepage" replace />}/> */}
+          </>
+        )}
+        {Role_ID === 2 && (
+          <>
+            <Route path='/stid' element={<STID/>}/>
+            <Route path='/transportOder' element={<TransportOrder/>}/>
+            {/* <Route path="*" element={<Navigate to="/homepage" replace />}/> */}
+          </>
+        )}
+        {Role_ID === 1 || Role_ID ==2 ? 
+          <Route path='/timeslot' element={<TimeSlot/>}/>
+        : ""
+        }
+        {Role_ID === 3 && (
+          <>
+            <Route path='/capacityPlanning' element={<CapacityPlanning/>}/>
+            {/* <Route path="*" element={<Navigate to="/homepage" replace />}/> */}
+          </>
+        )}
+      </Route>
+    </Routes>
     </>
   );
 }
