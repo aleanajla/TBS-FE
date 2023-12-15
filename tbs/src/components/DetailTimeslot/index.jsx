@@ -32,9 +32,8 @@ export default function DetailTimeslot() {
                 <div className="w-full gap-2 grid grid-cols-2">
                     {slots.map((slot) => (
                         slot.detailSlots.map((detail, index) => {
-                            const totalBookingQty = slot.detailSlots.reduce((sum, detail) => sum + detail.Booking_Qty, 0);
-                            const totalQty = slot.detailSlots.reduce((sum, detail) => sum + detail.Qty, 0);
-                            const overallProgressValue = Math.round((totalBookingQty / totalQty) * 100);
+
+                            const overallProgressValue = Math.floor(((detail.Qty - detail.Booking_Qty)/detail.Qty) * 100)
                             return (
                                 <button key={index} className="w-full ">
                                     <div className="flex justify-between p-4 bg-white border border-gray-400 rounded-lg items-center flex-row hover:border-primary hover:border-2 transition duration-300">

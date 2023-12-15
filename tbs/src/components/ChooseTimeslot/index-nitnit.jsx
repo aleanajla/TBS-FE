@@ -42,21 +42,7 @@ export default function ChooseTimeslot() {
                                     <DayTimeslot />
                                 </div>
                             </div>
-                            {/* <div className="pt-4 flex justify-between"> */}
-                                {/* <div className="w-1/2 mr-4"> */}
-                                    <DetailTimeslot/>
-                                    {/* <div className="flex justify-between p-4 bg-white border border-gray-400 rounded-lg items-center flex-row">
-                                        <div className="flex flex-col gap-2">
-                                            <p className="text-[#7D7D7D] text-lg font-medium">00.01-04.00</p>
-                                            <p className="text-2xl font-semibold">31/50</p>
-                                            <p className="text-[#7D7D7D] text-md font-medium">CONTAINER</p>
-                                        </div>
-                                        <div className="flex items-center justify-center">
-                                            <RadialProgress progress={progressValue} />
-                                        </div>
-                                    </div> */}
-                                {/* </div> */}
-                            {/* </div> */}
+                            <DetailTimeslot />
                         </div>
                     </div>
                     :

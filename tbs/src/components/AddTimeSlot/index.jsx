@@ -57,7 +57,7 @@ export function AddTimeSlot() {
         <p className="font-medium text-white">Add Time slot</p>
       </button>
       {open ? (
-        <div className="absolute z-[999] inset-0 bg-opacity-60 backdrop-blur-sm flex justify-center items-center bg-black">
+        <div className="absolute inset-0 bg-opacity-60 backdrop-blur-sm flex justify-center items-center bg-black">
           <div className=" bg-white w-[947px] max-h-[720px] rounded-xl py-[31px] px-[47px] flex flex-col gap-4">
             <div className="flex flex-row-reverse">
               <button className="btn" onClick={() => setOpen(false)}>

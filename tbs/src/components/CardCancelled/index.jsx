@@ -53,7 +53,7 @@ export default function CardCancelled({data}) {
                                             <path d="M6.22049 10.2749H6.22723" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                             <path d="M6.22049 12.5249H6.22723" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>
-                                        <p>Created Date: {data.createdAt} </p>
+                                        <p>Created Date: {new Date(data.createdAt).toISOString().split('T')[0]}</p>
                                     </div>
                                     <div className="flex flex-row items-center gap-x-1.5">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -68,7 +68,7 @@ export default function CardCancelled({data}) {
                                             <path d="M6.22049 10.2749H6.22723" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                             <path d="M6.22049 12.5249H6.22723" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>
-                                        <p>Closing Time: {data.Closing_Time} </p>
+                                        <p>Closing Time: {new Date(data.Closing_Time).toISOString().split('T')[0]} {new Date(data.Closing_Time).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })}</p>
                                     </div>
                                 </div>
                             </div>

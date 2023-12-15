@@ -22,6 +22,8 @@ import Layout from './components/Layouts/Layout';
 
 function App() {
   const { Role_ID } = useSelector((state) => state.Auth.user)
+
+
   return (
     <>
       <Header />
@@ -31,6 +33,7 @@ function App() {
         <Route path="/forgotPassword" element={<ForgotPassword />} />
         <Route path="/newPassword" element={<NewPassword />} />
       </Routes>
+
       <Layout>
         <Routes>
           <Route element={<ProtectedRoutesUser />}>
