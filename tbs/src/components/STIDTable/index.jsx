@@ -43,11 +43,11 @@ export function STIDtable() {
         method: "get",
         url: `http://localhost:3000/api/users/view/stid/${id}`,
         params: {
-          search: search,
+          search: search ? search : "",
         },
       });
 
-      setSTID(() => result.data);
+      setSTID(result.data);
     } catch (error) {
       console.log(error);
     }
@@ -55,7 +55,7 @@ export function STIDtable() {
 
   useEffect(() => {
     getData();
-  }, [getData]);
+  }, [search]);
 
   return (
     <div className="py-10 px-4 flex flex-col gap-8 border rounded-lg">

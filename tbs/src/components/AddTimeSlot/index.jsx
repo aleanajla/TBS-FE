@@ -13,11 +13,13 @@ import { Label } from "src/components/ui/label";
 import { DatePickerWithRange } from "../DatePicker";
 import { useState } from "react";
 import AccordionTimeslot from "../AccordionTimeslot/Index";
+import { endOfDay } from "date-fns";
 
 export function AddTimeSlot() {
   const [open, setOpen] = useState(false);
   const [sections, setSections] = useState([]);
-  const [data, setData] = useState([])
+  const [addSlot, setAddSlot] = useState([]);
+  const [data, setData] = useState([]);
 
   const addSection = () => {
     setSections((prevSections) => [
@@ -29,9 +31,34 @@ export function AddTimeSlot() {
   };
 
   const deleteSection = (id) => {
-    setSections((prevSections) => prevSections.filter((section) => section.id !== id));
+    setSections((prevSections) =>
+      prevSections.filter((section) => section.id !== id)
+    );
   };
+  // const [penampung, setPenampung] = useState({
+  //   startDate:"",
+  //   endDate:""
+  // })
 
+  // setPenampung({
+  //   stardate:data, 
+  //   endDate:end
+  // })
+  // const tampung = [
+  //   {
+  //     idTerminal,
+  //     detail: [{ startDate, endDate }, {star}],
+  //   },
+  // ];
+
+
+  // [{data1}, {data2}]
+  // function startDateEndate(start) {
+  //   [
+
+  //   ]
+  //     // return `${start-end}`
+  // }
   return (
     <>
       <button
@@ -57,7 +84,7 @@ export function AddTimeSlot() {
         <p className="font-medium text-white">Add Time slot</p>
       </button>
       {open ? (
-        <div className="absolute z-[999] inset-0 bg-opacity-60 backdrop-blur-sm flex justify-center items-center bg-black">
+        <div className="absolute inset-0 bg-opacity-60 backdrop-blur-sm flex justify-center items-center bg-black">
           <div className=" bg-white w-[947px] max-h-[720px] rounded-xl py-[31px] px-[47px] flex flex-col gap-4">
             <div className="flex flex-row-reverse">
               <button className="btn" onClick={() => setOpen(false)}>
@@ -95,7 +122,10 @@ export function AddTimeSlot() {
                 <div className="flex flex-col gap-2.5 pb-5">
                   <h2 className="font-medium">Timeslot</h2>
                   {sections.map((section) => (
-                      <AccordionTimeslot data={{id: section.id}} onClick={()=>deleteSection(section.id)}/>
+                    <AccordionTimeslot
+                      data={{ id: section.id }}
+                      onClick={() => deleteSection(section.id)}
+                    />
                   ))}
                   <button
                     className="flex gap-x-2.5 items-center mt-[10px]"
@@ -139,7 +169,10 @@ export function AddTimeSlot() {
               <button className="w-[118px] h-[53px] items-center justify-center bg-primary text-sm rounded-full text-white">
                 Save
               </button>
-              <button className="w-[118px] h-[53px] items-center justify-center text-sm rounded-full border border-primary text-primary" onClick={()=> setOpen(false)}>
+              <button
+                className="w-[118px] h-[53px] items-center justify-center text-sm rounded-full border border-primary text-primary"
+                onClick={() => setOpen(false)}
+              >
                 Cancel
               </button>
             </div>
@@ -151,4 +184,3 @@ export function AddTimeSlot() {
     </>
   );
 }
-

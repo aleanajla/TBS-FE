@@ -1,9 +1,9 @@
 import { Login, SetUser } from "./actionType";
-import axios, { Axios } from "axios";
+import axios from "axios";
 import API_LOCAL from "../../API"
 
 export const LoginAction = (payload) => {
-    console.log("payload:", payload);
+    // console.log("payload:", payload);
     return async (dispatch) => {
         try {
             let response = await axios({
@@ -57,13 +57,11 @@ export const GetUserDetails = (payload) => {
             const { Username, Role_ID, id, Customer_ID } = response.data;
 
             dispatch({type: SetUser, payload: {
-                
                     username: Username,
                     isLoggedIn: true,
                     Role_ID: Role_ID,
                     id : id,
                     Customer_ID: Customer_ID
-                
             }})
         } catch (error) {
             console.log(error)

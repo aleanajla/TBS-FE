@@ -1,6 +1,8 @@
 import { useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
 import Login from "../pages/Login";
+import Layout from "./Layouts/Layout";
+import { useNavigate } from "react-router-dom";
 
 const useAuth = () => {
   const {id} = useSelector((state) => state.Auth.user);
@@ -9,7 +11,11 @@ const useAuth = () => {
 
 const ProtectedRoutesUser = () => {
   const isAuth = useAuth();
-  return isAuth ? <Outlet /> : <Login />;
+  return isAuth ? 
+  <Layout>
+    <Outlet /> 
+  </Layout>
+  : <Login />;
 };
 
 export default ProtectedRoutesUser;

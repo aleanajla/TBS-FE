@@ -10,7 +10,7 @@ export default function SlotSchedule(){
         try{
             const response = await axios({
                 method: "get",
-                url: `http://localhost:3000/api//users/slot/${date}`
+                url: `http://localhost:3000/api/users/slot/${date}`
             })
             console.log(response.data);
             setSlots(()=>response.data)
@@ -22,7 +22,7 @@ export default function SlotSchedule(){
 
     useEffect(() => {
         getDetailSlot()
-    })
+    },[date])
 
     return(
     <>
