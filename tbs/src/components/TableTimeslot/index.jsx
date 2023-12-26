@@ -4,7 +4,7 @@ import StatusJob from "../StatusJob";
 import TableValue from "../TableValue";
 import { useSelector } from "react-redux";
 
-export default function TableTimeslot({ data }) {
+export default function TableTimeslot({ data, bookingData }) {
   const { Role_ID } = useSelector((state) => state.Auth.user);
   return (
     <>
@@ -29,7 +29,7 @@ export default function TableTimeslot({ data }) {
         )}
       </div>
       <div className="w-full border rounded-lg">
-        <TableValue data={data} />
+        <TableValue data={data} bookingData={bookingData} />
       </div>
     </>
   );

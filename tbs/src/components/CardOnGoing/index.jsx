@@ -25,7 +25,7 @@ export default function CardOnGoing({ data }) {
                 <div className="border-b-2 border-grey-400 w-full h-14 flex items-center justify-between px-8">
                     <div className="flex items-center gap-4">
                         <div>
-                            <p className="font-medium text-gray text-md">Request Id : {data.No_Request}</p>
+                            <p className="font-medium text-gray text-md">Request ID : {data.No_Request}</p>
                         </div>
                         <div className="flex items-center bg-[#F3F3F3] rounded-md p-2">
                             <p className="font-medium text-gray text-md px-8 text-primary">PT PRIMA INDONESIA</p>

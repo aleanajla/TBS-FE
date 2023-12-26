@@ -26,11 +26,19 @@ import * as action from "../../config/redux/auth/action";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function SignUpForm() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [error, setError] = useState("")
-  const navigate = useNavigate()
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const [selectedValue, setSelectedValue] = useState("");
+
+  // Handler for the change event of the dropdown
+  const handleChange = (event) => {
+    const newValue = event.target.value;
+    setSelectedValue(newValue);
+  };
 
   const [registerData, setRegisterData] = useState({
     Username: "",
@@ -40,12 +48,13 @@ export default function SignUpForm() {
     Name: "",
     Phone_Number: "",
     Email: "",
-    Role_ID: 0
-  })
+    // Role_ID: "",
+  });
 
-  const onSubmitRegister = async(event) => {
+  const onSubmitRegister = async (event) => {
     event.preventDefault();
-    try{
+    console.log(selectedValue);
+    try {
       const response = await axios({
         method: "post",
         url: "http://localhost:3000/api/users/register",
@@ -57,26 +66,32 @@ export default function SignUpForm() {
           Name: registerData.Name,
           Phone_Number: registerData.Phone_Number,
           Email: registerData.Email,
-          Role_ID: registerData.Role_ID
-        }
-      })
+          Role_ID: selectedValue,
+        },
+      });
       console.log(response);
-      // const result = await dispatch(action.LoginAction({Username: registerData.Username, Password: registerData.Password}))
-      // navigate('/homepage')
-      // if(result.error) {
-      //   setError(result.message)
+      // const result = await dispatch(
+      //   action.LoginAction({
+      //     Username: registerData.Username,
+      //     Password: registerData.Password,
+      //   })
+      // );
+
+      // if (result.error) {
+      //   setError(result.message);
+      // } else {
+      //   navigate("/homepage");
       // }
-    }
-    catch(error){
-      setError(error)
+      navigate('/');
+    } catch (error) {
+      setError(error.response);
       console.log(error);
     }
-    
-  }
+  };
 
   const onChange = useCallback((e) => {
-		setRegisterData({ ...registerData, [e.target.name]: e.target.value });
-	});
+    setRegisterData({ ...registerData, [e.target.name]: e.target.value });
+  });
 
   return (
     <Card className="w-[827px] py-3 px-[36px] rounded-lg">
@@ -92,29 +107,53 @@ export default function SignUpForm() {
           <div className="grid grid-rows-4 w-full items-center gap-5">
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="username">Username</Label>
-              <Input id="username" name="Username" placeholder="Username" onChange={onChange} value={registerData.Username}/>
+              <Input
+                id="username"
+                name="Username"
+                placeholder="Username"
+                onChange={onChange}
+                value={registerData.Username}
+              />
             </div>
             <div className="w-full grid grid-cols-2 justify-between gap-6 items-center">
               <div className="space-y-1.5">
                 <Label htmlFor="Role_ID">User Category</Label>
-                <Select>
+                <select
+                  id="userCategory"
+                  name="Role_ID"
+                  value={selectedValue}
+                  onChange={handleChange}
+                >
+                  <option value="">Select User Category</option>
+                  <option value="1">Freight Forwarder</option>
+                  <option value="2">Trucking Company</option>
+                </select>
+                {/* <Select name="Role_ID">
                   <SelectTrigger
                     id="userCategory"
-                    name="userCategory"
+                    name="Role_ID"
                     className="text-[#7D7D7D] p-3.5 py-6"
-                    onChange={onChange} value={registerData.Role_ID}
+                    value={selectedValue}
+                    onChange={}
                   >
                     <SelectValue placeholder="User Category" />
                   </SelectTrigger>
                   <SelectContent position="popper">
-                    <SelectItem value="1">
-                      Freight Forwarder
-                    </SelectItem>
-                    <SelectItem value="2">
-                      Trucking Company
-                    </SelectItem>
+                    <SelectItem value="1">Freight Forwarder</SelectItem>
+                    <SelectItem value="2">Trucking Company</SelectItem>
                   </SelectContent>
-                </Select>
+                </Select> */}
+                <div className="space-y-1.5">
+                  <Label htmlFor="pkmu">Name</Label>
+                  <Input
+                    id="Name"
+                    name="Name"
+                    placeholder="Number PKMU"
+                    className="p-3.5"
+                    onChange={onChange}
+                    value={registerData.Name}
+                  />
+                </div>
               </div>
               <div className="space-y-1.5">
                 <Label htmlFor="pkmu">Number PKMU</Label>
@@ -123,7 +162,8 @@ export default function SignUpForm() {
                   name="PMKU"
                   placeholder="Number PKMU"
                   className="p-3.5"
-                  onChange={onChange} value={registerData.PMKU}
+                  onChange={onChange}
+                  value={registerData.PMKU}
                 />
               </div>
             </div>
@@ -135,7 +175,8 @@ export default function SignUpForm() {
                   name="Email"
                   placeholder="Email"
                   className="p-3.5"
-                  onChange={onChange} value={registerData.Email}
+                  onChange={onChange}
+                  value={registerData.Email}
                 />
               </div>
               <div className="space-y-1.5">
@@ -145,7 +186,8 @@ export default function SignUpForm() {
                   name="Phone_Number"
                   placeholder="Phone Number"
                   className="p-3.5"
-                  onChange={onChange} value={registerData.Phone_Number}
+                  onChange={onChange}
+                  value={registerData.Phone_Number}
                 />
               </div>
             </div>
@@ -158,7 +200,8 @@ export default function SignUpForm() {
                   placeholder="Password"
                   type={showPassword ? "text" : "password"}
                   className="p-3.5"
-                  onChange={onChange} value={registerData.Password}
+                  onChange={onChange}
+                  value={registerData.Password}
                 />
                 {showPassword ? (
                   <AiOutlineEye
@@ -184,7 +227,8 @@ export default function SignUpForm() {
                   placeholder="Confirm Password"
                   type={showConfirmPassword ? "text" : "password"}
                   className="p-3.5"
-                  onChange={onChange} value={registerData.Confirm_Password}
+                  onChange={onChange}
+                  value={registerData.Confirm_Password}
                 />
                 {showConfirmPassword ? (
                   <AiOutlineEye
@@ -211,7 +255,10 @@ export default function SignUpForm() {
                 Login Here
               </Link>
             </div>
-            <button className="w-[347px] py-3.5 px-6 rounded-full bg-primary text-white font-xs font-normal" type="submit">
+            <button
+              className="w-[347px] py-3.5 px-6 rounded-full bg-primary text-white font-xs font-normal"
+              type="submit"
+            >
               Sign Up
             </button>
           </div>

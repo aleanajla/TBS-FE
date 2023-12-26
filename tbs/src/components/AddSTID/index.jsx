@@ -1,4 +1,4 @@
-import * as React from "react";
+import react, {useEffect} from "react";
 import { Button } from "src/components/ui/button";
 import { useState } from "react";
 import axios from "axios";
@@ -29,7 +29,7 @@ export function AddSTID() {
   const [openDriver, setOpenDriver] = useState(false);
   const [openTruck, setOpenTruck] = useState(false);
   const [error, setError] = useState("");
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState("");
 
   const getDataDriver = async () => {
     try {
@@ -37,8 +37,8 @@ export function AddSTID() {
         method: "get",
         url: `http://localhost:3000/api/users/drivers/${Customer_ID}`,
         params: {
-          search: search
-        }
+          search: search,
+        },
       });
       setDataDriver(() => response.data);
       console.log(dataDriver);
@@ -53,8 +53,8 @@ export function AddSTID() {
         method: "get",
         url: `http://localhost:3000/api/users/trucks/${Customer_ID}`,
         params: {
-          search: search
-        }
+          search: search,
+        },
       });
       setDataTruck(() => response.data);
       console.log(dataTruck);
@@ -78,7 +78,7 @@ export function AddSTID() {
       setOpen(false);
       setDriver("");
       setTruck("");
-      alert("Sucessfully Added!")
+      alert("Sucessfully Added!");
     } catch (error) {
       console.log(error.response.data);
       setError(error.response.data);
@@ -87,10 +87,10 @@ export function AddSTID() {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     getDataDriver();
     getDataTruck();
-  }, [getDataDriver, getDataTruck]);
+  }, []);
 
   const handleInputChange = (e) => {
     setSearch(e.target.value);
@@ -125,10 +125,13 @@ export function AddSTID() {
           <div className="absolute inset-0 bg-opacity-60 backdrop-blur-sm flex justify-center items-center bg-black">
             <div className=" bg-white w-[700px] max-h-[720px] rounded-xl py-[31px] px-[47px] flex flex-col gap-2">
               <div className="flex flex-row-reverse">
-                <button className="btn" onClick={() => {
-                  setOpen(false)
-                  setError("")
-                }}>
+                <button
+                  className="btn"
+                  onClick={() => {
+                    setOpen(false);
+                    setError("");
+                  }}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="19"
@@ -169,14 +172,17 @@ export function AddSTID() {
                     >
                       {driver
                         ? dataDriver.find((drivers) => drivers.id === driver)
-                          ?.Driver_Name
+                            ?.Driver_Name
                         : "Driver"}
                       {/* <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" /> */}
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="z-0 w-[250px] p-0">
                     <Command>
-                      <CommandInput placeholder="Search driver..." onChange={handleInputChange} />
+                      <CommandInput
+                        placeholder="Search driver..."
+                        onChange={handleInputChange}
+                      />
                       <CommandEmpty>Not Found.</CommandEmpty>
                       <CommandGroup>
                         {dataDriver.map((drivers) => (
@@ -216,7 +222,7 @@ export function AddSTID() {
                     >
                       {truck
                         ? dataTruck.find((trucks) => trucks.id === truck)
-                          ?.Plat_Number
+                            ?.Plat_Number
                         : "Truck"}
 
                       {/* <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" /> */}
@@ -224,7 +230,10 @@ export function AddSTID() {
                   </PopoverTrigger>
                   <PopoverContent className="w-[250px] p-0">
                     <Command>
-                      <CommandInput placeholder="Search truck..." onChange={handleInputChange} />
+                      <CommandInput
+                        placeholder="Search truck..."
+                        onChange={handleInputChange}
+                      />
                       <CommandEmpty>Not Found.</CommandEmpty>
                       <CommandGroup>
                         {dataTruck.map((trucks) => (
@@ -262,9 +271,10 @@ export function AddSTID() {
                 <button
                   className="w-[118px] h-[53px] items-center justify-center text-sm rounded-full border border-primary text-primary"
                   onClick={() => {
-                    setOpen(false)
-                    setError("")
-                  }}>
+                    setOpen(false);
+                    setError("");
+                  }}
+                >
                   Cancel
                 </button>
               </div>

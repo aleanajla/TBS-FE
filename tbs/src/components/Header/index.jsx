@@ -23,7 +23,7 @@ const Header = () => {
             navigate('/')
         }
     }
-  },[])
+  },[token])
 
 
   return (

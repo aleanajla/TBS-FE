@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "src/components/ui/button";
 import {
@@ -24,6 +24,7 @@ import { useSelector } from "react-redux";
 export default function Navbar() {
   const {username} = useSelector((state) => state.Auth.user)
   const navigate = useNavigate()
+  const [userName, setUsername] = useState('')
 
   const logout = () => {
       localStorage.removeItem('token')
@@ -37,6 +38,13 @@ export default function Navbar() {
   const goToChangePassword = () => {
     navigate('/changePassword')
   }
+
+  useEffect(()=> {
+    console.log(username, "username")
+    if(username){
+      setUsername(username)
+    }
+  }, [username])
 
   return (
     <>
@@ -91,7 +99,7 @@ export default function Navbar() {
               className="w-[150px] rounded-full border border-[#212121] px-4 justify-between py-4"
             >
               <Button variant="outline" className="py-4">
-                <p>{username}</p>
+                <p>{userName}</p>
                 <img src="/images/chevronDown.svg" />
               </Button>
             </DropdownMenuTrigger>

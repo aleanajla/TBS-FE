@@ -52,7 +52,7 @@ export default function CardBooking() {
 
   useEffect(() => {
     getDataBooking();
-  });
+  },[]);
   
   const [searchTerm, setSearchTerm] = useState('');
 

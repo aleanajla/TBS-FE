@@ -73,7 +73,7 @@ export function EditSTID({ data }) {
 
     React.useEffect(() => {
         getDataDriver();
-    }, [getDataDriver]);
+    }, []);
 
     return (
         <>

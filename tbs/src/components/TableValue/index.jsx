@@ -30,58 +30,113 @@ import {
   PopoverTrigger,
 } from "src/components/ui/popover";
 import { useSelector } from "react-redux";
+import { result } from "lodash";
 
 export default function TableValue({ data }) {
-  const [dataBooking, setDataBooking] = useState([]);
+  console.log(data.ID_Request, "data props");
+  const [dataContainer, setDataContainer] = useState([]);
+  // const [dataBooking, setDataBooking] = useState([]);
   const [dataSTID, setDataSTID] = useState([]);
-  const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
-  const [search, setSearch] = useState("");
   const { Role_ID } = useSelector((state) => state.Auth.user);
-
-  const getDataSTID = async () => {
-    try {
-      const result = await axios({
-        method: "get",
-        url: `http://localhost:3000/api/users/view/stid/${data.ID_Trucking}`,
-        params: {
-          search: search,
-        },
-      });
-      console.log(result);
-      setDataSTID(() => result.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [loading, setLoading] = useState(true);
+  const [timeslot, setTimeslot] = useState([]);
+  // const [dataRequestBooking, setDataRequestBooking] = useState([]);
 
   const getDataContainer = async () => {
+    console.log(data?.ID_Request, "id request");
+    try {
+      if (data?.ID_Request) {
+        console.log(data?.ID_Request, "id request");
+        const response = await axios({
+          method: "get",
+          url: `http://localhost:3000/api/users/view/containers`,
+          params: {
+            ID_Request: data?.ID_Request,
+          },
+        });
+        console.log(response, "result container");
+        // let data = []
+        setDataContainer(response.data);
+      }
+    } catch (error) {
+      console.log(error, "error container");
+    }
+  };
+
+  // const getDataBooking = async () => {
+  //   try {
+  //     const response = await axios({
+  //       method: "get",
+  //       url: `http://localhost:3000/api/users/view/bookings`,
+  //       params: {
+  //         ID_Request: data.ID_Request,
+  //       },
+  //     });
+  //     console.log(result);
+
+  //     setDataBooking(response.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  const getDataFromChild = (data) => {
+    setTimeslot(() => data);
+  };
+
+  const getSTID = (data) => {
+    setDataSTID(data);
+  };
+
+  const submitData = async (id) => {
     try {
       const response = await axios({
-        method: "get",
-        url: `http://localhost:3000/api/users/view/containers`,
-        params: {
-          ID_Request: data.ID_Request,
+        method: "post",
+        url: "http://localhost:3000/api/user/create/booking",
+        data: {
+          ID_Request_Container: id,
+          ID_Request_TC: data.id,
+          ID_Detail_Slot: timeslot.id,
         },
       });
-      setDataBooking(() => response.data);
+      alert("Successfully Send!");
+      // setBooking(() => response.data);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleInputChange = (e) => {
-    setSearch(e.target.value);
+  const submitAssignJob = async (id, id_stid) => {
+    try {
+      const response = await axios({
+        method: "post",
+        url: `http://localhost:3000/api/users/create/TCA`,
+        data: {
+          ID_Booking: id,
+          ID_STID: id_stid,
+        },
+      });
+      alert("Successfully Send!");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
+    // console.log(data.id, timeslot.id, timeslot.start, timeslot.end);
+    // console.log(dataBooking, "data booking")
+    // getAllData();
+    // getDataBooking()
+    console.log(dataSTID.STID_Number, "DATA STID ARRAY FROM TABLE VALUE");
     getDataContainer();
-    getDataSTID();
-  }, [getDataContainer, getDataSTID]);
+    // getDataBooking();
+
+    // console.log(dataContainer, "data container")
+  }, [data, dataSTID]);
 
   return (
     <>
-      {data.ID_Status === 2 && (
+      {data?.ID_Status === 2 && (
         <Table>
           {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
           <TableHeader>
@@ -97,94 +152,133 @@ export default function TableValue({ data }) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {dataBooking.map((job, key) => (
-              <TableRow className="-z-10" key={key}>
-                <TableCell className="text-center">{key + 1}</TableCell>
-                <TableCell className="text-center font-medium text-gray-400">
-                  {job.Container_Number}
-                </TableCell>
-                <TableCell>
-                  <div className="flex place-content-center">
-                    {Role_ID === 1 ? (
-                      <ChooseTimeslot />
-                    ): ""}
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <div className="flex place-content-center">
-                    {Role_ID === 2 ? (
-                      <>
-                        <Popover open={open} onOpenChange={setOpen}>
-                          <PopoverTrigger asChild>
-                            <Button
-                              variant="outline"
-                              role="combobox"
-                              aria-expanded={open}
-                              className="w-[250px] justify-between text-gray-500"
-                            >
-                              {value
-                                ? dataSTID.find((stid) => stid.id === value)
-                                    ?.STID_Number
-                                : "STID"}
+            {dataContainer?.mergedData?.map((job, key) => {
+              // console.log("job");
+              return (
+                <TableRow className="-z-10" key={key}>
+                  <TableCell className="text-center">{key + 1}</TableCell>
+                  <TableCell className="text-center font-medium text-gray-400">
+                    {job?.requestContainer
+                      ? job?.requestContainer.Container_Number
+                      : job?.Container_Number}
+                  </TableCell>
+                  <TableCell>
+                    {job?.detailSlot ? (
+                      <div className="flex place-content-center">
+                        <ChooseTimeslot
+                          data={{
+                            Container_Number: job?.requestContainer
+                              ? job?.requestContainer.Container_Number
+                              : job?.Container_Number,
+                            Start: job?.detailSlot.Start,
+                            End: job?.detailSlot.End,
+                          }}
+                          updateData={getDataFromChild}
+                        />
+                        {/* {Role_ID === 1 ? (
+                            ) : (
+                              ""
+                            )} */}
+                      </div>
+                    ) : (
+                      <div className="flex place-content-center">
+                        <ChooseTimeslot
+                          data={{
+                            Container_Number: job?.requestContainer
+                              ? job?.requestContainer.Container_Number
+                              : job?.Container_Number,
+                            Start: 0,
+                            End: 0,
+                          }}
+                          updateData={getDataFromChild}
+                        />
+                        {/* {Role_ID === 1 ? (
+                            ) : (
+                              ""
+                            )} */}
+                      </div>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex place-content-center">
+                      {/* {Role_ID === 2 && dataSTID.length == 0 ? (
+                        <>
+                          <ChooseSTID
+                            data={{ id: data.ID_Trucking }}
+                            getDataDetailSTID={getSTID}
+                          />
+                        </>
+                      ) : (
+                        <>
+                          <p>{dataSTID.STID_Number}</p>
+                        </>
+                      )} */}
 
-                              {/* <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" /> */}
-                            </Button>
-                          </PopoverTrigger>
-
-                          <PopoverContent className="w-[250px] p-0">
-                            <Command>
-                              <CommandInput
-                                placeholder="Search STID..."
-                                onChange={handleInputChange}
-                              />
-                              <CommandEmpty>No framework found.</CommandEmpty>
-                              <CommandGroup>
-                                {dataSTID.map((stid) => (
-                                  <CommandItem
-                                    key={stid.id}
-                                    value={stid.id}
-                                    onSelect={() => {
-                                      setValue(
-                                        stid.id === value ? "" : stid.id
-                                      );
-                                      setOpen(false);
-                                    }}
-                                  >
-                                    <Check
-                                      className={cn(
-                                        "mr-2 h-4 w-4",
-                                        value === stid.id
-                                          ? "opacity-100"
-                                          : "opacity-0"
-                                      )}
-                                    />
-                                    {stid.STID_Number}
-                                  </CommandItem>
-                                ))}
-                              </CommandGroup>
-                            </Command>
-                          </PopoverContent>
-                        </Popover>
-                      </>
-                    ) : ""}
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <div className="flex place-content-center">
-                    {Role_ID === 2 ? (
+                      {Role_ID === 2 && (
+                        <>
+                          <ChooseSTID
+                            data={{ id: data.ID_Trucking, index: key }}
+                            getDataDetailSTID={getSTID}
+                          />
+                        </>
+                      )}
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex place-content-center">
+                      {Role_ID === 2 && key === dataSTID.index ? (
+                        <>
+                          {/* {dataSTID.Driver_Name} */}
+                          <ChooseDriver
+                            data={{ Driver_Name: dataSTID.Driver_Name }}
+                          />
+                        </>
+                      ) : (
+                        "-"
+                      )}
+                    </div>
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {Role_ID === 1 && job?.requestContainer ? (
+                      <button
+                        className=" bg-gray-400 text-white px-8 py-2 rounded-lg text-sm"
+                        // onClick={() => submitData(job.id)}
+                        disabled={true}
+                      >
+                        <p>Save & Send</p>
+                      </button>
+                    ) : Role_ID === 1 ? (
                       <>
-                      <ChooseDriver />
+                        <button
+                          className=" bg-primary text-white px-8 py-2 rounded-lg text-sm"
+                          onClick={() => submitData(job.id)}
+                        >
+                          <p>Save & Send</p>
+                        </button>
                       </>
-                    ): ""}
-                  </div>
-                </TableCell>
-                <TableCell className="text-center">
-                  <button className=" bg-primary text-white px-8 py-2 rounded-lg text-sm">
-                    <p>Save & Send</p>
-                  </button>
-                </TableCell>
-              </TableRow>
-            ))}
+                    ) : job?.requestContainer ? (
+                      <>
+                        <button
+                          className=" bg-primary text-white px-8 py-2 rounded-lg text-sm"
+                          onClick={() => submitAssignJob(job.id, dataSTID.id)}
+                        >
+                          <p>Save & Send</p>
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <button
+                          className=" bg-gray-400 text-white px-8 py-2 rounded-lg text-sm"
+                          disabled={true}
+                        >
+                          <p>Save & Send</p>
+                        </button>
+                      </>
+                    )}
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       )}

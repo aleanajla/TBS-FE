@@ -3,9 +3,10 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import RadialProgress from "../RadialProgress";
 
-export default function DetailTimeslot() {
+export default function DetailTimeslot({dataTimeSlot}) {
     const { date } = useSelector((state) => state.CapacityPlanning.Date);
     const [slots, setSlots] = useState([])
+    // const [timeslot, setTimeslot] = useState([])
 
 
     const getDetailSlot = async () => {
@@ -26,6 +27,11 @@ export default function DetailTimeslot() {
         getDetailSlot()
     })
 
+    const handleClick = (start, end, id) => {
+        const data = {start: start, end: end, id: id}
+        dataTimeSlot(data)
+    }
+
     return (
         <>
             <div className="pt-4 flex justify-between">
@@ -36,7 +42,7 @@ export default function DetailTimeslot() {
                             const totalQty = slot.detailSlots.reduce((sum, detail) => sum + detail.Qty, 0);
                             const overallProgressValue = Math.round((totalBookingQty / totalQty) * 100);
                             return (
-                                <button key={index} className="w-full ">
+                                <button key={index} className="w-full" onClick={()=>handleClick(detail.Start, detail.End, detail.id)}>
                                     <div className="flex justify-between p-4 bg-white border border-gray-400 rounded-lg items-center flex-row hover:border-primary hover:border-2 transition duration-300">
                                         <div className="flex flex-col gap-2 text-left">
                                             <p className="text-[#7D7D7D] text-lg font-medium flex ">

@@ -30,6 +30,7 @@ export default function AssignTruck({ data }) {
   const [statusRequest, setStatusRequest] = useState([]);
   const [isButtonDisabled, setButtonDisabled] = useState(false);
   const { Role_ID } = useSelector((state) => state.Auth.user);
+  const [dataBooking, setDataBooking] = useState([])
 
   const handleInputChange = (e) => {
     setSearch(e.target.value);
@@ -81,7 +82,9 @@ export default function AssignTruck({ data }) {
       console.log(response);
       setOpen(false);
       setTrucking("");
+      setDataBooking(()=>response.data)
       alert("Assign Job Success!");
+
     } catch (error) {
       console.log(error);
       setError(error.response.data);
@@ -242,7 +245,7 @@ export default function AssignTruck({ data }) {
       ) : (
         ""
       )}
-      <TableTimeslot data={statusRequest} />
+      <TableTimeslot data={statusRequest} bookingData={dataBooking}/>
     </>
   );
 }
