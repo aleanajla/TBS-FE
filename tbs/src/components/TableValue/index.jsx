@@ -10,7 +10,6 @@ import {
 } from "src/components/ui/table";
 import ChooseTimeslot from "../ChooseTimeslot/index-nitnit";
 import { ChooseSTID } from "../chooseSTID";
-import { ChooseDriver } from "../ChooseDriver";
 import axios from "axios";
 import RadialProgress from "../RadialProgress";
 import { Check, ChevronsUpDown } from "lucide-react";
@@ -63,23 +62,6 @@ export default function TableValue({ data }) {
     }
   };
 
-  // const getDataBooking = async () => {
-  //   try {
-  //     const response = await axios({
-  //       method: "get",
-  //       url: `http://localhost:3000/api/users/view/bookings`,
-  //       params: {
-  //         ID_Request: data.ID_Request,
-  //       },
-  //     });
-  //     console.log(result);
-
-  //     setDataBooking(response.data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   const getDataFromChild = (data) => {
     setTimeslot(() => data);
   };
@@ -100,7 +82,6 @@ export default function TableValue({ data }) {
         },
       });
       alert("Successfully Send!");
-      // setBooking(() => response.data);
     } catch (error) {
       console.log(error);
     }
@@ -123,15 +104,8 @@ export default function TableValue({ data }) {
   };
 
   useEffect(() => {
-    // console.log(data.id, timeslot.id, timeslot.start, timeslot.end);
-    // console.log(dataBooking, "data booking")
-    // getAllData();
-    // getDataBooking()
     console.log(dataSTID.STID_Number, "DATA STID ARRAY FROM TABLE VALUE");
     getDataContainer();
-    // getDataBooking();
-
-    // console.log(dataContainer, "data container")
   }, [data, dataSTID]);
 
   return (
@@ -145,8 +119,7 @@ export default function TableValue({ data }) {
               <TableHead className="text-center">No</TableHead>
               <TableHead className="text-center">Kontainer</TableHead>
               <TableHead className="text-center">Slot Waktu</TableHead>
-              <TableHead className="text-center">STID</TableHead>
-              <TableHead className="text-center">Driver</TableHead>
+              <TableHead className="text-center">STID - Driver</TableHead>
               <TableHead className="text-center">Action</TableHead>
               {/* </div> */}
             </TableRow>
@@ -172,6 +145,7 @@ export default function TableValue({ data }) {
                               : job?.Container_Number,
                             Start: job?.detailSlot.Start,
                             End: job?.detailSlot.End,
+                            Date: job?.detailSlot.slot.Date,
                           }}
                           updateData={getDataFromChild}
                         />
@@ -189,6 +163,7 @@ export default function TableValue({ data }) {
                               : job?.Container_Number,
                             Start: 0,
                             End: 0,
+                            Date: null,
                           }}
                           updateData={getDataFromChild}
                         />
@@ -214,30 +189,42 @@ export default function TableValue({ data }) {
                         </>
                       )} */}
 
-                      {Role_ID === 2 && (
-                        <>
-                          <ChooseSTID
-                            data={{ id: data.ID_Trucking, index: key }}
-                            getDataDetailSTID={getSTID}
-                          />
-                        </>
-                      )}
+                      {Role_ID === 2 &&
+                        (job?.assignJob ? (
+                          <>
+                            <p>
+                              {job?.assignJob.masterSTID.STID_Number} -{" "}
+                              {
+                                job?.assignJob.masterSTID.masterDriver
+                                  .Driver_Name
+                              }
+                            </p>
+                          </>
+                        ) : (
+                          <>
+                            <ChooseSTID
+                              data={{ id: data.ID_Trucking, index: key }}
+                              getDataDetailSTID={getSTID}
+                            />
+                          </>
+                        ))}
+                      {Role_ID === 1 &&
+                        (job?.assignJob ? (
+                          <>
+                            <p>
+                              {job?.assignJob.masterSTID.STID_Number} -{" "}
+                              {
+                                job?.assignJob.masterSTID.masterDriver
+                                  .Driver_Name
+                              }
+                            </p>
+                          </>
+                        ) : (
+                          "-"
+                        ))}
                     </div>
                   </TableCell>
-                  <TableCell>
-                    <div className="flex place-content-center">
-                      {Role_ID === 2 && key === dataSTID.index ? (
-                        <>
-                          {/* {dataSTID.Driver_Name} */}
-                          <ChooseDriver
-                            data={{ Driver_Name: dataSTID.Driver_Name }}
-                          />
-                        </>
-                      ) : (
-                        "-"
-                      )}
-                    </div>
-                  </TableCell>
+
                   <TableCell className="text-center">
                     {Role_ID === 1 && job?.requestContainer ? (
                       <button

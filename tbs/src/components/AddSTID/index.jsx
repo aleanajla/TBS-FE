@@ -90,7 +90,7 @@ export function AddSTID() {
   useEffect(() => {
     getDataDriver();
     getDataTruck();
-  }, []);
+  }, [search]);
 
   const handleInputChange = (e) => {
     setSearch(e.target.value);

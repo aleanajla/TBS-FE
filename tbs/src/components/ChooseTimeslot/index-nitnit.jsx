@@ -22,14 +22,14 @@ console.log(timeslot, "timeslot")
   return (
     <>
       {data?.Start ? (
-        <p>{data.Start} - {data.End}</p>
+        <p>{data.Date} {data.Start} - {data.End}</p>
       ) 
         :
         (
           <>
             {timeslot.length != 0 ? (
               <>
-                <p>{timeslot.start} - {timeslot.end}</p>
+                <p>{timeslot.date} {timeslot.start} - {timeslot.end}</p>
               </>
             ) : (
               Role_ID === 1 ? (

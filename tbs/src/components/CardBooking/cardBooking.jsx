@@ -4,9 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { debounce } from 'lodash';
+import { Search } from "lucide-react";
 
 export default function CardBooking() {
   const [booking, setBooking] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const { Customer_ID } = useSelector((state) => state.Auth.user);
   const navigate = useNavigate();
 
@@ -52,9 +54,8 @@ export default function CardBooking() {
 
   useEffect(() => {
     getDataBooking();
-  },[]);
+  },[searchTerm]);
   
-  const [searchTerm, setSearchTerm] = useState('');
 
   const handleInputChange = (e) => {
       setSearchTerm(e.target.value);

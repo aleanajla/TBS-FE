@@ -28,7 +28,7 @@ export default function DetailTimeslot({dataTimeSlot}) {
     })
 
     const handleClick = (start, end, id) => {
-        const data = {start: start, end: end, id: id}
+        const data = {start: start, end: end, id: id, date: date}
         dataTimeSlot(data)
     }
 

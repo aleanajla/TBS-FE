@@ -152,7 +152,7 @@ export function Tab() {
     getTotalOnGoing();
     getTotalCompleted();
     getTotalRejected();
-  },[]);
+  },[search]);
 
   return (
     <Tabs defaultValue="request" className="bg-white">
