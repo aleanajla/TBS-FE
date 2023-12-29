@@ -121,7 +121,11 @@ export function AddTimeSlot() {
               <div className="border-b">
                 <div className="flex flex-col gap-2.5 pb-5">
                   <h2 className="font-medium">Timeslot</h2>
-                  {sections.map((section) => (
+                  <AccordionTimeslot
+                      // data={{ id: section.id }}
+                      // onClick={() => deleteSection(section.id)}
+                    />
+                  {/* {sections.map((section) => (
                     <AccordionTimeslot
                       data={{ id: section.id }}
                       onClick={() => deleteSection(section.id)}
@@ -161,7 +165,7 @@ export function AddTimeSlot() {
                       />
                     </svg>
                     <p className="text-sm">Timeslot</p>
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>

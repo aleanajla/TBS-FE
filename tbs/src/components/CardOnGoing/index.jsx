@@ -5,9 +5,9 @@ import { Link, useNavigate } from "react-router-dom";
 export default function CardOnGoing({ data }) {
     const navigate = useNavigate()
 
-    const handleTCA = (id,Service_Name,Vessel_Name,No_Request,Closing_Time,Port_Name,Terminal_Name,Qty) => {
+    const handleTCA = (Service_Name,Vessel_Name,No_Request,Closing_Time,Port_Name,Terminal_Name,Qty, ID_Request) => {
         const data = {
-            id: id,
+            id: ID_Request,
             Service_Name: Service_Name,
             Vessel_Name: Vessel_Name,
             No_Request: No_Request,
@@ -117,7 +117,7 @@ export default function CardOnGoing({ data }) {
                         </div>
                         <div>
                             <div className="flex flex-row-reverse py-4 gap-2 w-full">
-                                <button className="bg-primary text-white h-12 px-20 rounded-md items-center" onClick={() => handleTCA(data.id, data.Service_Name, data.Vessel_Name, data.No_Request, data.Closing_Time, data.Port_Name, data.Terminal_Name, data.Qty)}>
+                                <button className="bg-primary text-white h-12 px-20 rounded-md items-center" onClick={() => handleTCA(data.Service_Name, data.Vessel_Name, data.No_Request, data.Closing_Time, data.Port_Name, data.Terminal_Name, data.Qty, data.ID_Request)}>
                                     <p className="font-medium">TCA</p>
                                 </button>
                                 <button className="bg-white text-primary border border-primary h-12 px-8 rounded-md items-center flex gap-1">

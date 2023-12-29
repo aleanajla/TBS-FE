@@ -32,6 +32,7 @@ export function STIDtable() {
         },
       });
       console.log(result);
+      // getData()
     } catch (error) {
       console.log(error);
     }
