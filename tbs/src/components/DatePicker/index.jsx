@@ -15,13 +15,18 @@ import {
 } from "src/components/ui/popover"
 
 export function DatePickerWithRange({
-    className,
+    className,dataDate
 }) {
     const [date, setDate] = React.useState({
         from: new Date(2024, 0, 20),
         to: addDays(new Date(2024, 0, 20), 20),
     })
-    // console.log(className, 'class')
+
+    const handlePassingData = () => {
+        const data = {from: format(date.from, "LLL dd, y"), to: format(date.to, "LLL dd, y")}
+        dataDate(data)
+    }
+
 
     return (
         <div className={cn("grid gap-2 w-100", className)}>
@@ -39,8 +44,9 @@ export function DatePickerWithRange({
                             {date?.from ? (
                                 date.to ? (
                                     <>
-                                        {format(date.from, "LLL dd, y")} -{" "}
+                                        {format(date.from, "LLL dd, y")} - {" "}
                                         {format(date.to, "LLL dd, y")}
+                                        {handlePassingData()}
                                     </>
                                 ) : (
                                     format(date.from, "LLL dd, y")
@@ -73,6 +79,7 @@ export function DatePickerWithRange({
                         defaultMonth={date?.from}
                         selected={date}
                         onSelect={setDate}
+                        // onSelect={handlePassingData}
                         numberOfMonths={2}
                         className={"w-full"}
                     />
