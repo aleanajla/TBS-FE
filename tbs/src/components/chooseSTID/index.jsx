@@ -25,6 +25,7 @@ export function ChooseSTID({ data, getDataDetailSTID }) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
   const [STID_Number, setSTID_Number] = React.useState("");
+  const [Driver, setDriver] = useState("")
   const [search, setSearch] = useState("");
   const [dataSTID, setSTID] = useState([]);
 
@@ -61,7 +62,7 @@ export function ChooseSTID({ data, getDataDetailSTID }) {
   return (
     value ? (
       <>
-        <p>{STID_Number}</p>
+        <p>{STID_Number} - {Driver}</p>
       </>
       ) : (
       <>
@@ -97,6 +98,7 @@ export function ChooseSTID({ data, getDataDetailSTID }) {
                       setValue(stid.id === value ? "" : stid.id);
                       setOpen(false);
                       setSTID_Number(stid.STID_Number === STID_Number ? "" : stid.STID_Number)
+                      setDriver(stid.masterDriver.Driver_Name)
                       updateSTID(stid.id, stid.STID_Number, stid.masterDriver.Driver_Name)
                     }}
                   >
@@ -106,7 +108,7 @@ export function ChooseSTID({ data, getDataDetailSTID }) {
                         value === stid.id ? "opacity-100" : "opacity-0"
                       )}
                     />
-                    {stid.STID_Number}
+                    {stid.STID_Number} - {stid.masterDriver.Driver_Name}
                   </CommandItem>
                 ))}
               </CommandGroup>

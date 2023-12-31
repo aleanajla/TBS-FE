@@ -1,39 +1,79 @@
-import { Button } from "src/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "src/components/ui/dialog";
 import { Input } from "src/components/ui/input";
 import { Label } from "src/components/ui/label";
 import { DatePickerWithRange } from "../DatePicker";
 import { useState } from "react";
 import AccordionTimeslot from "../AccordionTimeslot/Index";
 import { endOfDay } from "date-fns";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../ui/accordion";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import { DropdownEndHour } from "../DropdownEndHour";
+import { DropdownEndMinute } from "../DropdownEndMinute";
+import { DropdownStartHour } from "../DropdownStartHour";
+import { DropdownStartMinute } from "../DropdownStartMinute";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 export function AddTimeSlot() {
   const [open, setOpen] = useState(false);
-  const [sections, setSections] = useState([]);
-  const [addSlot, setAddSlot] = useState([]);
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
+  const [fromHour, setFromHour] = useState("");
+  const [fromMinute, setFromMinute] = useState("");
+  const [toHour, setToHour] = useState("");
+  const [toMinute, setToMinute] = useState("");
+  const [capacity, setCapacity] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const { Customer_ID } = useSelector((state) => state.Auth.user);
 
-  const addSection = () => {
-    setSections((prevSections) => [
-      ...prevSections,
-      {
-        id: prevSections.length + 1,
-      },
-    ]);
-  };
+  const submitTimeSlot = async (event) => {
+    event.preventDefault();
+    if(!fromHour){
+      alert("Field from hour is required")
+    }
+    if(fromMinute === null){
+      alert("Field from minute is required")
+    }
+    if(!toHour) {
+      alert("Field to hour is required")
+    }
+    if(toMinute === null){
+      alert("Field to minute is required")
+    }
 
-  const deleteSection = (id) => {
-    setSections((prevSections) =>
-      prevSections.filter((section) => section.id !== id)
-    );
+    const from = fromHour + ":" + fromMinute
+    const to = toHour + ":" + toMinute 
+
+    try{
+      const response = await axios({
+        method: "post",
+        url: "http://localhost:3000/api/users/add/slot",
+        data: {
+          startDate: startDate,
+          endDate: endDate,
+          from: from,
+          to: to,
+          capacity: capacity,
+          ID_Terminal : 1
+        }
+      })
+      console.log(response.data)
+      setOpen(false)
+      setCapacity("")
+    }
+    catch(error) {
+      console.log(error);
+    }
   };
   // const [penampung, setPenampung] = useState({
   //   startDate:"",
@@ -41,7 +81,7 @@ export function AddTimeSlot() {
   // })
 
   // setPenampung({
-  //   stardate:data, 
+  //   stardate:data,
   //   endDate:end
   // })
   // const tampung = [
@@ -51,7 +91,6 @@ export function AddTimeSlot() {
   //   },
   // ];
 
-
   // [{data1}, {data2}]
   // function startDateEndate(start) {
   //   [
@@ -59,6 +98,32 @@ export function AddTimeSlot() {
   //   ]
   //     // return `${start-end}`
   // }
+
+  const handleStartHour = (data) => {
+    setFromHour(data);
+  };
+
+  const handleStartMinute = (data) => {
+    setFromMinute(data);
+  };
+
+  const handleEndHour = (data) => {
+    setToHour(data);
+  };
+  const handleEndMinute = (data) => {
+    setToMinute(data);
+  };
+
+  const handleChangeCapacity = (event) => {
+    const newValue = event.target.value;
+    setCapacity(newValue);
+  };
+
+  const handleDate = (data) => {
+    setStartDate(data.from)
+    setEndDate(data.to)
+  }
+
   return (
     <>
       <button
@@ -84,6 +149,7 @@ export function AddTimeSlot() {
         <p className="font-medium text-white">Add Time slot</p>
       </button>
       {open ? (
+        <form onSubmit={submitTimeSlot}>
         <div className="absolute inset-0 bg-opacity-60 backdrop-blur-sm flex justify-center items-center bg-black">
           <div className=" bg-white w-[947px] max-h-[720px] rounded-xl py-[31px] px-[47px] flex flex-col gap-4">
             <div className="flex flex-row-reverse">
@@ -116,57 +182,66 @@ export function AddTimeSlot() {
             <div className="flex flex-col gap-4 scrollbar-hide overflow-y-scroll">
               <div className="flex flex-col gap-2">
                 <h2 className="font-medium">Date</h2>
-                <DatePickerWithRange />
+                {/* <p>Start Date: {startDate ? startDate : "-"}, End Date: {endDate? endDate : "-"}</p> */}
+                <DatePickerWithRange dataDate={handleDate}/>
               </div>
               <div className="border-b">
                 <div className="flex flex-col gap-2.5 pb-5">
                   <h2 className="font-medium">Timeslot</h2>
-                  {sections.map((section) => (
-                    <AccordionTimeslot
-                      data={{ id: section.id }}
-                      onClick={() => deleteSection(section.id)}
-                    />
-                  ))}
-                  <button
-                    className="flex gap-x-2.5 items-center mt-[10px]"
-                    onClick={addSection}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="25"
-                      viewBox="0 0 24 25"
-                      fill="none"
-                    >
-                      <path
-                        d="M12 22.5076C17.5 22.5076 22 18.0076 22 12.5076C22 7.00757 17.5 2.50757 12 2.50757C6.5 2.50757 2 7.00757 2 12.5076C2 18.0076 6.5 22.5076 12 22.5076Z"
-                        stroke="#064B82"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M8 12.5076H16"
-                        stroke="#064B82"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M12 16.5076V8.50757"
-                        stroke="#064B82"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
-                    <p className="text-sm">Timeslot</p>
-                  </button>
+                  <Accordion type="single" collapsible className="w-full">
+                    <AccordionItem value="item-1" className="border rounded-lg">
+                      <div className="relative">
+                        <AccordionTrigger className="text-sm">
+                          Time Slot
+                        </AccordionTrigger>
+                      </div>
+                      <AccordionContent>
+                        <div className="flex flex-col gap-y-5 border-t pt-4">
+                          <div className="grid grid-cols-2 gap-2 ">
+                            <div className="flex flex-col gap-y-3 justify-between">
+                              <p className="font-medium">From</p>
+                              <div className="grid grid-cols-2 gap-2">
+                                <DropdownStartHour
+                                  dataStartHour={handleStartHour}
+                                />
+                                <DropdownStartMinute
+                                  dataStartMinute={handleStartMinute}
+                                />
+                              </div>
+                            </div>
+                            <div className="flex flex-col gap-y-3 justify-between">
+                              <p className="font-medium">To</p>
+                              <div className="grid grid-cols-2 gap-2">
+                                <DropdownEndHour dataEndHour={handleEndHour} />
+                                <DropdownEndMinute
+                                  dataEndMinute={handleEndMinute}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-2 gap-2 items-center">
+                            <div className="flex flex-col gap-y-3">
+                              <p className="font-medium">Real Capacity</p>
+                              <Input
+                                type="Capacity Planning"
+                                placeholder="100"
+                                value={capacity}
+                                onChange={handleChangeCapacity}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
                 </div>
               </div>
             </div>
             <div className="flex flex-row-reverse gap-3">
-              <button className="w-[118px] h-[53px] items-center justify-center bg-primary text-sm rounded-full text-white">
+              <button
+                type="submit"
+                className="w-[118px] h-[53px] items-center justify-center bg-primary text-sm rounded-full text-white"
+              >
                 Save
               </button>
               <button
@@ -178,6 +253,7 @@ export function AddTimeSlot() {
             </div>
           </div>
         </div>
+        </form>
       ) : (
         ""
       )}
