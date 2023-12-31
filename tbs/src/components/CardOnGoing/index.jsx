@@ -1,8 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ProgressBar } from "../ProgressBar";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 export default function CardOnGoing({ data }) {
+    const [totalTCA, setTotalTCA] = useState([])
+
+    const getTotalTCA = async () => {
+        try {
+            const response = await axios({
+                method : "get",
+                url: `http://localhost:3000/api/users/view/countingTCA/${data.ID_Request}`
+            })
+            setTotalTCA(response.data.totalTCA)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        getTotalTCA()
+    }, [])
+
     return (
         <>
             <div className="border-2 border-gray-300 rounded-md w-full">
@@ -86,16 +105,16 @@ export default function CardOnGoing({ data }) {
                     <div className="flex flex-row items-center justify-between">
                         <div className="py-5 ">
                             <div className="w-full">
-                                <ProgressBar value={50} max={200} />
+                                <ProgressBar value={totalTCA} max={data.Qty} />
                                 {/* <progress class="progress w-68" value="3" max="20"></progress> */}
                                 {/* <progress className="progress progress-red-500 bg-black rounded w-full" value="10" max="100"></progress> */}
                             </div>
                             <div className="flex flex-row pt-2.5 pb-1">
                                 <div className="flex flex-row ">
                                     <p className="text-primary font-poppins">TCA</p>
-                                    <p className="text-primary font-bold px-1 font-poppins">3</p>
+                                    <p className="text-primary font-bold px-1 font-poppins">{totalTCA}</p>
                                     <p className="text-primary font-poppins">out of</p>
-                                    <p className="text-primary px-1 font-poppins">20</p>
+                                    <p className="text-primary px-1 font-poppins">{data.Qty}</p>
                                     <p className="text-primary font-poppins">completed</p>
                                 </div>
                             </div>
@@ -107,7 +126,7 @@ export default function CardOnGoing({ data }) {
                                 </button>
                                 <button className="bg-white text-primary border border-primary h-12 px-8 rounded-md items-center flex gap-1">
                                     <p className="font-medium">View E-Ticket</p>
-                                    <p className="font-medium">(3)</p>
+                                    <p className="font-medium">({totalTCA})</p>
                                 </button>
                             </div>
                         </div>

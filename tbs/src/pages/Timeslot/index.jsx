@@ -4,6 +4,9 @@ import HeaderJob from "../../components/HeaderJob/headerJob";
 import AssignTruck from "../../components/AssignTruck";
 import TableTimeslot from "../../components/TableTimeslot";
 import { useLocation, useNavigate } from "react-router-dom";
+import { PDFDownloadLink, pdf } from "@react-pdf/renderer";
+import PDFFile from "src/components/ViewETicket";
+import { Anchor } from "lucide-react";
 
 export default function TimeSlot() {
   const location = useLocation();
@@ -32,6 +35,10 @@ export default function TimeSlot() {
           </svg>
           <p className="font-medium text-md">My Booking</p>
         </button>
+
+
+          <p>test</p>
+            
       </div>
       <HeaderJob data={data} />
       <div>

@@ -7,6 +7,7 @@ import { debounce } from 'lodash';
 
 export default function CardBooking() {
   const [booking, setBooking] = useState([]);
+  const [totalTimeslot, setTotalTimeslot] = useState([])
   const { Customer_ID } = useSelector((state) => state.Auth.user);
   const navigate = useNavigate();
 
@@ -49,6 +50,18 @@ export default function CardBooking() {
     };
     navigate("/timeslot", { state: data });
   };
+
+  // const getTotalTimeslot = async () => {
+  //   try {
+  //     const response = await axios({
+  //       method : "get",
+  //       url: `http://localhost:3000/api/users/counting/timeslot/${data.id}`
+  //       setTotalTimeslot(response.data.totalTimeslot)
+  //     })
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
   useEffect(() => {
     getDataBooking();
@@ -209,7 +222,7 @@ export default function CardBooking() {
                             stroke-linejoin="round"
                           />
                         </svg>
-                        <p>{bookings.createdAt}</p>
+                        <p>Created Date: {new Date(bookings.createdAt).toISOString().split('T')[0]}</p>
                       </div>
                       <div className="flex flex-row items-center gap-x-1.5">
                         <svg
@@ -294,7 +307,7 @@ export default function CardBooking() {
                             stroke-linejoin="round"
                           />
                         </svg>
-                        <p>{bookings.Closing_Time}</p>
+                        <p>Closing Time: {new Date(bookings.Closing_Time).toISOString().split('T')[0]} {new Date(bookings.Closing_Time).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })}</p>
                       </div>
                     </div>
                   </div>

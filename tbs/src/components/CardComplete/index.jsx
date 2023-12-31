@@ -87,8 +87,6 @@ export default function CardComplete({data}) {
                         <div className="py-5 ">
                             <div className="w-full">
                                 <ProgressBar value={50} max={200} />
-                                {/* <progress class="progress w-68" value="3" max="20"></progress> */}
-                                {/* <progress className="progress progress-red-500 bg-black rounded w-full" value="10" max="100"></progress> */}
                             </div>
                             <div className="flex flex-row pt-2.5 pb-1">
                                 <div className="flex flex-row ">
