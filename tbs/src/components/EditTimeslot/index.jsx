@@ -1,25 +1,30 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
 import { Input } from "src/components/ui/input";
-import { useSelector } from "react-redux";
-import { EditTimeSlot } from "../EditTimeslot";
-import { Link, useNavigate } from "react-router-dom";
+import { Label } from "src/components/ui/label";
 import { DatePickerWithRange } from "../DatePicker";
-import { DropdownEndHour } from "../DropdownEndHour";
-import { DropdownEndMinute } from "../DropdownEndMinute";
-import { DropdownStartHour } from "../DropdownStartHour";
-import { DropdownStartMinute } from "../DropdownStartMinute";
+import { useState } from "react";
+import AccordionTimeslot from "../AccordionTimeslot/Index";
+import { endOfDay } from "date-fns";
 import {
     Accordion,
     AccordionContent,
     AccordionItem,
     AccordionTrigger,
 } from "../ui/accordion";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "../ui/select";
+import { DropdownEndHour } from "../DropdownEndHour";
+import { DropdownEndMinute } from "../DropdownEndMinute";
+import { DropdownStartHour } from "../DropdownStartHour";
+import { DropdownStartMinute } from "../DropdownStartMinute";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
-export default function SlotSchedule() {
-    const { date } = useSelector((state) => state.CapacityPlanning.Date);
-    const [slots, setSlots] = useState([]);
-    const [selectedDetail, setSelectedDetail] = useState(null);
+export function EditTimeSlot() {
     const [open, setOpen] = useState(false);
     const [fromHour, setFromHour] = useState("");
     const [fromMinute, setFromMinute] = useState("");
@@ -28,28 +33,70 @@ export default function SlotSchedule() {
     const [capacity, setCapacity] = useState("");
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
+    const { Customer_ID } = useSelector((state) => state.Auth.user);
 
-    const getDetailSlot = async () => {
+    const submitTimeSlot = async (event) => {
+        event.preventDefault();
+        if (!fromHour) {
+            alert("Field from hour is required")
+        }
+        if (fromMinute === null) {
+            alert("Field from minute is required")
+        }
+        if (!toHour) {
+            alert("Field to hour is required")
+        }
+        if (toMinute === null) {
+            alert("Field to minute is required")
+        }
+
+        const from = fromHour + ":" + fromMinute
+        const to = toHour + ":" + toMinute
+
         try {
             const response = await axios({
-                method: "get",
-                url: `http://localhost:3000/api/users/slot/${date}`,
-            });
-            console.log(response.data);
-            setSlots(() => response.data);
-        } catch (error) {
+                method: "post",
+                url: "http://localhost:3000/api/users/add/slot",
+                data: {
+                    startDate: startDate,
+                    endDate: endDate,
+                    from: from,
+                    to: to,
+                    capacity: capacity,
+                    ID_Terminal: 1
+                }
+            })
+            console.log(response.data)
+            setOpen(false)
+            setCapacity("")
+        }
+        catch (error) {
             console.log(error);
         }
     };
+    // const [penampung, setPenampung] = useState({
+    //   startDate:"",
+    //   endDate:""
+    // })
 
-    useEffect(() => {
-        getDetailSlot();
-    }, [date]);
+    // setPenampung({
+    //   stardate:data,
+    //   endDate:end
+    // })
+    // const tampung = [
+    //   {
+    //     idTerminal,
+    //     detail: [{ startDate, endDate }, {star}],
+    //   },
+    // ];
 
-    const handleSlotClick = (selectedDetail) => {
-        setSelectedDetail(selectedDetail);
-        setOpen(true);
-    };
+    // [{data1}, {data2}]
+    // function startDateEndate(start) {
+    //   [
+
+    //   ]
+    //     // return `${start-end}`
+    // }
 
     const handleStartHour = (data) => {
         setFromHour(data);
@@ -78,35 +125,16 @@ export default function SlotSchedule() {
 
     return (
         <>
-            <div className="bg-primary w-full h-auto p-[44px] rounded-lg">
-                <div className="flex items-center gap-[15px]">
-                    <h2 className="text-white font-normal text-xl">{date}</h2>
-                </div>
-                <div className="bg-white w-full h-[1px] rounded-sm mt-[15px]" />
-                <div className="pt-9 flex justify-center gap-x-14">
-                    {slots.map((slot) => {
-                        return slot.detailSlots.map((detail) => (
-                            <button
-                                key={detail.id}
-                                className="flex flex-col gap-y-[5px] items-center"
-                                onClick={() => handleSlotClick(detail)}
-                            >
-                                <div className="flex gap-[5px] text-[#4185BB] font-medium">
-                                    <p>{detail.Start.split(":").slice(0, 2).join(":")}</p>
-                                    <p>-</p>
-                                    <p>{detail.End.split(":").slice(0, 2).join(":")}</p>
-                                </div>
-                                <div className="border-[1px] w-[80px] h-[56px] flex items-center justify-center border-[#4185BB] rounded-lg">
-                                    <p className="text-[#4185BB] font-normal text-[28px]">{detail.Qty}</p>
-                                </div>
-                            </button>
-                        ));
-                    })}
-                </div>
-                {open && selectedDetail && (
-                    <div className="absolute inset-0 flex justify-center items-center bg-black backdrop-blur-sm bg-opacity-60">
-                        <div className="bg-white w-[947px] max-h-[720px] rounded-xl py-[31px] px-[47px] flex flex-col gap-4">
-                            <p>Selected slot details: {selectedDetail.Start} - {selectedDetail.End}</p>
+            <button
+                className="flex gap-[2px] bg-white rounded-lg w-[100px] h-[54px] text-white btn items-center justify-center"
+                onClick={() => setOpen(true)}
+            >
+                <p className="font-medium text-primary">Edit</p>
+            </button>
+            {open ? (
+                <form onSubmit={submitTimeSlot}>
+                    <div className="absolute inset-0 bg-opacity-60 backdrop-blur-sm flex justify-center items-center bg-black">
+                        <div className=" bg-white w-[947px] max-h-[720px] rounded-xl py-[31px] px-[47px] flex flex-col gap-4">
                             <div className="flex flex-row-reverse">
                                 <button className="btn" onClick={() => setOpen(false)}>
                                     <svg
@@ -140,7 +168,7 @@ export default function SlotSchedule() {
                                     {/* <p>Start Date: {startDate ? startDate : "-"}, End Date: {endDate? endDate : "-"}</p> */}
                                     <DatePickerWithRange dataDate={handleDate} />
                                 </div>
-                                <div>
+                                <div className="border-b">
                                     <div className="flex flex-col gap-2.5 pb-5">
                                         <h2 className="font-medium">Timeslot</h2>
                                         <Accordion type="single" collapsible className="w-full">
@@ -148,6 +176,13 @@ export default function SlotSchedule() {
                                                 <div className="relative">
                                                     <AccordionTrigger className="text-sm">
                                                         Time Slot
+                                                        <button>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
+                                                                <path d="M12.6602 22.5076C18.1602 22.5076 22.6602 18.0076 22.6602 12.5076C22.6602 7.00763 18.1602 2.50763 12.6602 2.50763C7.16016 2.50763 2.66016 7.00763 2.66016 12.5076C2.66016 18.0076 7.16016 22.5076 12.6602 22.5076Z" stroke="#F64E60" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                                <path d="M9.83008 15.3376L15.4901 9.67761" stroke="#F64E60" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                                <path d="M15.4901 15.3376L9.83008 9.67761" stroke="#F64E60" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                            </svg>
+                                                        </button>
                                                     </AccordionTrigger>
                                                 </div>
                                                 <AccordionContent>
@@ -200,11 +235,6 @@ export default function SlotSchedule() {
                                     Save
                                 </button>
                                 <button
-                                    className="w-[135px] h-[53px] items-center justify-center bg-[#F64E60] text-sm rounded-full border border-white text-white"
-                                >
-                                    Delete Slot
-                                </button>
-                                <button
                                     className="w-[118px] h-[53px] items-center justify-center text-sm rounded-full border border-primary text-primary"
                                     onClick={() => setOpen(false)}
                                 >
@@ -213,8 +243,10 @@ export default function SlotSchedule() {
                             </div>
                         </div>
                     </div>
-                )}
-            </div>
+                </form>
+            ) : (
+                ""
+            )}
         </>
     );
 }
