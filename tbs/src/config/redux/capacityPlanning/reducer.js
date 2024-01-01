@@ -1,5 +1,5 @@
 const initializeState = {
-  Date: '',
+  Date: new Date().toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
 };
 
 const CapacityReducer = (state = initializeState, action) => {
