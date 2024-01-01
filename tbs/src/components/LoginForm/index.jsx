@@ -100,7 +100,7 @@ export default function LoginForm() {
               </Link>
             </div>
           </div>
-          <CardFooter className="flex flex-col items-center justify-center w-full gap-2">
+          <CardFooter className="flex flex-col pt-10 pb-6 items-center justify-center w-full gap-2">
               <div className="flex flex-row gap-2">
                 <p>Didn't have account?</p>
                 <Link to={"/signUp"} className="text-primary font-medium">
@@ -119,7 +119,7 @@ export default function LoginForm() {
 
 {/* <div className="bg-white py-[53px] px-[51px] rounded-lg">
         <div className="flex justify-center mt-7">
-            <img src="/images/logo_tbs.png" />
+            <img src="/images/logo_tbst-10.png" />
         </div>
         <div className="">
             <h1 className="text-primary font-bold text-2xl mb-3.5">Sign In</h1>
