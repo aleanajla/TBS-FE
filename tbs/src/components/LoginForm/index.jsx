@@ -11,16 +11,9 @@ import {
 } from "src/components/ui/card"
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "src/components/ui/select"
 import { Checkbox } from "../ui/checkbox";
 import * as action from "../../config/redux/auth/action";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 
 
 
@@ -44,7 +37,7 @@ export default function LoginForm() {
     // isloggedIn true routing ke home kl false stay at login
     if (result.error) {
       setError(result.message)
-    } 
+    }
     else {
       navigate('/homepage')
     }
@@ -96,16 +89,24 @@ export default function LoginForm() {
               </div>
             </div>
           </div>
-          <div className="flex justify-between items-center w-full pt-6">
-            <div className="flex items-center space-x-2">
-              <Checkbox id="terms" className="bg-white" />
-              <Label htmlFor="terms" className="text-sm font-medium">Remember Me</Label>
+          <div className="flex flex-col gap-4 justify-center items-center">
+            <div className="flex justify-between items-center w-full pt-6">
+              <div className="flex items-center space-x-2">
+                <Checkbox id="terms" className="bg-white" />
+                <Label htmlFor="terms" className="text-sm font-medium">Remember Me</Label>
+              </div>
+              <Link to={"/forgotPassword"}>
+                <p className="text-sm font-medium text-primary">Forgot Password</p>
+              </Link>
             </div>
-            <Link to={"/forgotPassword"}>
-              <p className="text-sm font-medium text-primary">Forgot Password</p>
-            </Link>
           </div>
-          <CardFooter className="flex items-center justify-center w-full py-10">
+          <CardFooter className="flex flex-col items-center justify-center w-full gap-2">
+              <div className="flex flex-row gap-2">
+                <p>Didn't have account?</p>
+                <Link to={"/signUp"} className="text-primary font-medium">
+                  Register Here
+                </Link>
+              </div>
             <button type="submit" className="w-full py-3.5 px-6 rounded-full bg-primary text-white font-normal">
               Login
             </button>
