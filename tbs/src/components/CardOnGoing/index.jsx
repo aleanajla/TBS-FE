@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ProgressBar } from "../ProgressBar";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function CardOnGoing({ data }) {
     const navigate = useNavigate()
+    const [countTCA, setCountTCA] = useState([])
 
     const handleTCA = (Service_Name,Vessel_Name,No_Request,Closing_Time,Port_Name,Terminal_Name,Qty, ID_Request) => {
         const data = {
@@ -15,9 +17,29 @@ export default function CardOnGoing({ data }) {
             Port_Name: Port_Name,
             Terminal_Name: Terminal_Name,
             Qty: Qty,
+            count: countTCA.totalTCA
         };
         navigate('/timeslot', {state: data})
     }
+    const countingTCA = async () => {
+        try{
+            const response = await axios({
+                method: "get",
+                url: `http://localhost:3000/api/users/view/countingTCA/${data.ID_Request}`
+            })
+
+            setCountTCA(()=>response.data)
+
+        }   
+        catch(error){
+            console.log(error);
+        }
+    }
+
+    useEffect(()=> {
+        countingTCA()
+    },[])
+
     return (
         <>
             <div className="border-2 border-gray-300 rounded-md w-full">
@@ -69,7 +91,7 @@ export default function CardOnGoing({ data }) {
                                             <path d="M6.22049 10.2749H6.22723" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                             <path d="M6.22049 12.5249H6.22723" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>
-                                        <p>Created Date: {data.createdAt} </p>
+                                        <p>Created Date: {new Date(data.createdAt).toISOString().split('T')[0]}</p>
                                     </div>
                                     <div className="flex flex-row items-center gap-x-1.5">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -84,7 +106,7 @@ export default function CardOnGoing({ data }) {
                                             <path d="M6.22049 10.2749H6.22723" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                             <path d="M6.22049 12.5249H6.22723" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>
-                                        <p>Closing Time: {data.Closing_Time} </p>
+                                        <p>Closing Time: {new Date(data.Closing_Time).toISOString().split('T')[0]} {new Date(data.Closing_Time).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })}</p>
                                     </div>
                                 </div>
                             </div>
@@ -101,16 +123,16 @@ export default function CardOnGoing({ data }) {
                     <div className="flex flex-row items-center justify-between">
                         <div className="py-5 ">
                             <div className="w-full">
-                                <ProgressBar value={50} max={200} />
+                                <ProgressBar value={countTCA.totalTCA} max={data.Qty} />
                                 {/* <progress class="progress w-68" value="3" max="20"></progress> */}
                                 {/* <progress className="progress progress-red-500 bg-black rounded w-full" value="10" max="100"></progress> */}
                             </div>
                             <div className="flex flex-row pt-2.5 pb-1">
                                 <div className="flex flex-row ">
                                     <p className="text-primary font-poppins">TCA</p>
-                                    <p className="text-primary font-bold px-1 font-poppins">3</p>
+                                    <p className="text-primary font-bold px-1 font-poppins">{countTCA.totalTCA}</p>
                                     <p className="text-primary font-poppins">out of</p>
-                                    <p className="text-primary px-1 font-poppins">20</p>
+                                    <p className="text-primary px-1 font-poppins">{data.Qty}</p>
                                     <p className="text-primary font-poppins">completed</p>
                                 </div>
                             </div>
@@ -122,7 +144,7 @@ export default function CardOnGoing({ data }) {
                                 </button>
                                 <button className="bg-white text-primary border border-primary h-12 px-8 rounded-md items-center flex gap-1">
                                     <p className="font-medium">View E-Ticket</p>
-                                    <p className="font-medium">(3)</p>
+                                    <p className="font-medium">({countTCA.totalTCA})</p>
                                 </button>
                             </div>
                         </div>
