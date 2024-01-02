@@ -34,12 +34,14 @@ import { result } from "lodash";
 export default function TableValue({ data }) {
   console.log(data.ID_Request, "data props");
   const [dataContainer, setDataContainer] = useState([]);
-  // const [dataBooking, setDataBooking] = useState([]);
   const [dataSTID, setDataSTID] = useState([]);
   const { Role_ID } = useSelector((state) => state.Auth.user);
-  const [loading, setLoading] = useState(true);
   const [timeslot, setTimeslot] = useState([]);
+  const [openTimeslot, setOpenTimeslot] = useState("");
+  const [openAssignJob, setOpenAssignJob] = useState(false);
+  const [loading, setLoading] = useState(true);
   // const [dataRequestBooking, setDataRequestBooking] = useState([]);
+  // const [dataBooking, setDataBooking] = useState([]);
 
   const getDataContainer = async () => {
     console.log(data?.ID_Request, "id request");
@@ -82,6 +84,7 @@ export default function TableValue({ data }) {
         },
       });
       alert("Successfully Send!");
+      getDataContainer()
     } catch (error) {
       console.log(error);
     }
@@ -98,13 +101,49 @@ export default function TableValue({ data }) {
         },
       });
       alert("Successfully Send!");
+      getDataContainer()
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const editBooking = async (id) => {
+    try {
+      const response = await axios({
+        method: "post",
+        url: `http://localhost:3000/api/users/edit/timeslot`,
+        data: {
+          ID_Booking: id,
+          New_Timeslot: timeslot.id,
+        },
+      });
+      alert(response.data);
+      getDataContainer();
+      setOpenTimeslot("");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const editAssignJob = async (ID_AssignJob, ID_STID) => {
+    try {
+      const response = await axios({
+        method: "post",
+        url: "http://localhost:3000/api/users/edit/TCA",
+        data: {
+          ID_AssignJob: ID_AssignJob,
+          New_STID: ID_STID,
+        },
+      });
+      alert(response.data);
+      getDataContainer();
+      setOpenAssignJob("");
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    console.log(dataSTID.STID_Number, "DATA STID ARRAY FROM TABLE VALUE");
     getDataContainer();
   }, [data, dataSTID]);
 
@@ -136,7 +175,21 @@ export default function TableValue({ data }) {
                       : job?.Container_Number}
                   </TableCell>
                   <TableCell>
-                    {job?.detailSlot ? (
+                    {openTimeslot === key && Role_ID === 1 ? (
+                      <div className="flex place-content-center">
+                        <ChooseTimeslot
+                          data={{
+                            Container_Number: job?.requestContainer
+                              ? job?.requestContainer.Container_Number
+                              : job?.Container_Number,
+                            Start: 0,
+                            End: 0,
+                            Date: null,
+                          }}
+                          updateData={getDataFromChild}
+                        />
+                      </div>
+                    ) : job?.detailSlot ? (
                       <div className="flex place-content-center">
                         <ChooseTimeslot
                           data={{
@@ -149,10 +202,6 @@ export default function TableValue({ data }) {
                           }}
                           updateData={getDataFromChild}
                         />
-                        {/* {Role_ID === 1 ? (
-                            ) : (
-                              ""
-                            )} */}
                       </div>
                     ) : (
                       <div className="flex place-content-center">
@@ -167,29 +216,20 @@ export default function TableValue({ data }) {
                           }}
                           updateData={getDataFromChild}
                         />
-                        {/* {Role_ID === 1 ? (
-                            ) : (
-                              ""
-                            )} */}
                       </div>
                     )}
                   </TableCell>
                   <TableCell>
                     <div className="flex place-content-center">
-                      {/* {Role_ID === 2 && dataSTID.length == 0 ? (
+                      {openAssignJob === key && Role_ID === 2 ? (
                         <>
                           <ChooseSTID
-                            data={{ id: data.ID_Trucking }}
+                            data={{ id: data.ID_Trucking, index: key }}
                             getDataDetailSTID={getSTID}
                           />
                         </>
                       ) : (
-                        <>
-                          <p>{dataSTID.STID_Number}</p>
-                        </>
-                      )} */}
-
-                      {Role_ID === 2 &&
+                        Role_ID === 2 &&
                         (job?.assignJob ? (
                           <>
                             <p>
@@ -207,7 +247,8 @@ export default function TableValue({ data }) {
                               getDataDetailSTID={getSTID}
                             />
                           </>
-                        ))}
+                        ))
+                      )}
                       {Role_ID === 1 &&
                         (job?.assignJob ? (
                           <>
@@ -226,14 +267,66 @@ export default function TableValue({ data }) {
                   </TableCell>
 
                   <TableCell className="text-center">
-                    {Role_ID === 1 && job?.requestContainer ? (
-                      <button
-                        className=" bg-gray-400 text-white px-8 py-2 rounded-lg text-sm"
-                        // onClick={() => submitData(job.id)}
-                        disabled={true}
-                      >
-                        <p>Save & Send</p>
-                      </button>
+                    {openTimeslot === key || openAssignJob === key ? (
+                      <>
+                        {Role_ID === 1 ? (
+                          <>
+                            <button
+                              className="bg-white mr-2 border-primary border-2 text-primary px-8 py-2 rounded-lg text-sm"
+                              onClick={() => setOpenTimeslot("")}
+                            >
+                              <p>Cancel</p>
+                            </button>
+                            <button
+                              className="bg-primary text-white px-8 py-2 rounded-lg text-sm"
+                              onClick={() => editBooking(job.id)}
+                            >
+                              <p>Edit & Send</p>
+                            </button>
+                          </>
+                        ) : (
+                          <>
+                            <button
+                              className="bg-white mr-2 border-primary border-2 text-primary px-8 py-2 rounded-lg text-sm"
+                              onClick={() => setOpenAssignJob("")}
+                            >
+                              <p>Cancel</p>
+                            </button>
+                            <button
+                              className="bg-primary text-white px-8 py-2 rounded-lg text-sm"
+                              onClick={() =>
+                                editAssignJob(job.assignJob.id, dataSTID.id)
+                              }
+                            >
+                              <p>Edit & Send</p>
+                            </button>
+                          </>
+                        )}
+                      </>
+                    ) : Role_ID === 1 && job?.requestContainer ? (
+                      job?.assignJob ? (
+                        <div>
+                          <button
+                            className=" bg-white mr-2 border-primary border-2 text-white px-8 py-2 rounded-lg text-sm"
+                            onClick={() => setOpenTimeslot(key)}
+                          >
+                            <p className="text-primary">Edit</p>
+                          </button>
+                          <button
+                            className=" bg-primary text-white px-5 border-2 border-primary py-2 rounded-lg text-sm"
+                            // onClick={() => submitAssignJob(job.id, dataSTID.id)}
+                          >
+                            <p>View E-Ticket</p>
+                          </button>
+                        </div>
+                      ) : (
+                        <button
+                          className=" bg-gray-400 text-white px-8 py-2 rounded-lg text-sm"
+                          disabled={true}
+                        >
+                          <p>Save & Send</p>
+                        </button>
+                      )
                     ) : Role_ID === 1 ? (
                       <>
                         <button
@@ -244,14 +337,33 @@ export default function TableValue({ data }) {
                         </button>
                       </>
                     ) : job?.requestContainer ? (
-                      <>
-                        <button
-                          className=" bg-primary text-white px-8 py-2 rounded-lg text-sm"
-                          onClick={() => submitAssignJob(job.id, dataSTID.id)}
-                        >
-                          <p>Save & Send</p>
-                        </button>
-                      </>
+                      job?.assignJob ? (
+                        <>
+                          <div>
+                            <button
+                              className=" bg-white mr-2 border-primary border-2 text-white px-8 py-2 rounded-lg text-sm"
+                              onClick={() => setOpenAssignJob(key)}
+                            >
+                              <p className="text-primary">Edit TC</p>
+                            </button>
+                            <button
+                              className=" bg-primary text-white px-5 border-2 border-primary py-2 rounded-lg text-sm"
+                              // onClick={() => submitAssignJob(job.id, dataSTID.id)}
+                            >
+                              <p>View E-Ticket</p>
+                            </button>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <button
+                            className=" bg-primary text-white px-8 py-2 rounded-lg text-sm"
+                            onClick={() => submitAssignJob(job.id, dataSTID.id)}
+                          >
+                            <p>Save & Send</p>
+                          </button>
+                        </>
+                      )
                     ) : (
                       <>
                         <button

@@ -1,7 +1,8 @@
 import React from "react";
 
 export default function SearchBar() {
-    return (<>
+    return (
+    <>
         <div
             class="flex items-center mx-auto bg-[#F8F8F8] rounded-lg w-full"
             x-data="{ search: '' }"

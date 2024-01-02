@@ -18,6 +18,7 @@ import {
 
 export default function SlotSchedule() {
   const { date } = useSelector((state) => state.CapacityPlanning.Date);
+  const { Date } = useSelector((state) => state.CapacityPlanning);
   const [slots, setSlots] = useState([]);
   const [selectedDetail, setSelectedDetail] = useState(null);
   const [open, setOpen] = useState(false);
@@ -27,7 +28,7 @@ export default function SlotSchedule() {
     try {
       const response = await axios({
         method: "get",
-        url: `http://localhost:3000/api/users/slot/${date}`,
+        url: `http://localhost:3000/api/users/slot/${date?date:Date}`,
       });
       console.log(response.data);
       setSlots(() => response.data);
@@ -117,10 +118,6 @@ export default function SlotSchedule() {
         {open && selectedDetail && (
           <div className="absolute inset-0 flex justify-center items-center bg-black backdrop-blur-sm bg-opacity-60">
             <div className="bg-white w-[947px] max-h-[720px] rounded-xl py-[31px] px-[47px] flex flex-col gap-4">
-              {/* <p>
-                Selected slot details: {selectedDetail.Start} -{" "}
-                {selectedDetail.End}
-              </p> */}
               <div className="flex flex-row-reverse">
                 <button className="btn" onClick={() => setOpen(false)}>
                   <svg

@@ -245,7 +245,7 @@ export default function AssignTruck({ data }) {
       ) : (
         ""
       )}
-      <TableTimeslot data={statusRequest}/>
+      <TableTimeslot data={statusRequest} dataTCA={data}/>
     </>
   );
 }

@@ -7,7 +7,7 @@ export default function HeaderJob({data}){
             <div className="flex flex-row items-center gap-2">
                 <p className="font-medium">{data.No_Request} - {data.Vessel_Name.toUpperCase()}</p>
                 <div className="bg-success bg-[#0F9B71] rounded-full text-white font-medium py-1 px-2">
-                    <p>3/{data.Qty}</p>
+                    <p>{data.count}/{data.Qty}</p>
                 </div>
             </div>
 

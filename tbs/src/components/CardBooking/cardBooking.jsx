@@ -3,13 +3,14 @@ import { ProgressBar } from "../ProgressBar";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { debounce } from 'lodash';
+import { debounce } from "lodash";
 import { Search } from "lucide-react";
 
 export default function CardBooking() {
   const [booking, setBooking] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const { Customer_ID } = useSelector((state) => state.Auth.user);
+  const [countTCA, setCountTCA] = useState([]);
   const navigate = useNavigate();
 
   const getDataBooking = async () => {
@@ -18,8 +19,8 @@ export default function CardBooking() {
         method: "get",
         url: `http://localhost:3000/api/users/view/request/${Customer_ID}`,
         params: {
-          search: searchTerm
-        }
+          search: searchTerm,
+        },
       });
 
       console.log(response);
@@ -37,7 +38,8 @@ export default function CardBooking() {
     Closing_Time,
     Port_Name,
     Terminal_Name,
-    Qty
+    Qty,
+    count
   ) => {
     const data = {
       id: id,
@@ -48,21 +50,33 @@ export default function CardBooking() {
       Port_Name: Port_Name,
       Terminal_Name: Terminal_Name,
       Qty: Qty,
+      count: count,
     };
     navigate("/timeslot", { state: data });
   };
 
+  const countingTCA = async () => {
+    try {
+      const response = await axios({
+        method: "get",
+        url: `http://localhost:3000/api/users/view/countingTCA/${booking.id}`,
+      });
+      setCountTCA(() => response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getDataBooking();
-  },[searchTerm]);
-  
+    countingTCA();
+  }, [searchTerm]);
 
   const handleInputChange = (e) => {
-      setSearchTerm(e.target.value);
+    setSearchTerm(e.target.value);
   };
 
   return (
-
     <>
       <div className="py-6">
         <div className="border-2 border-gray-200 rounded-lg p-6">
@@ -107,7 +121,7 @@ export default function CardBooking() {
             {/* Header Request */}
             <div className="border-b-2 border-grey-400 w-full h-14 flex items-center">
               <p className="font-medium text-gray text-md px-8">
-                Request ID : {bookings.No_Request}
+                Request ID : {bookings.requests.No_Request}
               </p>
             </div>
             {/* Detail */}
@@ -119,10 +133,10 @@ export default function CardBooking() {
                 <div>
                   <div className="flex flex-row gap-4 items-center">
                     <p className="font-medium text-md">
-                      {bookings.Vessel_Name.toUpperCase()}
+                      {bookings.requests.Vessel_Name.toUpperCase()}
                     </p>
                     <div className="px-4 py-0.5 bg-primary text-white rounded-md font-medium">
-                      <p>{bookings.Service_Name.toUpperCase()}</p>
+                      <p>{bookings.requests.Service_Name.toUpperCase()}</p>
                     </div>
                   </div>
                   <div>
@@ -210,7 +224,7 @@ export default function CardBooking() {
                             stroke-linejoin="round"
                           />
                         </svg>
-                        <p>{bookings.createdAt}</p>
+                        <p>{bookings.requests.createdAt}</p>
                       </div>
                       <div className="flex flex-row items-center gap-x-1.5">
                         <svg
@@ -295,19 +309,21 @@ export default function CardBooking() {
                             stroke-linejoin="round"
                           />
                         </svg>
-                        <p>{bookings.Closing_Time}</p>
+                        <p>{bookings.requests.Closing_Time}</p>
                       </div>
                     </div>
                   </div>
                   <div className="flex flex-row gap-2.5">
                     <div className="flex flex-row">
                       <p className="font-medium text-gray-500">Port: </p>
-                      <p className="pl-1 text-gray-500">{bookings.Port_Name}</p>
+                      <p className="pl-1 text-gray-500">
+                        {bookings.requests.Port_Name}
+                      </p>
                     </div>
                     <div className="flex flex-row">
                       <p className="font-medium text-gray-500">Terminal: </p>
                       <p className="pl-1 text-gray-500">
-                        {bookings.Terminal_Name}
+                        {bookings.requests.Terminal_Name}
                       </p>
                     </div>
                   </div>
@@ -316,7 +332,10 @@ export default function CardBooking() {
               <div className="flex flex-row items-center justify-between">
                 <div className="py-5 ">
                   <div className="w-full">
-                    <ProgressBar value={50} max={bookings.Qty} />
+                    <ProgressBar
+                      value={bookings.counts.count}
+                      max={bookings.requests.Qty}
+                    />
                     {/* <progress class="progress w-68" value="3" max="20"></progress> */}
                     {/* <progress className="progress progress-red-500 bg-black rounded w-full" value="10" max="100"></progress> */}
                   </div>
@@ -324,29 +343,34 @@ export default function CardBooking() {
                     <div className="flex flex-row ">
                       <p className="text-primary font-poppins">Time Slot</p>
                       <p className="text-primary font-bold px-1 font-poppins">
-                        3
+                        {bookings.counts.count}
                       </p>
                       <p className="text-primary font-poppins">dari</p>
                       <p className="text-primary px-1 font-poppins">
-                        {bookings.Qty}
+                        {bookings.requests.Qty}
                       </p>
                       <p className="text-primary font-poppins">telah terisi</p>
                     </div>
                   </div>
                 </div>
-                <div>
+                <div className="flex gap-3">
+                  <button className="bg-white text-primary border border-primary h-12 px-8 rounded-md items-center flex gap-1">
+                    <p className="font-medium">View E-Ticket</p>
+                    <p className="font-medium">({bookings.counts.count})</p>
+                  </button>
                   <button
                     className="bg-primary text-white h-12 px-4 rounded-md items-center"
                     onClick={() =>
                       handleClick(
-                        bookings.id,
-                        bookings.Service_Name,
-                        bookings.Vessel_Name,
-                        bookings.No_Request,
-                        bookings.Closing_Time,
-                        bookings.Port_Name,
-                        bookings.Terminal_Name,
-                        bookings.Qty
+                        bookings.requests.id,
+                        bookings.requests.Service_Name,
+                        bookings.requests.Vessel_Name,
+                        bookings.requests.No_Request,
+                        bookings.requests.Closing_Time,
+                        bookings.requests.Port_Name,
+                        bookings.requests.Terminal_Name,
+                        bookings.requests.Qty,
+                        bookings.counts.count
                       )
                     }
                   >
