@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-// import bg_footer from '../../../public/images/bg_footer.png'
 
 export default function Footer() {
 

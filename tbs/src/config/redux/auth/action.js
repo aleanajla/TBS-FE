@@ -16,9 +16,9 @@ export const LoginAction = (payload) => {
                 }
             })
 
+            localStorage.setItem("token", response.data.token)
             const { username, Role_ID } = response.data.payload;
             dispatch({type: Login, payload:{username, Role_ID, token: response.data.token}})
-            localStorage.setItem("token", response.data.token)
             
             return {
                 error : false,
@@ -40,6 +40,7 @@ export const LoginAction = (payload) => {
 }
 
 export const GetUserDetails = (payload) => {
+    console.log(payload)
     return async (dispatch) => {
         try {
             let response = await axios({

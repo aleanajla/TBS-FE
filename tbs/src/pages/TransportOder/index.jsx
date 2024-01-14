@@ -1,10 +1,5 @@
-import Timeslot from "../../components/ChooseTimeslot";
-import CardBooking from "../../components/CardBooking/cardBooking";
-import FilterSearch from "../../components/FilterSearch";
-import Layout from "../../components/Layouts/Layout";
 import React from "react";
 import { Link } from "react-router-dom";
-import Tabs from "src/components/Tabs";
 import { Tab } from "src/components/Tab/Tab";
 
 export default function TransportOrder() {

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -11,25 +10,9 @@ import {
 import ChooseTimeslot from "../ChooseTimeslot/index-nitnit";
 import { ChooseSTID } from "../chooseSTID";
 import axios from "axios";
-import RadialProgress from "../RadialProgress";
-import { Check, ChevronsUpDown } from "lucide-react";
-
-import { cn } from "src/lib/utils";
-import { Button } from "src/components/ui/button";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from "src/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "src/components/ui/popover";
 import { useSelector } from "react-redux";
-import { result } from "lodash";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import Eticket from "../Eticket";
 
 export default function TableValue({ data }) {
   console.log(data.ID_Request, "data props");
@@ -39,9 +22,6 @@ export default function TableValue({ data }) {
   const [timeslot, setTimeslot] = useState([]);
   const [openTimeslot, setOpenTimeslot] = useState("");
   const [openAssignJob, setOpenAssignJob] = useState(false);
-  const [loading, setLoading] = useState(true);
-  // const [dataRequestBooking, setDataRequestBooking] = useState([]);
-  // const [dataBooking, setDataBooking] = useState([]);
 
   const getDataContainer = async () => {
     console.log(data?.ID_Request, "id request");
@@ -56,7 +36,6 @@ export default function TableValue({ data }) {
           },
         });
         console.log(response, "result container");
-        // let data = []
         setDataContainer(response.data);
       }
     } catch (error) {
@@ -84,7 +63,7 @@ export default function TableValue({ data }) {
         },
       });
       alert("Successfully Send!");
-      getDataContainer()
+      getDataContainer();
     } catch (error) {
       console.log(error);
     }
@@ -101,7 +80,7 @@ export default function TableValue({ data }) {
         },
       });
       alert("Successfully Send!");
-      getDataContainer()
+      getDataContainer();
     } catch (error) {
       console.log(error);
     }
@@ -151,21 +130,17 @@ export default function TableValue({ data }) {
     <>
       {data?.ID_Status === 2 && (
         <Table>
-          {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
           <TableHeader>
             <TableRow>
-              {/* <div className="w-full flex justify-between bg-[#F5F5F5]"> */}
               <TableHead className="text-center">No</TableHead>
               <TableHead className="text-center">Kontainer</TableHead>
               <TableHead className="text-center">Slot Waktu</TableHead>
               <TableHead className="text-center">STID - Driver</TableHead>
               <TableHead className="text-center">Action</TableHead>
-              {/* </div> */}
             </TableRow>
           </TableHeader>
           <TableBody>
             {dataContainer?.mergedData?.map((job, key) => {
-              // console.log("job");
               return (
                 <TableRow className="-z-10" key={key}>
                   <TableCell className="text-center">{key + 1}</TableCell>
@@ -224,8 +199,9 @@ export default function TableValue({ data }) {
                       {openAssignJob === key && Role_ID === 2 ? (
                         <>
                           <ChooseSTID
-                            data={{ id: data.ID_Trucking, index: key }}
+                            data={{ id: data.ID_Trucking, index: key, date: job?.detailSlot?.slot.Date ? job?.detailSlot.slot.Date: null}}
                             getDataDetailSTID={getSTID}
+                            dataContainer = {dataContainer}
                           />
                         </>
                       ) : (
@@ -243,8 +219,9 @@ export default function TableValue({ data }) {
                         ) : (
                           <>
                             <ChooseSTID
-                              data={{ id: data.ID_Trucking, index: key }}
+                              data={{ id: data.ID_Trucking, index: key, date: job?.detailSlot?.slot.Date ? job?.detailSlot.slot.Date: null}}
                               getDataDetailSTID={getSTID}
+                              dataContainer = {dataContainer}
                             />
                           </>
                         ))
@@ -312,12 +289,16 @@ export default function TableValue({ data }) {
                           >
                             <p className="text-primary">Edit</p>
                           </button>
-                          <button
-                            className=" bg-primary text-white px-5 border-2 border-primary py-2 rounded-lg text-sm"
-                            // onClick={() => submitAssignJob(job.id, dataSTID.id)}
-                          >
-                            <p>View E-Ticket</p>
-                          </button>
+                          <PDFDownloadLink
+                              document={<Eticket data={{id_booking: job.id}}/>}
+                              fileName="Eticket"
+                            >
+                              <button
+                                className=" bg-primary text-white px-5 border-2 border-primary py-2 rounded-lg text-sm"
+                              >
+                                <p>View E-Ticket</p>
+                              </button>
+                            </PDFDownloadLink>
                         </div>
                       ) : (
                         <button
@@ -346,12 +327,16 @@ export default function TableValue({ data }) {
                             >
                               <p className="text-primary">Edit TC</p>
                             </button>
-                            <button
-                              className=" bg-primary text-white px-5 border-2 border-primary py-2 rounded-lg text-sm"
-                              // onClick={() => submitAssignJob(job.id, dataSTID.id)}
+                            <PDFDownloadLink
+                              document={<Eticket data={{id_booking: job.id}}/>}
+                              fileName="Eticket"
                             >
-                              <p>View E-Ticket</p>
-                            </button>
+                              <button
+                                className=" bg-primary text-white px-5 border-2 border-primary py-2 rounded-lg text-sm"
+                              >
+                                <p>View E-Ticket</p>
+                              </button>
+                            </PDFDownloadLink>
                           </div>
                         </>
                       ) : (

@@ -5,6 +5,8 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { debounce } from "lodash";
 import { Search } from "lucide-react";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import Eticket from "../Eticket";
 
 export default function CardBooking() {
   const [booking, setBooking] = useState([]);
@@ -354,10 +356,21 @@ export default function CardBooking() {
                   </div>
                 </div>
                 <div className="flex gap-3">
-                  <button className="bg-white text-primary border border-primary h-12 px-8 rounded-md items-center flex gap-1">
-                    <p className="font-medium">View E-Ticket</p>
-                    <p className="font-medium">({bookings.counts.count})</p>
-                  </button>
+                  {/* <PDFDownloadLink
+                    document={
+                      <Eticket
+                        data={{
+                          id_booking: bookings.id,
+                        }}
+                      />
+                    }
+                    fileName="Eticket"
+                  >
+                    <button className="bg-white text-primary border border-primary h-12 px-8 rounded-md items-center flex gap-1">
+                      <p className="font-medium">View E-Ticket</p>
+                      <p className="font-medium">({bookings.counts.count})</p>
+                    </button>
+                  </PDFDownloadLink> */}
                   <button
                     className="bg-primary text-white h-12 px-4 rounded-md items-center"
                     onClick={() =>

@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import qs from "qs";
 import axios from "axios";
@@ -18,11 +18,7 @@ export default function NewPasswordForm(){
     const token = qs.parse(search.replace("?", ""))?.token ?? null;
 
     console.log(token)
-    // if (!token) {
-    //     navigate('/login')
-    // }
 
-    
     const onSubmitNewPassword = async (event) => {
         event.preventDefault();
         let result = { error: false, message: "" }
@@ -30,7 +26,6 @@ export default function NewPasswordForm(){
         try {
             let response = await axios({
                 method: "patch",
-                // url: `${API_LOCAL}/api/users/login`,
                 url: "http://localhost:3000/api/auth/user/change-password",
                 data: newPasswordData,
                 headers: {

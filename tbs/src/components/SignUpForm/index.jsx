@@ -1,29 +1,17 @@
 import * as React from "react";
-
-import { Button } from "src/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "src/components/ui/card";
 import { Input } from "src/components/ui/input";
 import { Label } from "src/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "src/components/ui/select";
 import { useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import axios from "axios";
-import * as action from "../../config/redux/auth/action";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 export default function SignUpForm() {
   const dispatch = useDispatch();
@@ -48,7 +36,6 @@ export default function SignUpForm() {
     Name: "",
     Phone_Number: "",
     Email: "",
-    // Role_ID: "",
   });
 
   const onSubmitRegister = async (event) => {
@@ -70,18 +57,6 @@ export default function SignUpForm() {
         },
       });
       console.log(response);
-      // const result = await dispatch(
-      //   action.LoginAction({
-      //     Username: registerData.Username,
-      //     Password: registerData.Password,
-      //   })
-      // );
-
-      // if (result.error) {
-      //   setError(result.message);
-      // } else {
-      //   navigate("/homepage");
-      // }
       navigate("/");
     } catch (error) {
       setError(error.response.data);

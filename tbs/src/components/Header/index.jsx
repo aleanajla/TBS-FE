@@ -8,6 +8,8 @@ const Header = () => {
   const dispatch = useDispatch()
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  let tokenLocalstorage = localStorage.getItem('token')
+  console.log(tokenLocalstorage)
 
   // automatically authenticate user if token is found
   useEffect(() => {

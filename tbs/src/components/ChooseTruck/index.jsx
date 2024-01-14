@@ -57,8 +57,6 @@ export function ChooseTruck() {
                     {value
                         ? dataTruck.find((truck) => truck.id === value)?.Plat_Number
                         : "Truck"}
-                        
-                    {/* <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" /> */}
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-[250px] p-0">
