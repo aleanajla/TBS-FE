@@ -2,8 +2,6 @@
 
 import * as React from "react"
 import { addDays, format } from "date-fns"
-import { Calendar as CalendarIcon } from "lucide-react"
-// import { DateRange } from "react-day-picker"
 
 import { cn } from "src/lib/utils"
 import { Button } from "src/components/ui/button"
@@ -56,7 +54,6 @@ export function DatePickerWithRange({
                             )}
                         </div>
                         <div>
-                            {/* <CalendarIcon className="mr-2 h-4 w-4" /> */}
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
                                 <path d="M8 6.25C7.59 6.25 7.25 5.91 7.25 5.5V2.5C7.25 2.09 7.59 1.75 8 1.75C8.41 1.75 8.75 2.09 8.75 2.5V5.5C8.75 5.91 8.41 6.25 8 6.25Z" fill="#292D32" />
                                 <path d="M16 6.25C15.59 6.25 15.25 5.91 15.25 5.5V2.5C15.25 2.09 15.59 1.75 16 1.75C16.41 1.75 16.75 2.09 16.75 2.5V5.5C16.75 5.91 16.41 6.25 16 6.25Z" fill="#292D32" />
@@ -79,7 +76,6 @@ export function DatePickerWithRange({
                         defaultMonth={date?.from}
                         selected={date}
                         onSelect={setDate}
-                        // onSelect={handlePassingData}
                         numberOfMonths={2}
                         className={"w-full"}
                     />

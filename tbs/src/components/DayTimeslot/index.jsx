@@ -31,18 +31,6 @@ export default function DayTimeslot() {
         (currentIndex + 1) * itemsPerPage
     );
 
-    //   const handlePrev = () => {
-    //     setCurrentIndex((prevIndex) =>
-    //       prevIndex > 0 ? prevIndex - 1 : totalPages - 1
-    //     );
-    //   };
-
-    //   const handleNext = () => {
-    //     setCurrentIndex((prevIndex) =>
-    //       prevIndex < totalPages - 1 ? prevIndex + 1 : 0
-    //     );
-    //   };
-
     const handleClick = (date, index) => {
         dispatch({ type: 'SELECTED_DATE', payload: { date } });
         setSelectedDate(index);

@@ -1,22 +1,12 @@
 import { Input } from "src/components/ui/input";
-import { Label } from "src/components/ui/label";
 import { DatePickerWithRange } from "../DatePicker";
 import { useState } from "react";
-import AccordionTimeslot from "../AccordionTimeslot/Index";
-import { endOfDay } from "date-fns";
 import {
     Accordion,
     AccordionContent,
     AccordionItem,
     AccordionTrigger,
 } from "../ui/accordion";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "../ui/select";
 import { DropdownEndHour } from "../DropdownEndHour";
 import { DropdownEndMinute } from "../DropdownEndMinute";
 import { DropdownStartHour } from "../DropdownStartHour";
@@ -33,7 +23,7 @@ export function EditTimeSlot() {
     const [capacity, setCapacity] = useState("");
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
-    const { Customer_ID } = useSelector((state) => state.Auth.user);
+    // const { Customer_ID } = useSelector((state) => state.Auth.user);
 
     const submitTimeSlot = async (event) => {
         event.preventDefault();
@@ -74,29 +64,6 @@ export function EditTimeSlot() {
             console.log(error);
         }
     };
-    // const [penampung, setPenampung] = useState({
-    //   startDate:"",
-    //   endDate:""
-    // })
-
-    // setPenampung({
-    //   stardate:data,
-    //   endDate:end
-    // })
-    // const tampung = [
-    //   {
-    //     idTerminal,
-    //     detail: [{ startDate, endDate }, {star}],
-    //   },
-    // ];
-
-    // [{data1}, {data2}]
-    // function startDateEndate(start) {
-    //   [
-
-    //   ]
-    //     // return `${start-end}`
-    // }
 
     const handleStartHour = (data) => {
         setFromHour(data);

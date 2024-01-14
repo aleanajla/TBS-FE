@@ -1,9 +1,9 @@
-import react, {useEffect} from "react";
+import {useEffect} from "react";
 import { Button } from "src/components/ui/button";
 import { useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check } from "lucide-react";
 
 import { cn } from "src/lib/utils";
 import {

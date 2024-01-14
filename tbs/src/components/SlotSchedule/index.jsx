@@ -2,13 +2,6 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Input } from "src/components/ui/input";
 import { useSelector } from "react-redux";
-import { EditTimeSlot } from "../EditTimeslot";
-import { Link, useNavigate } from "react-router-dom";
-import { DatePickerWithRange } from "../DatePicker";
-import { DropdownEndHour } from "../DropdownEndHour";
-import { DropdownEndMinute } from "../DropdownEndMinute";
-import { DropdownStartHour } from "../DropdownStartHour";
-import { DropdownStartMinute } from "../DropdownStartMinute";
 import {
   Accordion,
   AccordionContent,
@@ -39,7 +32,7 @@ export default function SlotSchedule() {
 
   useEffect(() => {
     getDetailSlot();
-  }, [date]);
+  }, [Date]);
 
   const handleSlotClick = (selectedDetail) => {
     setSelectedDetail(selectedDetail);
@@ -52,7 +45,8 @@ export default function SlotSchedule() {
     setCapacity(newValue);
   };
 
-  const handleEdit = async()=> {
+  const handleEdit = async(event)=> {
+    event.preventDefault();
     try{
         const response = await axios({
             method: "post",
@@ -71,26 +65,11 @@ export default function SlotSchedule() {
     }
   }
 
-  const deleteDetailSlot = async() => {
-    try{
-        const response = await axios({
-            method: "post",
-            url: `http://localhost:3000/api/users/delete/slot/${selectedDetail.id}`
-        })
-
-        alert(response.data)
-        setOpen(false)
-    }
-    catch(error){
-        console.log(error);
-    }
-  }
-
   return (
     <>
       <div className="bg-primary w-full h-auto p-[44px] rounded-lg">
         <div className="flex items-center gap-[15px]">
-          <h2 className="text-white font-normal text-xl">{date}</h2>
+          <h2 className="text-white font-normal text-xl">{date? date: Date}</h2>
         </div>
         <div className="bg-white w-full h-[1px] rounded-sm mt-[15px]" />
         <div className="pt-9 flex justify-center gap-x-14">
@@ -148,9 +127,7 @@ export default function SlotSchedule() {
               <div className="flex flex-col gap-4 scrollbar-hide overflow-y-scroll">
                 <div className="flex flex-col gap-2">
                   <h2 className="font-medium">Date</h2>
-                  {/* <p>Start Date: {startDate ? startDate : "-"}, End Date: {endDate? endDate : "-"}</p> */}
-                  {/* <DatePickerWithRange dataDate={handleDate} /> */}
-                  <Input value={date} disabled={true} />
+                  <Input value={date?date:Date} disabled={true} />
                 </div>
                 <div>
                   <div className="flex flex-col gap-2.5 pb-5">
@@ -210,9 +187,6 @@ export default function SlotSchedule() {
                   className="w-[118px] h-[53px] items-center justify-center bg-primary text-sm rounded-full text-white" onClick={handleEdit}
                 >
                   Save
-                </button>
-                <button className="w-[135px] h-[53px] items-center justify-center bg-[#F64E60] text-sm rounded-full border border-white text-white" onClick={deleteDetailSlot}>
-                  Delete Slot
                 </button>
                 <button
                   className="w-[118px] h-[53px] items-center justify-center text-sm rounded-full border border-primary text-primary"
