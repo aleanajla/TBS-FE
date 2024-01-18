@@ -12,7 +12,7 @@ import { DropdownEndMinute } from "../DropdownEndMinute";
 import { DropdownStartHour } from "../DropdownStartHour";
 import { DropdownStartMinute } from "../DropdownStartMinute";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { API_LOCAL } from "src/config/API";
 
 export function EditTimeSlot() {
     const [open, setOpen] = useState(false);
@@ -46,7 +46,7 @@ export function EditTimeSlot() {
         try {
             const response = await axios({
                 method: "post",
-                url: "http://localhost:3000/api/users/add/slot",
+                url: `${API_LOCAL}/api/users/add/slot`,
                 data: {
                     startDate: startDate,
                     endDate: endDate,

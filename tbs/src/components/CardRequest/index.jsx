@@ -1,13 +1,15 @@
 import axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
+import { API_LOCAL } from "src/config/API";
+
 
 export default function CardRequest({data}) {
     const reject = async () => {
         try {
             const response = await axios({
                 method: "post",
-                url: `http://localhost:3000/api/users/update/rejectAssignJob/${data.id}`
+                url: `${API_LOCAL}/api/users/update/rejectAssignJob/${data.id}`
             })
             console.log(response);
         }
@@ -19,7 +21,7 @@ export default function CardRequest({data}) {
         try{
             const response = await axios({
                 method: "post",
-                url: `http://localhost:3000/api/users/update/acceptAssignJob/${data.id}`
+                url: `${API_LOCAL}/api/users/update/acceptAssignJob/${data.id}`
             })
             console.log(response);
         }

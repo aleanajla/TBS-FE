@@ -20,7 +20,6 @@ export default function TableTimeslot({ data, dataTCA }) {
               </div>
               <StatusJob status={{ Status_Name: data.Status_Name }} />
             </div>
-            <SearchBar />
           </>
         )}
       </div>

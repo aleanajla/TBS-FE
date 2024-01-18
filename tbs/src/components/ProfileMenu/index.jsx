@@ -3,6 +3,7 @@ import { Label } from "src/components/ui/label";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { API_LOCAL } from "src/config/API";
 
 export function ProfileMenu() {
   const { id } = useSelector((state) => state.Auth.user);
@@ -12,7 +13,7 @@ export function ProfileMenu() {
     try {
       const response = await axios({
         method: "get",
-        url: `http://localhost:3000/api/view/profile/${id}`,
+        url: `${API_LOCAL}/api/view/profile/${id}`,
       });
       console.log(response.data);
       setData(() => response.data);

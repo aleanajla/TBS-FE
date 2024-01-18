@@ -13,6 +13,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import Eticket from "../Eticket";
+import { API_LOCAL } from "src/config/API";
 
 export default function TableValue({ data }) {
   console.log(data.ID_Request, "data props");
@@ -30,7 +31,7 @@ export default function TableValue({ data }) {
         console.log(data?.ID_Request, "id request");
         const response = await axios({
           method: "get",
-          url: `http://localhost:3000/api/users/view/containers`,
+          url: `${API_LOCAL}/api/users/view/containers`,
           params: {
             ID_Request: data?.ID_Request,
           },
@@ -55,7 +56,7 @@ export default function TableValue({ data }) {
     try {
       const response = await axios({
         method: "post",
-        url: "http://localhost:3000/api/user/create/booking",
+        url: `${API_LOCAL}/api/user/create/booking`,
         data: {
           ID_Request_Container: id,
           ID_Request_TC: data.id,
@@ -73,7 +74,7 @@ export default function TableValue({ data }) {
     try {
       const response = await axios({
         method: "post",
-        url: `http://localhost:3000/api/users/create/TCA`,
+        url: `${API_LOCAL}/api/users/create/TCA`,
         data: {
           ID_Booking: id,
           ID_STID: id_stid,
@@ -90,7 +91,7 @@ export default function TableValue({ data }) {
     try {
       const response = await axios({
         method: "post",
-        url: `http://localhost:3000/api/users/edit/timeslot`,
+        url: `${API_LOCAL}/api/users/edit/timeslot`,
         data: {
           ID_Booking: id,
           New_Timeslot: timeslot.id,
@@ -108,7 +109,7 @@ export default function TableValue({ data }) {
     try {
       const response = await axios({
         method: "post",
-        url: "http://localhost:3000/api/users/edit/TCA",
+        url: `${API_LOCAL}/api/users/edit/TCA`,
         data: {
           ID_AssignJob: ID_AssignJob,
           New_STID: ID_STID,
@@ -135,7 +136,7 @@ export default function TableValue({ data }) {
               <TableHead className="text-center">No</TableHead>
               <TableHead className="text-center">Kontainer</TableHead>
               <TableHead className="text-center">Slot Waktu</TableHead>
-              <TableHead className="text-center">STID - Driver</TableHead>
+              <TableHead className="text-center">STID - Driver - Size</TableHead>
               <TableHead className="text-center">Action</TableHead>
             </TableRow>
           </TableHeader>
@@ -199,9 +200,8 @@ export default function TableValue({ data }) {
                       {openAssignJob === key && Role_ID === 2 ? (
                         <>
                           <ChooseSTID
-                            data={{ id: data.ID_Trucking, index: key, date: job?.detailSlot?.slot.Date ? job?.detailSlot.slot.Date: null}}
+                            data={{ id: data.ID_Trucking, index: key, date: job?.detailSlot?.slot.Date ? job?.detailSlot.slot.Date: null, Size: job?.requestContainer.Container_Size}}
                             getDataDetailSTID={getSTID}
-                            dataContainer = {dataContainer}
                           />
                         </>
                       ) : (
@@ -209,19 +209,21 @@ export default function TableValue({ data }) {
                         (job?.assignJob ? (
                           <>
                             <p>
-                              {job?.assignJob.masterSTID.STID_Number} -{" "}
+                              {job?.assignJob.masterSTID.STID_Number} - {" "}
                               {
                                 job?.assignJob.masterSTID.masterDriver
                                   .Driver_Name
-                              }
+                              } - {" "}
+                              {
+                                job?.requestContainer.Container_Size
+                              }{`"`}
                             </p>
                           </>
                         ) : (
                           <>
                             <ChooseSTID
-                              data={{ id: data.ID_Trucking, index: key, date: job?.detailSlot?.slot.Date ? job?.detailSlot.slot.Date: null}}
+                              data={{ id: data.ID_Trucking, index: key, date: job?.detailSlot?.slot.Date ? job?.detailSlot.slot.Date: null, Size: job?.requestContainer.Container_Size}}
                               getDataDetailSTID={getSTID}
-                              dataContainer = {dataContainer}
                             />
                           </>
                         ))
@@ -234,7 +236,10 @@ export default function TableValue({ data }) {
                               {
                                 job?.assignJob.masterSTID.masterDriver
                                   .Driver_Name
-                              }
+                              } - {" "}
+                              {
+                                job?.requestContainer.Container_Size
+                              }{`"`}
                             </p>
                           </>
                         ) : (

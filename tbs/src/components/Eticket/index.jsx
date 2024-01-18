@@ -9,6 +9,7 @@ import {
 } from "@react-pdf/renderer";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { API_LOCAL } from "src/config/API";
 
 // Create styles
 const styles = StyleSheet.create({
@@ -106,7 +107,7 @@ const Eticket = ({ data }) => {
     try {
       const response = await axios({
         method: "get",
-        url: `http://localhost:3000/api/users/view/eticket/${data.id_booking}`,
+        url: `${API_LOCAL}/api/users/view/eticket/${data.id_booking}`,
       });
       setDataEtiket(() => response.data);
     } catch (error) {
@@ -118,7 +119,7 @@ const Eticket = ({ data }) => {
     try {
       const response = await axios({
         method: "get",
-        url: `http://localhost:3000/api/users/view/qrcode`,
+        url: `${API_LOCAL}/api/users/view/qrcode`,
         params: {
           ID_Booking: data.id_booking,
         },

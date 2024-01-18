@@ -12,6 +12,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import axios from "axios";
 import { useDispatch } from "react-redux";
+import { API_LOCAL } from "src/config/API";
 
 export default function SignUpForm() {
   const dispatch = useDispatch();
@@ -44,7 +45,7 @@ export default function SignUpForm() {
     try {
       const response = await axios({
         method: "post",
-        url: "http://localhost:3000/api/users/register",
+        url: `${API_LOCAL}/api/users/register`,
         data: {
           Username: registerData.Username,
           Password: registerData.Password,

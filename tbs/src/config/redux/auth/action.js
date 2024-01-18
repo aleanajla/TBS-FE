@@ -1,6 +1,6 @@
 import { Login, SetUser } from "./actionType";
 import axios from "axios";
-import API_LOCAL from "../../API"
+import {API_LOCAL} from "../../API/index"
 
 export const LoginAction = (payload) => {
     // console.log("payload:", payload);
@@ -9,7 +9,7 @@ export const LoginAction = (payload) => {
             let response = await axios({
                 method: "post", 
                 // url: `${API_LOCAL}/api/users/login`,
-                url: "http://localhost:3000/api/users/login",
+                url: `${API_LOCAL}/api/users/login`,
                 data: {
                     Username : payload.Username,
                     Password : payload.Password
@@ -46,7 +46,7 @@ export const GetUserDetails = (payload) => {
             let response = await axios({
                 method: "get", 
                 // url: `${API_LOCAL}/api/users/login`,
-                url: "http://localhost:3000/api/auth/user",
+                url: `${API_LOCAL}/api/auth/user`,
                 headers: {
                     "Authorization" : `Bearer ${payload.token}`
                 }

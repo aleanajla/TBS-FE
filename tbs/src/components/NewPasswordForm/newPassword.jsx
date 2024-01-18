@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import qs from "qs";
 import axios from "axios";
+import { API_LOCAL } from "src/config/API";
 
 
 export default function NewPasswordForm(){
@@ -26,7 +27,7 @@ export default function NewPasswordForm(){
         try {
             let response = await axios({
                 method: "patch",
-                url: "http://localhost:3000/api/auth/user/change-password",
+                url: `${API_LOCAL}/api/auth/user/change-password`,
                 data: newPasswordData,
                 headers: {
                     Authorization: `Bearer ${token}`

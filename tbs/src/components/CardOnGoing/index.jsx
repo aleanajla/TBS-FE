@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ProgressBar } from "../ProgressBar";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_LOCAL } from "src/config/API";
 
 export default function CardOnGoing({ data }) {
     const navigate = useNavigate()
@@ -25,7 +26,7 @@ export default function CardOnGoing({ data }) {
         try{
             const response = await axios({
                 method: "get",
-                url: `http://localhost:3000/api/users/view/countingTCA/${data.ID_Request}`
+                url: `${API_LOCAL}/api/users/view/countingTCA/${data.ID_Request}`
             })
 
             setCountTCA(()=>response.data)
