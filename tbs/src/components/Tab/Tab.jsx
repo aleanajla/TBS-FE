@@ -13,6 +13,7 @@ import CardCancelled from "../CardCancelled";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { API_LOCAL } from "src/config/API";
 
 export function Tab() {
   const { Customer_ID } = useSelector((state) => state.Auth.user);
@@ -34,7 +35,7 @@ export function Tab() {
     try {
       const response = await axios({
         method: "get",
-        url: `http://localhost:3000/api/users/view/countingRequest/${Customer_ID}`
+        url: `${API_LOCAL}/api/users/view/countingRequest/${Customer_ID}`
       });
       setTotalRequest(response.data.totalRequest);
     } catch (error) {
@@ -46,7 +47,7 @@ export function Tab() {
     try {
       const response = await axios({
         method: "get",
-        url: `http://localhost:3000/api/users/view/countingOnGoing/${Customer_ID}`
+        url: `${API_LOCAL}/api/users/view/countingOnGoing/${Customer_ID}`
       });
       setTotalOnGoing(response.data.totalOnGoing);
     } catch (error) {
@@ -58,7 +59,7 @@ export function Tab() {
     try {
       const response = await axios({
         method: "get",
-        url: `http://localhost:3000/api/users/view/countingCompleted/${Customer_ID}`
+        url: `${API_LOCAL}/api/users/view/countingCompleted/${Customer_ID}`
       });
       setTotalCompleted(response.data.totalCompleted);
     } catch (error) {
@@ -70,7 +71,7 @@ export function Tab() {
     try {
       const response = await axios({
         method: "get",
-        url: `http://localhost:3000/api/users/view/countingRejected/${Customer_ID}`
+        url: `${API_LOCAL}/api/users/view/countingRejected/${Customer_ID}`
       });
       setTotalRejected(response.data.totalRejected);
     } catch (error) {
@@ -82,7 +83,7 @@ export function Tab() {
     try {
       const response = await axios({
         method: "get",
-        url: `http://localhost:3000/api/users/view/requestTP/${Customer_ID}`,
+        url: `${API_LOCAL}/api/users/view/requestTP/${Customer_ID}`,
         params: {
           search : search
         },
@@ -99,7 +100,7 @@ export function Tab() {
     try {
       const response = await axios({
         method: "get",
-        url: `http://localhost:3000/api/users/view/cancelTP/${Customer_ID}`,
+        url: `${API_LOCAL}/api/users/view/cancelTP/${Customer_ID}`,
         params: {
           search : search
         },
@@ -115,7 +116,7 @@ export function Tab() {
     try {
       const response = await axios({
         method: "get",
-        url: `http://localhost:3000/api/users/view/onGoingTP/${Customer_ID}`,
+        url: `${API_LOCAL}/api/users/view/onGoingTP/${Customer_ID}`,
         params: {
           search : search
         },
@@ -131,7 +132,7 @@ export function Tab() {
     try {
       const response = await axios({
         method: "get",
-        url: `http://localhost:3000/api/users/view/completedTP/${Customer_ID}`,
+        url: `${API_LOCAL}/api/users/view/completedTP/${Customer_ID}`,
         params: {
           search : search
         },

@@ -4,6 +4,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
 import { useCallback, useState } from "react"
 import { useSelector } from "react-redux"
 import axios from "axios"
+import { API_LOCAL } from "src/config/API"
 
 export function ChangePasswordComponent() {
     const [showPassword, setShowPassword] = useState(false)
@@ -31,7 +32,7 @@ export function ChangePasswordComponent() {
         try{
             const response = await axios({
                 method: "patch",
-                url: `http://localhost:3000/api/users/change-password`,
+                url: `${API_LOCAL}/api/users/change-password`,
                 data: {
                     OldPassword: changePasswordData.OldPassword,
                     NewPassword: changePasswordData.NewPassword,

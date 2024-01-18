@@ -10,6 +10,7 @@ import {
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import axios from "axios";
+import { API_LOCAL } from "src/config/API";
 
 export default function ForgotPasswordForm() {
     const [error, setError] = useState("")
@@ -23,7 +24,7 @@ export default function ForgotPasswordForm() {
             let response = await axios({
                 method: "post",
                 // url: `${API_LOCAL}/api/users/login`,
-                url: "http://localhost:3000/api/auth/user/forgot-password",
+                url: `${API_LOCAL}/api/auth/user/forgot-password`,
                 data: {
                     Email: email
                 }

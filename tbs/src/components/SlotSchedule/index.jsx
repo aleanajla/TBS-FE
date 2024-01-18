@@ -8,6 +8,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../ui/accordion";
+import { API_LOCAL } from "src/config/API";
 
 export default function SlotSchedule() {
   const { date } = useSelector((state) => state.CapacityPlanning.Date);
@@ -21,7 +22,7 @@ export default function SlotSchedule() {
     try {
       const response = await axios({
         method: "get",
-        url: `http://localhost:3000/api/users/slot/${date?date:Date}`,
+        url: `${API_LOCAL}/api/users/slot/${date?date:Date}`,
       });
       console.log(response.data);
       setSlots(() => response.data);
@@ -50,7 +51,7 @@ export default function SlotSchedule() {
     try{
         const response = await axios({
             method: "post",
-            url: "http://localhost:3000/api/users/update/slot",
+            url: `${API_LOCAL}/api/users/update/slot`,
             data: {
                 Qty: capacity,
                 id: selectedDetail.id

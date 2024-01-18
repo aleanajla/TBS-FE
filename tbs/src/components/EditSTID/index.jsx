@@ -18,6 +18,7 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "src/components/ui/popover";
+import { API_LOCAL } from "src/config/API";
 
 export function EditSTID({ data }) {
     const [open, setOpen] = useState(false);
@@ -33,7 +34,7 @@ export function EditSTID({ data }) {
         try {
             let response = await axios({
                 method: "get",
-                url: `http://localhost:3000/api/users/drivers/${Customer_ID}`,
+                url: `${API_LOCAL}/api/users/drivers/${Customer_ID}`,
                 params: {
                     search: search
                 }

@@ -3,10 +3,8 @@ import { ProgressBar } from "../ProgressBar";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { debounce } from "lodash";
-import { Search } from "lucide-react";
-import { PDFDownloadLink } from "@react-pdf/renderer";
-import Eticket from "../Eticket";
+import { API_LOCAL } from "src/config/API";
+
 
 export default function CardBooking() {
   const [booking, setBooking] = useState([]);
@@ -19,7 +17,7 @@ export default function CardBooking() {
     try {
       const response = await axios({
         method: "get",
-        url: `http://localhost:3000/api/users/view/request/${Customer_ID}`,
+        url: `${API_LOCAL}/api/users/view/request/${Customer_ID}`,
         params: {
           search: searchTerm,
         },
@@ -61,7 +59,7 @@ export default function CardBooking() {
     try {
       const response = await axios({
         method: "get",
-        url: `http://localhost:3000/api/users/view/countingTCA/${booking.id}`,
+        url: `${API_LOCAL}/api/users/view/countingTCA/${booking.id}`,
       });
       setCountTCA(() => response.data);
     } catch (error) {
@@ -311,7 +309,7 @@ export default function CardBooking() {
                             stroke-linejoin="round"
                           />
                         </svg>
-                        <p>{bookings.requests.Closing_Time}</p>
+                        <p>Closing Time : {bookings.requests.Closing_Time}</p>
                       </div>
                     </div>
                   </div>
@@ -356,21 +354,6 @@ export default function CardBooking() {
                   </div>
                 </div>
                 <div className="flex gap-3">
-                  {/* <PDFDownloadLink
-                    document={
-                      <Eticket
-                        data={{
-                          id_booking: bookings.id,
-                        }}
-                      />
-                    }
-                    fileName="Eticket"
-                  >
-                    <button className="bg-white text-primary border border-primary h-12 px-8 rounded-md items-center flex gap-1">
-                      <p className="font-medium">View E-Ticket</p>
-                      <p className="font-medium">({bookings.counts.count})</p>
-                    </button>
-                  </PDFDownloadLink> */}
                   <button
                     className="bg-primary text-white h-12 px-4 rounded-md items-center"
                     onClick={() =>
@@ -389,7 +372,6 @@ export default function CardBooking() {
                   >
                     <p className="font-medium">Booking Time Slot</p>
                   </button>
-                  {/* <Link to={"/timeslot"}></Link> */}
                 </div>
               </div>
             </div>

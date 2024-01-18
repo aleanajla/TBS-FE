@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import RadialProgress from "../RadialProgress";
+import { API_LOCAL } from "src/config/API";
 
 export default function DetailTimeslot({dataTimeSlot}) {
     const { date } = useSelector((state) => state.CapacityPlanning.Date);
@@ -12,7 +13,7 @@ export default function DetailTimeslot({dataTimeSlot}) {
         try {
             const response = await axios({
                 method: "get",
-                url: `http://localhost:3000/api/users/slot/${date}`
+                url: `${API_LOCAL}/api/users/slot/${date}`
             })
             console.log(response.data);
             setSlots(() => response.data)

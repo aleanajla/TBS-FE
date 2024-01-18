@@ -19,6 +19,8 @@ import {
 import TableTimeslot from "../TableTimeslot";
 import { id } from "date-fns/locale";
 import { useSelector } from "react-redux";
+import { API_LOCAL } from "src/config/API";
+
 
 export default function AssignTruck({ data }) {
   const [open, setOpen] = useState(false);
@@ -40,7 +42,7 @@ export default function AssignTruck({ data }) {
     try {
       const response = await axios({
         method: "get",
-        url: "http://localhost:3000/api/users/view/trucking",
+        url: `${API_LOCAL}/api/users/view/trucking`,
       });
       console.log(response);
       setDataTrucking(() => response.data);
@@ -53,7 +55,7 @@ export default function AssignTruck({ data }) {
     try {
       const response = await axios({
         method: "get",
-        url: `http://localhost:3000/api/users/search/reqTrucking/${data.id}`,
+        url: `${API_LOCAL}/api/users/search/reqTrucking/${data.id}`,
       });
       console.log(response);
       setStatusRequest(() => response.data);
@@ -73,7 +75,7 @@ export default function AssignTruck({ data }) {
     try {
       const response = await axios({
         method: "post",
-        url: "http://localhost:3000/api/users/create/requestTC",
+        url: `${API_LOCAL}/api/users/create/requestTC`,
         data: {
           ID_Request: data.id,
           ID_Customer: trucking,

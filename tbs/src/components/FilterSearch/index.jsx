@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { debounce } from 'lodash';
 import axios from "axios";
+import { API_LOCAL } from "src/config/API";
 
 export default function FilterSearch() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -9,7 +10,7 @@ export default function FilterSearch() {
     try {
       const response = await axios({
         method: "post",
-        url: "http://localhost:3000/api/users/search/assignJob",
+        url: `${API_LOCAL}/api/users/search/assignJob`,
         params: {
           searchTC: searchTerm
         }

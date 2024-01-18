@@ -13,6 +13,7 @@ import { DropdownEndMinute } from "../DropdownEndMinute";
 import { DropdownStartHour } from "../DropdownStartHour";
 import { DropdownStartMinute } from "../DropdownStartMinute";
 import axios from "axios";
+import { API_LOCAL } from "src/config/API";
 
 export function AddTimeSlot() {
   const [open, setOpen] = useState(false);
@@ -50,7 +51,7 @@ export function AddTimeSlot() {
     try {
       const validation = await axios({
         method: "post",
-        url: "http://localhost:3000/api/users/check/slot",
+        url: `${API_LOCAL}/api/users/check/slot`,
         data: {
           startDate: startDate,
           endDate: endDate,
@@ -64,7 +65,7 @@ export function AddTimeSlot() {
         try {
           const response = await axios({
             method: "post",
-            url: "http://localhost:3000/api/users/add/slot",
+            url: `${API_LOCAL}/api/users/add/slot`,
             data: {
               startDate: startDate,
               endDate: endDate,

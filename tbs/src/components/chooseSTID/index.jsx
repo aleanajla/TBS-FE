@@ -20,24 +20,25 @@ import {
 import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
+import { API_LOCAL } from "src/config/API";
 
-export function ChooseSTID({ data, getDataDetailSTID, dataContainer }) {
+export function ChooseSTID({ data, getDataDetailSTID }) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
   const [STID_Number, setSTID_Number] = React.useState("");
   const [Driver, setDriver] = useState("");
   const [search, setSearch] = useState("");
   const [dataSTID, setSTID] = useState([]);
+  const [Size, setSize] = useState("")
 
   const getDataSTID = async () => {
     try {
       const result = await axios({
         method: "get",
-        url: `http://localhost:3000/api/users/view/stid/booking/${data.id}`,
+        url: `${API_LOCAL}/api/users/view/stid/booking/${data.id}`,
         params: {
           search: search,
-          date: data.date,
-          stid: STID_Number
+          date: data.date
         },
       });
       console.log(result);
@@ -47,12 +48,13 @@ export function ChooseSTID({ data, getDataDetailSTID, dataContainer }) {
     }
   };
 
-  const updateSTID = (id, STID_Number, Driver_Name) => {
+  const updateSTID = (id, STID_Number, Driver_Name, Size) => {
     const datas = {
       id: id,
       STID_Number: STID_Number,
       Driver_Name: Driver_Name,
       index: data.index,
+      Size: Size
     };
     console.log(datas, "UPDATE STID");
     getDataDetailSTID(datas);
@@ -69,7 +71,7 @@ export function ChooseSTID({ data, getDataDetailSTID, dataContainer }) {
   return value ? (
     <>
       <p>
-        {STID_Number} - {Driver}
+        {STID_Number} - {Driver} - {Size}{`"`}
       </p>
     </>
   ) : (
@@ -97,6 +99,7 @@ export function ChooseSTID({ data, getDataDetailSTID, dataContainer }) {
             <CommandEmpty>Not found.</CommandEmpty>
             <CommandGroup>
               {dataSTID.map((stid) => (
+                stid.masterTruck.Size == data.Size &&  (
                 <CommandItem
                   key={stid.id}
                   value={stid.id}
@@ -107,10 +110,12 @@ export function ChooseSTID({ data, getDataDetailSTID, dataContainer }) {
                       stid.STID_Number === STID_Number ? "" : stid.STID_Number
                     );
                     setDriver(stid.masterDriver.Driver_Name);
+                    setSize(stid.masterTruck.Size)
                     updateSTID(
                       stid.id,
                       stid.STID_Number,
-                      stid.masterDriver.Driver_Name
+                      stid.masterDriver.Driver_Name,
+                      stid.masterTruck.Size
                     );
                   }}
                 >
@@ -120,8 +125,9 @@ export function ChooseSTID({ data, getDataDetailSTID, dataContainer }) {
                       value === stid.id ? "opacity-100" : "opacity-0"
                     )}
                   />
-                  {stid.STID_Number} - {stid.masterDriver.Driver_Name}
+                  {stid.STID_Number} - {stid.masterDriver.Driver_Name} - {stid.masterTruck.Size}{`"`}
                 </CommandItem>
+                )
               ))}
             </CommandGroup>
           </Command>

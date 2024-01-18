@@ -4,6 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { Check } from "lucide-react";
+import { API_LOCAL } from "src/config/API";
 
 import { cn } from "src/lib/utils";
 import {
@@ -35,7 +36,7 @@ export function AddSTID() {
     try {
       let response = await axios({
         method: "get",
-        url: `http://localhost:3000/api/users/drivers/${Customer_ID}`,
+        url: `${API_LOCAL}/api/users/drivers/${Customer_ID}`,
         params: {
           search: search,
         },
@@ -51,7 +52,7 @@ export function AddSTID() {
     try {
       let response = await axios({
         method: "get",
-        url: `http://localhost:3000/api/users/trucks/${Customer_ID}`,
+        url: `${API_LOCAL}/api/users/trucks/${Customer_ID}`,
         params: {
           search: search,
         },
@@ -68,7 +69,7 @@ export function AddSTID() {
     try {
       const response = await axios({
         method: "post",
-        url: "http://localhost:3000/api/users/add/stid",
+        url: `${API_LOCAL}/api/users/add/stid`,
         data: {
           Driver_ID: driver,
           Truck_ID: truck,
@@ -78,7 +79,7 @@ export function AddSTID() {
       setOpen(false);
       setDriver("");
       setTruck("");
-      alert("Sucessfully Added!");
+      alert("Sucessfully Added! Data STID Cannot Be Deleted!");
     } catch (error) {
       console.log(error.response.data);
       setError(error.response.data);
