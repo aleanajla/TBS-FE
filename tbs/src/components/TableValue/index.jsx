@@ -15,14 +15,15 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import Eticket from "../Eticket";
 import { API_LOCAL } from "src/config/API";
 
-export default function TableValue({ data }) {
-  console.log(data.ID_Request, "data props");
+export default function TableValue({ data, dataTCA }) {
   const [dataContainer, setDataContainer] = useState([]);
   const [dataSTID, setDataSTID] = useState([]);
   const { Role_ID } = useSelector((state) => state.Auth.user);
   const [timeslot, setTimeslot] = useState([]);
   const [openTimeslot, setOpenTimeslot] = useState("");
   const [openAssignJob, setOpenAssignJob] = useState(false);
+  const Closing_Time = new Date(dataTCA.Closing_Time);
+  const currentTime = new Date()
 
   const getDataContainer = async () => {
     console.log(data?.ID_Request, "id request");
@@ -53,20 +54,28 @@ export default function TableValue({ data }) {
   };
 
   const submitData = async (id) => {
-    try {
-      const response = await axios({
-        method: "post",
-        url: `${API_LOCAL}/api/user/create/booking`,
-        data: {
-          ID_Request_Container: id,
-          ID_Request_TC: data.id,
-          ID_Detail_Slot: timeslot.id,
-        },
-      });
-      alert("Successfully Send!");
-      getDataContainer();
-    } catch (error) {
-      console.log(error);
+    const selected_date = new Date(timeslot.date)
+
+    if(selected_date>=Closing_Time){
+      window.location.reload();
+      alert("The Selected Date Exceeds Closing Time!")
+    }
+    else{
+      try {
+        const response = await axios({
+          method: "post",
+          url: `${API_LOCAL}/api/user/create/booking`,
+          data: {
+            ID_Request_Container: id,
+            ID_Request_TC: data.id,
+            ID_Detail_Slot: timeslot.id,
+          },
+        });
+        alert("Successfully Send!");
+        getDataContainer();
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -200,7 +209,7 @@ export default function TableValue({ data }) {
                       {openAssignJob === key && Role_ID === 2 ? (
                         <>
                           <ChooseSTID
-                            data={{ id: data.ID_Trucking, index: key, date: job?.detailSlot?.slot.Date ? job?.detailSlot.slot.Date: null, Size: job?.requestContainer.Container_Size}}
+                            data={{ id: data.ID_Trucking, index: key, date: job?.detailSlot?.slot.Date ? job?.detailSlot.slot.Date: null, Size: job?.requestContainer?.Container_Size ? job?.requestContainer?.Container_Size : null}}
                             getDataDetailSTID={getSTID}
                           />
                         </>
@@ -222,7 +231,7 @@ export default function TableValue({ data }) {
                         ) : (
                           <>
                             <ChooseSTID
-                              data={{ id: data.ID_Trucking, index: key, date: job?.detailSlot?.slot.Date ? job?.detailSlot.slot.Date: null, Size: job?.requestContainer.Container_Size}}
+                              data={{ id: data.ID_Trucking, index: key, date: job?.detailSlot?.slot.Date ? job?.detailSlot.slot.Date: null, Size: job?.requestContainer?.Container_Size ? job?.requestContainer?.Container_Size : null}}
                               getDataDetailSTID={getSTID}
                             />
                           </>
@@ -288,12 +297,14 @@ export default function TableValue({ data }) {
                     ) : Role_ID === 1 && job?.requestContainer ? (
                       job?.assignJob ? (
                         <div>
-                          <button
-                            className=" bg-white mr-2 border-primary border-2 text-white px-8 py-2 rounded-lg text-sm"
-                            onClick={() => setOpenTimeslot(key)}
-                          >
-                            <p className="text-primary">Edit</p>
-                          </button>
+                          {currentTime <= Closing_Time && (
+                            <button
+                              className=" bg-white mr-2 border-primary border-2 text-white px-8 py-2 rounded-lg text-sm"
+                              onClick={() => setOpenTimeslot(key)}
+                            >
+                              <p className="text-primary">Edit</p>
+                            </button>
+                          )} 
                           <PDFDownloadLink
                               document={<Eticket data={{id_booking: job.id}}/>}
                               fileName="Eticket"
@@ -326,12 +337,16 @@ export default function TableValue({ data }) {
                       job?.assignJob ? (
                         <>
                           <div>
-                            <button
-                              className=" bg-white mr-2 border-primary border-2 text-white px-8 py-2 rounded-lg text-sm"
-                              onClick={() => setOpenAssignJob(key)}
-                            >
-                              <p className="text-primary">Edit TC</p>
-                            </button>
+                            { currentTime <= Closing_Time ? (
+                              <>
+                              <button
+                                className=" bg-white mr-2 border-primary border-2 text-white px-8 py-2 rounded-lg text-sm"
+                                onClick={() => setOpenAssignJob(key)}
+                              >
+                                <p className="text-primary">Edit</p>
+                              </button>
+                              </>
+                            ): ""}
                             <PDFDownloadLink
                               document={<Eticket data={{id_booking: job.id}}/>}
                               fileName="Eticket"

@@ -143,7 +143,7 @@ const Eticket = ({ data }) => {
             <Text style={styles.textHeader}>
               GATEPASS {dataEtiket.Service_Name}
             </Text>
-            <Text style={styles.textHeader}>Terminal JICT - Domestik</Text>
+            <Text style={styles.textHeader}>{dataEtiket.Terminal_Name}</Text>
           </View>
           <View style={styles.qrContainer}>
             {qrcode && (

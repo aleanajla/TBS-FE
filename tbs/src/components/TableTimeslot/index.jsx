@@ -9,7 +9,7 @@ export default function TableTimeslot({ data, dataTCA }) {
   return (
     <>
       <div className="p-4 flex flex-col gap-6">
-        {Role_ID === 1 && (
+        {Role_ID === 1 && data.Status_Name != null ? (
           <>
             <div className="flex justify-between">
               <div className="flex flex-row items-center gap-3">
@@ -21,10 +21,10 @@ export default function TableTimeslot({ data, dataTCA }) {
               <StatusJob status={{ Status_Name: data.Status_Name }} />
             </div>
           </>
-        )}
+        ): ""}
       </div>
       <div className="w-full border rounded-lg">
-        <TableValue data={data}/>
+        <TableValue data={data} dataTCA={dataTCA}/>
       </div>
     </>
   );
