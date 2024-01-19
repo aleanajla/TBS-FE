@@ -28,7 +28,7 @@ export default function HeaderJob({data}){
                         <path d="M7.44559 10.7749H7.45274" stroke="#064B82" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M7.44559 13.0249H7.45274" stroke="#064B82" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    <p className="text-primary font-medium  ">{data.Closing_Time} </p>
+                    <p className="text-primary font-medium">{new Date(data.Closing_Time).toISOString().split('T')[0]} {new Date(data.Closing_Time).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })} </p>
                 </div>
             </div>
 

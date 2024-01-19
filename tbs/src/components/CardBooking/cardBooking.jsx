@@ -124,7 +124,6 @@ export default function CardBooking() {
                 Request ID : {bookings.requests.No_Request}
               </p>
             </div>
-            {/* Detail */}
             <div className="w-full mt-22 px-8">
               <div className="flex flex-row gap-x-7 border-b-2 border-grey-400 py-7">
                 <div>
@@ -309,7 +308,7 @@ export default function CardBooking() {
                             stroke-linejoin="round"
                           />
                         </svg>
-                        <p>Closing Time : {bookings.requests.Closing_Time}</p>
+                        <p>Closing Time : {new Date(bookings.requests.Closing_Time).toISOString().split('T')[0]} {new Date(bookings.requests.Closing_Time).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })}</p>
                       </div>
                     </div>
                   </div>

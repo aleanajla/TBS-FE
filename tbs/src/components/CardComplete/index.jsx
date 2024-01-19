@@ -1,8 +1,23 @@
 import React from "react";
 import { ProgressBar } from "../ProgressBar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function CardComplete({data}) {
+    const navigate = useNavigate()
+    const handleReview= (Service_Name,Vessel_Name,No_Request,Closing_Time,Port_Name,Terminal_Name,Qty, ID_Request) => {
+        const data = {
+            id: ID_Request,
+            Service_Name: Service_Name,
+            Vessel_Name: Vessel_Name,
+            No_Request: No_Request,
+            Closing_Time: Closing_Time,
+            Port_Name: Port_Name,
+            Terminal_Name: Terminal_Name,
+            Qty: Qty,
+            count: Qty
+        };
+        navigate('/timeslot', {state: data})
+    }
     return (
         <>
             <div className="border-2 border-gray-300 rounded-md w-full">
@@ -54,7 +69,7 @@ export default function CardComplete({data}) {
                                             <path d="M6.22049 10.2749H6.22723" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                             <path d="M6.22049 12.5249H6.22723" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>
-                                        <p>Created Date: {data.createdAt} </p>
+                                        <p>Created Date: {new Date(data.createdAt).toISOString().split('T')[0]}</p>
                                     </div>
                                     <div className="flex flex-row items-center gap-x-1.5">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -69,7 +84,7 @@ export default function CardComplete({data}) {
                                             <path d="M6.22049 10.2749H6.22723" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                             <path d="M6.22049 12.5249H6.22723" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>
-                                        <p>Closing Time: {data.Closing_Time}</p>
+                                        <p>Closing Time: {new Date(data.Closing_Time).toISOString().split('T')[0]} {new Date(data.Closing_Time).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })}</p>
                                     </div>
                                 </div>
                             </div>
@@ -86,23 +101,21 @@ export default function CardComplete({data}) {
                     <div className="flex flex-row items-center justify-between">
                         <div className="py-5 ">
                             <div className="w-full">
-                                <ProgressBar value={50} max={200} />
-                                {/* <progress class="progress w-68" value="3" max="20"></progress> */}
-                                {/* <progress className="progress progress-red-500 bg-black rounded w-full" value="10" max="100"></progress> */}
+                                <ProgressBar value={200} max={200} />
                             </div>
                             <div className="flex flex-row pt-2.5 pb-1">
                                 <div className="flex flex-row ">
                                     <p className="text-primary font-poppins">TCA</p>
-                                    <p className="text-primary font-bold px-1 font-poppins">20</p>
+                                    <p className="text-primary font-bold px-1 font-poppins">{data.Qty}</p>
                                     <p className="text-primary font-poppins">out of</p>
-                                    <p className="text-primary px-1 font-poppins">20</p>
+                                    <p className="text-primary px-1 font-poppins">{data.Qty}</p>
                                     <p className="text-primary font-poppins">complete</p>
                                 </div>
                             </div>
                         </div>
                         <div>
                             <div className="flex flex-row-reverse py-4 gap-2 w-full">
-                                <button className="bg-white text-primary border border-primary h-12 px-8 rounded-md items-center flex gap-1">
+                                <button className="bg-white text-primary border border-primary h-12 px-8 rounded-md items-center flex gap-1" onClick={() => handleReview(data.Service_Name, data.Vessel_Name, data.No_Request, data.Closing_Time, data.Port_Name, data.Terminal_Name, data.Qty, data.ID_Request)}>
                                     <p className="font-medium">Review TCA</p>
                                 </button>
                             </div>

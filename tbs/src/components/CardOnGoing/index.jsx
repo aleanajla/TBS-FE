@@ -143,10 +143,6 @@ export default function CardOnGoing({ data }) {
                                 <button className="bg-primary text-white h-12 px-20 rounded-md items-center" onClick={() => handleTCA(data.Service_Name, data.Vessel_Name, data.No_Request, data.Closing_Time, data.Port_Name, data.Terminal_Name, data.Qty, data.ID_Request)}>
                                     <p className="font-medium">TCA</p>
                                 </button>
-                                {/* <button className="bg-white text-primary border border-primary h-12 px-8 rounded-md items-center flex gap-1">
-                                    <p className="font-medium">View E-Ticket</p>
-                                    <p className="font-medium">({countTCA.totalTCA})</p>
-                                </button> */}
                             </div>
                         </div>
                     </div>
