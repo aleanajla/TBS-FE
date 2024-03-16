@@ -114,7 +114,7 @@ export default function SignUpForm() {
                   <Input
                     id="Name"
                     name="Name"
-                    placeholder="Number PKMU"
+                    placeholder="Name"
                     className="p-3.5"
                     onChange={onChange}
                     value={registerData.Name}

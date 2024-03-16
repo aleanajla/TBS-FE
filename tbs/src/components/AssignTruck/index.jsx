@@ -85,6 +85,7 @@ export default function AssignTruck({ data }) {
       setOpen(false);
       setTrucking("");
       // setDataBooking(()=>response.data)
+      window.location.reload();
       alert("Assign Job Success!");
 
     } catch (error) {

@@ -55,7 +55,7 @@ export function EditSTID({ data }) {
         try {
             const response = await axios({
                 method: "post",
-                url: "http://localhost:3000/api/users/update/stid",
+                url: `${API_LOCAL}/api/users/update/stid`,
                 data: {
                     id: data.id,
                     Driver_ID: driver
@@ -64,6 +64,7 @@ export function EditSTID({ data }) {
             console.log(response);
             setOpen(false);
             setDriver("");
+            window.location.reload();
             alert("Sucessfully Edit!")
         } catch (error) {
             console.log(error);
@@ -185,8 +186,10 @@ export function EditSTID({ data }) {
                             </div>
                             <div className="flex flex-row-reverse gap-3">
                                 <button
-                                    className="w-[118px] h-[53px] items-center justify-center bg-primary text-sm rounded-full text-white"
+                                    className={driver ? "w-[118px] h-[53px] items-center justify-center bg-primary text-sm rounded-full text-white" : "w-[118px] h-[53px] items-center justify-center bg-gray-500 text-sm rounded-full text-white"}
                                     type="submit"
+                                    disabled={driver ? false : true}
+
                                 >
                                     Save
                                 </button>

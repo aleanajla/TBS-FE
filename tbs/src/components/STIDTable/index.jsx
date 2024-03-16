@@ -15,7 +15,7 @@ import { API_LOCAL } from "src/config/API";
 
 export function STIDtable() {
   const [STID, setSTID] = useState([]);
-  const { id } = useSelector((state) => state.Auth.user);
+  const { Customer_ID } = useSelector((state) => state.Auth.user);
   const [search, setSearch] = useState('');
 
   const handleInputChange = (e) => {
@@ -26,7 +26,7 @@ export function STIDtable() {
     try {
       const result = await axios({
         method: "get",
-        url: `${API_LOCAL}/api/users/view/stid/${id}`,
+        url: `${API_LOCAL}/api/users/view/stid/${Customer_ID}`,
         params: {
           search: search ? search : "",
         },

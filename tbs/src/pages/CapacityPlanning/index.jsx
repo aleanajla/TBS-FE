@@ -30,7 +30,7 @@ export default function CapacityPlanning() {
                 fill="black"
               />
             </svg>
-            <p className="font-medium">Time Slot</p>
+            <p className="font-medium">Home</p>
           </div>
         </button>
 

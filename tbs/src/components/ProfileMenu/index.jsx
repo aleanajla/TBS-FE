@@ -4,10 +4,12 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { API_LOCAL } from "src/config/API";
+import { useNavigate } from "react-router-dom";
 
 export function ProfileMenu() {
   const { id } = useSelector((state) => state.Auth.user);
   const [data, setData] = useState([]);
+  const navigate = useNavigate();
 
   const getData = async () => {
     try {
@@ -24,11 +26,33 @@ export function ProfileMenu() {
 
   useEffect(() => {
     getData();
-  });
+  },[id]);
+
+  const returnBack = () => {
+    navigate("/homepage");
+  };
 
   return (
+    
     <>
       <div className="flex flex-col gap-10">
+      <button onClick={returnBack}>
+          <div className="flex gap-[13px]">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="25"
+              viewBox="0 0 24 25"
+              fill="none"
+            >
+              <path
+                d="M20.0002 11.0217V13.0217H8.00016L13.5002 18.5217L12.0802 19.9417L4.16016 12.0217L12.0802 4.10165L13.5002 5.52165L8.00016 11.0217H20.0002Z"
+                fill="black"
+              />
+            </svg>
+            <p className="font-medium">Home</p>
+          </div>
+        </button>
         <div className="border px-10 py-10 rounded-lg">
           <div className="border-b flex justify-between items-center">
             <div className="flex items-center gap-4 pb-5">

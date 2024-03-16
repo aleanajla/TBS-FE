@@ -79,6 +79,7 @@ export function AddSTID() {
       setOpen(false);
       setDriver("");
       setTruck("");
+      window.location.reload();
       alert("Sucessfully Added! Data STID Cannot Be Deleted!");
     } catch (error) {
       console.log(error.response.data);
@@ -264,8 +265,9 @@ export function AddSTID() {
               </div>
               <div className="flex flex-row-reverse gap-3">
                 <button
-                  className="w-[118px] h-[53px] items-center justify-center bg-primary text-sm rounded-full text-white"
+                  className={driver && truck ? "w-[118px] h-[53px] items-center justify-center bg-primary text-sm rounded-full text-white" : "w-[118px] h-[53px] items-center justify-center bg-gray-500 text-sm rounded-full text-white"}
                   type="submit"
+                  disabled={truck && driver ? false : true}
                 >
                   Save
                 </button>

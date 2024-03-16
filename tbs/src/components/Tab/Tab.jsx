@@ -381,14 +381,15 @@ export function Tab() {
               data={{
                 id: requests.id,
                 ID_Request: requests.ID_Request,
-                No_Request: requests.request.No_Request,
-                Qty: requests.request.Qty,
-                Vessel_Name: requests.request.Vessel_Name,
-                Port_Name: requests.request.Port_Name,
-                Terminal_Name: requests.request.Terminal_Name,
-                Service_Name: requests.request.Service_Name,
-                createdAt: requests.request.createdAt,
-                Closing_Time: requests.request.Closing_Time,
+                No_Request: requests.No_Request,
+                Qty: requests.Qty,
+                Vessel_Name: requests.Vessel_Name,
+                Port_Name: requests.Port_Name,
+                Terminal_Name: requests.Terminal_Name,
+                Service_Name: requests.Service_Name,
+                createdAt: requests.createdAt,
+                Closing_Time: requests.Closing_Time,
+                Company_Name: requests.Company_Name
               }}
             />
           ))}
@@ -440,14 +441,15 @@ export function Tab() {
               data={{
                 id: data.id,
                 ID_Request: data.ID_Request,
-                No_Request: data.request.No_Request,
-                Qty: data.request.Qty,
-                Vessel_Name: data.request.Vessel_Name,
-                Port_Name: data.request.Port_Name,
-                Terminal_Name: data.request.Terminal_Name,
-                Service_Name: data.request.Service_Name,
-                createdAt: data.request.createdAt,
-                Closing_Time: data.request.Closing_Time,
+                No_Request: data.No_Request,
+                Qty: data.Qty,
+                Vessel_Name: data.Vessel_Name,
+                Port_Name: data.Port_Name,
+                Terminal_Name: data.Terminal_Name,
+                Service_Name: data.Service_Name,
+                createdAt: data.createdAt,
+                Closing_Time: data.Closing_Time,
+                Company_Name: data.Company_Name
               }}
             />
           ))}
@@ -499,14 +501,15 @@ export function Tab() {
               data={{
                 id: data.id,
                 ID_Request: data.ID_Request,
-                No_Request: data.request.No_Request,
-                Qty: data.request.Qty,
-                Vessel_Name: data.request.Vessel_Name,
-                Port_Name: data.request.Port_Name,
-                Terminal_Name: data.request.Terminal_Name,
-                Service_Name: data.request.Service_Name,
-                createdAt: data.request.createdAt,
-                Closing_Time: data.request.Closing_Time,
+                No_Request: data.No_Request,
+                Qty: data.Qty,
+                Vessel_Name: data.Vessel_Name,
+                Port_Name: data.Port_Name,
+                Terminal_Name: data.Terminal_Name,
+                Service_Name: data.Service_Name,
+                createdAt: data.createdAt,
+                Closing_Time: data.Closing_Time,
+                Company_Name: data.Company_Name
               }}
             />
           ))}
@@ -558,14 +561,15 @@ export function Tab() {
               data={{
                 id: data.id,
                 ID_Request: data.ID_Request,
-                No_Request: data.request.No_Request,
-                Qty: data.request.Qty,
-                Vessel_Name: data.request.Vessel_Name,
-                Port_Name: data.request.Port_Name,
-                Terminal_Name: data.request.Terminal_Name,
-                Service_Name: data.request.Service_Name,
-                createdAt: data.request.createdAt,
-                Closing_Time: data.request.Closing_Time,
+                No_Request: data.No_Request,
+                Qty: data.Qty,
+                Vessel_Name: data.Vessel_Name,
+                Port_Name: data.Port_Name,
+                Terminal_Name: data.Terminal_Name,
+                Service_Name: data.Service_Name,
+                createdAt: data.createdAt,
+                Closing_Time: data.Closing_Time,
+                Company_Name: data.Company_Name
               }}
             />
           ))}

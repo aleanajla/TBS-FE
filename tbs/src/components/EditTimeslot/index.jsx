@@ -23,7 +23,6 @@ export function EditTimeSlot() {
     const [capacity, setCapacity] = useState("");
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
-    // const { Customer_ID } = useSelector((state) => state.Auth.user);
 
     const submitTimeSlot = async (event) => {
         event.preventDefault();

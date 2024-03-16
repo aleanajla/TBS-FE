@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 export default function CardComplete({data}) {
     const navigate = useNavigate()
-    const handleReview= (Service_Name,Vessel_Name,No_Request,Closing_Time,Port_Name,Terminal_Name,Qty, ID_Request) => {
+    const handleReview= (Service_Name,Vessel_Name,No_Request,Closing_Time,Port_Name,Terminal_Name,Qty, ID_Request,Company_Name) => {
         const data = {
             id: ID_Request,
             Service_Name: Service_Name,
@@ -14,7 +14,8 @@ export default function CardComplete({data}) {
             Port_Name: Port_Name,
             Terminal_Name: Terminal_Name,
             Qty: Qty,
-            count: Qty
+            count: Qty,
+            Company_Name: Company_Name
         };
         navigate('/timeslot', {state: data})
     }
@@ -28,7 +29,7 @@ export default function CardComplete({data}) {
                             <p className="font-medium text-gray text-md">Request Id : {data.No_Request}</p>
                         </div>
                         <div className="flex items-center bg-[#F3F3F3] rounded-md p-2">
-                            <p className="font-medium text-gray text-md px-8 text-primary">PT PRIMA INDONESIA</p>
+                            <p className="font-medium text-gray text-md px-8 text-primary">{data.Company_Name}</p>
                         </div>
                     </div>
                     <div className="flex gap-2 items-center">

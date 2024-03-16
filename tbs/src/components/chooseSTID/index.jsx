@@ -54,7 +54,8 @@ export function ChooseSTID({ data, getDataDetailSTID }) {
       STID_Number: STID_Number,
       Driver_Name: Driver_Name,
       index: data.index,
-      Size: Size
+      Size: Size,
+      index: data?.index
     };
     console.log(datas, "UPDATE STID");
     getDataDetailSTID(datas);
@@ -115,7 +116,8 @@ export function ChooseSTID({ data, getDataDetailSTID }) {
                       stid.id,
                       stid.STID_Number,
                       stid.masterDriver.Driver_Name,
-                      stid.masterTruck.Size
+                      stid.masterTruck.Size,
+                      data.index
                     );
                   }}
                 >

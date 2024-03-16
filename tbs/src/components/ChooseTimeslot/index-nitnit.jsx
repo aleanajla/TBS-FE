@@ -8,7 +8,6 @@ import DetailTimeslot from "../DetailTimeslot";
 
 export default function ChooseTimeslot({ data, updateData }) {
   const [open, setOpen] = useState(false);
-  const progressValue = 75;
   const [timeslot, setTimeslot] = useState([]);
   const { Role_ID } = useSelector((state) => state.Auth.user);
 
@@ -131,7 +130,7 @@ export default function ChooseTimeslot({ data, updateData }) {
                 <DayTimeslot />
               </div>
             </div>
-            <DetailTimeslot dataTimeSlot={handleDataTimeSlot} />
+            <DetailTimeslot dataTimeSlot={handleDataTimeSlot} dataTerminal={data?.Terminal_Name} dataIndex={data?.index}/>
           </div>
         </div>
       ) : (

@@ -8,5 +8,5 @@ const port = {
     local: ":3000"
 }
 
-export const API_LOCAL = `https://node-3.abimanyu.dev`
-// export const API_LOCAL = hostname["local"] + port["local"]
+// export const API_LOCAL = `https://node-3.abimanyu.dev`
+export const API_LOCAL = hostname["local"] + port["local"]

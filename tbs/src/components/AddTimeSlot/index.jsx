@@ -1,6 +1,6 @@
 import { Input } from "src/components/ui/input";
 import { DatePickerWithRange } from "../DatePicker";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   Accordion,
@@ -14,6 +14,7 @@ import { DropdownStartHour } from "../DropdownStartHour";
 import { DropdownStartMinute } from "../DropdownStartMinute";
 import axios from "axios";
 import { API_LOCAL } from "src/config/API";
+import { useSelector } from "react-redux";
 
 export function AddTimeSlot() {
   const [open, setOpen] = useState(false);
@@ -24,8 +25,9 @@ export function AddTimeSlot() {
   const [capacity, setCapacity] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  // const { Customer_ID } = useSelector((state) => state.Auth.user);
   const [error, setError] = useState("");
+  const {Customer_ID} = useSelector((state) => state.Auth.user)
+  const [IDTerminal, setIDTerminal] = useState("")
 
   const submitTimeSlot = async (event) => {
     event.preventDefault();
@@ -58,7 +60,7 @@ export function AddTimeSlot() {
           from: from,
           to: to,
           capacity: capacity,
-          ID_Terminal: 1,
+          ID_Terminal: IDTerminal.id,
         },
       });
       if (validation) {
@@ -72,12 +74,13 @@ export function AddTimeSlot() {
               from: from,
               to: to,
               capacity: capacity,
-              ID_Terminal: 1,
+              ID_Terminal: IDTerminal.id,
             },
           });
           console.log(response);
           setOpen(false);
           setCapacity("");
+          window.location.reload();
           alert("Successfully Added!")
         } catch (error) {
           console.log(error);
@@ -88,7 +91,26 @@ export function AddTimeSlot() {
       setError(error?.response.data?.Message);
     }
   };
-  console.log(error, "errorrrr");
+
+  const getIDTerminal = async() => {
+    try{
+      const result = await axios({
+        method: "get",
+        url: `${API_LOCAL}/api/users/get/data/terminal`,
+        params: {
+          Customer_ID: Customer_ID
+        }
+      })
+      setIDTerminal(result.data);
+    }catch(error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    getIDTerminal()
+  },[]);
+
   const handleStartHour = (data) => {
     setFromHour(data);
   };
@@ -221,7 +243,7 @@ export function AddTimeSlot() {
                                 <p className="font-medium">Real Capacity</p>
                                 <Input
                                   type="Capacity Planning"
-                                  placeholder="100"
+                                  placeholder="Input Capacity"
                                   value={capacity}
                                   onChange={handleChangeCapacity}
                                 />

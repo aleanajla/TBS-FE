@@ -7,6 +7,23 @@ export default function RadialProgress ({ progress }) {
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (progress / 100) * circumference;
 
+  let strokeColor;
+  if (progress > 70) {
+    strokeColor = "#F64E60" 
+  } else if (progress >= 40 && progress <= 70) {
+    strokeColor = "#FFA621"; 
+  } else {
+    strokeColor =  "#0F9B71"; 
+  }
+
+  let backgroundColor; 
+  if (progress > 70) {
+    backgroundColor =  "#FFF5F8" //green
+  } else if (progress >= 40 && progress <= 70) {
+    backgroundColor = "#FFF8DD"; // Orange
+  } else {
+    backgroundColor = "#E8FFF3"; // Red
+  }
   return (
     <div className="relative">
       <svg height="100" width="100" className="transform -rotate-90">
@@ -15,7 +32,7 @@ export default function RadialProgress ({ progress }) {
           cx="50"
           cy="50"
           strokeWidth="10"
-          stroke="#E8FFF3"
+          stroke={backgroundColor}
           fill="transparent"
         />
         <circle
@@ -23,7 +40,7 @@ export default function RadialProgress ({ progress }) {
           cx="50"
           cy="50"
           strokeWidth="10"
-          stroke="#0F9B71"
+          stroke={strokeColor}
           strokeLinecap="round"
           fill="transparent"
           style={{

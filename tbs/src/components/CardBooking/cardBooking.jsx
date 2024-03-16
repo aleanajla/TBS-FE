@@ -223,7 +223,7 @@ export default function CardBooking() {
                             stroke-linejoin="round"
                           />
                         </svg>
-                        <p>{bookings.requests.createdAt}</p>
+                        <p>{new Date(bookings.requests.createdAt).toISOString().split('T')[0]} {new Date(bookings.requests.Closing_Time).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false})}</p>
                       </div>
                       <div className="flex flex-row items-center gap-x-1.5">
                         <svg
@@ -308,7 +308,7 @@ export default function CardBooking() {
                             stroke-linejoin="round"
                           />
                         </svg>
-                        <p>Closing Time : {new Date(bookings.requests.Closing_Time).toISOString().split('T')[0]} {new Date(bookings.requests.Closing_Time).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })}</p>
+                        <p>{bookings.requests.Service_Name == "Receiving" ? "Closing Time :" : "Delivery Date :"} {new Date(bookings.requests.Closing_Time).toISOString().split('T')[0]} {new Date(bookings.requests.Closing_Time).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })}</p>
                       </div>
                     </div>
                   </div>
@@ -340,7 +340,7 @@ export default function CardBooking() {
                   </div>
                   <div className="flex flex-row pt-2.5 pb-1">
                     <div className="flex flex-row ">
-                      <p className="text-primary font-poppins">Time Slot</p>
+                      <p className="text-primary font-poppins">TCA</p>
                       <p className="text-primary font-bold px-1 font-poppins">
                         {bookings.counts.count}
                       </p>

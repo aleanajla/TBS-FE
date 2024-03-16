@@ -17,12 +17,32 @@ export default function SlotSchedule() {
   const [selectedDetail, setSelectedDetail] = useState(null);
   const [open, setOpen] = useState(false);
   const [capacity, setCapacity] = useState("");
+  const { Customer_ID } = useSelector((state) => state.Auth.user);
+  const [ID_Terminal, setIDTerminal] = useState("")
+
+  const getIDTerminal = async () => {
+    try {
+      const result = await axios({
+        method: "get",
+        url: `${API_LOCAL}/api/users/get/data/terminal`,
+        params: {
+          Customer_ID: Customer_ID,
+        },
+      });
+      setIDTerminal(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const getDetailSlot = async () => {
     try {
       const response = await axios({
         method: "get",
         url: `${API_LOCAL}/api/users/slot/${date?date:Date}`,
+        params: {
+          ID_Terminal: ID_Terminal.id,
+        }
       });
       console.log(response.data);
       setSlots(() => response.data);
@@ -33,7 +53,8 @@ export default function SlotSchedule() {
 
   useEffect(() => {
     getDetailSlot();
-  }, [Date]);
+    getIDTerminal();
+  }, [Date,date]);
 
   const handleSlotClick = (selectedDetail) => {
     setSelectedDetail(selectedDetail);
@@ -59,6 +80,7 @@ export default function SlotSchedule() {
         })
 
         alert(response.data)
+        window.location.reload();
         setOpen(false)
     }
     catch(error){

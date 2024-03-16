@@ -14,6 +14,9 @@ import { useSelector } from "react-redux";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import Eticket from "../Eticket";
 import { API_LOCAL } from "src/config/API";
+import { Command } from "lucide-react";
+import { CommandEmpty, CommandInput } from "cmdk";
+import { Button } from "../ui/button";
 
 export default function TableValue({ data, dataTCA }) {
   const [dataContainer, setDataContainer] = useState([]);
@@ -23,7 +26,7 @@ export default function TableValue({ data, dataTCA }) {
   const [openTimeslot, setOpenTimeslot] = useState("");
   const [openAssignJob, setOpenAssignJob] = useState(false);
   const Closing_Time = new Date(dataTCA.Closing_Time);
-  const currentTime = new Date()
+  const currentTime = new Date();
 
   const getDataContainer = async () => {
     console.log(data?.ID_Request, "id request");
@@ -54,13 +57,12 @@ export default function TableValue({ data, dataTCA }) {
   };
 
   const submitData = async (id) => {
-    const selected_date = new Date(timeslot.date)
+    const selected_date = new Date(timeslot.date);
 
-    if(selected_date>=Closing_Time){
+    if (selected_date >= Closing_Time) {
       window.location.reload();
-      alert("The Selected Date Exceeds Closing Time!")
-    }
-    else{
+      alert("The Selected Date Exceeds Closing Time!");
+    } else {
       try {
         const response = await axios({
           method: "post",
@@ -71,6 +73,7 @@ export default function TableValue({ data, dataTCA }) {
             ID_Detail_Slot: timeslot.id,
           },
         });
+        window.location.reload();
         alert("Successfully Send!");
         getDataContainer();
       } catch (error) {
@@ -89,6 +92,7 @@ export default function TableValue({ data, dataTCA }) {
           ID_STID: id_stid,
         },
       });
+      window.location.reload();
       alert("Successfully Send!");
       getDataContainer();
     } catch (error) {
@@ -106,6 +110,7 @@ export default function TableValue({ data, dataTCA }) {
           New_Timeslot: timeslot.id,
         },
       });
+      window.location.reload();
       alert(response.data);
       getDataContainer();
       setOpenTimeslot("");
@@ -124,6 +129,7 @@ export default function TableValue({ data, dataTCA }) {
           New_STID: ID_STID,
         },
       });
+      window.location.reload();
       alert(response.data);
       getDataContainer();
       setOpenAssignJob("");
@@ -143,9 +149,11 @@ export default function TableValue({ data, dataTCA }) {
           <TableHeader>
             <TableRow>
               <TableHead className="text-center">No</TableHead>
-              <TableHead className="text-center">Kontainer</TableHead>
-              <TableHead className="text-center">Slot Waktu</TableHead>
-              <TableHead className="text-center">STID - Driver - Size</TableHead>
+              <TableHead className="text-center">Container</TableHead>
+              <TableHead className="text-center">Timeslot</TableHead>
+              <TableHead className="text-center">
+                STID - Driver - Size
+              </TableHead>
               <TableHead className="text-center">Action</TableHead>
             </TableRow>
           </TableHeader>
@@ -170,6 +178,8 @@ export default function TableValue({ data, dataTCA }) {
                             Start: 0,
                             End: 0,
                             Date: null,
+                            Terminal_Name: dataTCA?.Terminal_Name,
+                            index: key,
                           }}
                           updateData={getDataFromChild}
                         />
@@ -184,10 +194,48 @@ export default function TableValue({ data, dataTCA }) {
                             Start: job?.detailSlot.Start,
                             End: job?.detailSlot.End,
                             Date: job?.detailSlot.slot.Date,
+                            Terminal_Name: dataTCA?.Terminal_Name,
+                            index: key,
                           }}
                           updateData={getDataFromChild}
                         />
                       </div>
+                    ) : timeslot.index ? (
+                      timeslot.index == key ? (
+                        <div className="flex place-content-center">
+                          <ChooseTimeslot
+                            data={{
+                              Container_Number: job?.requestContainer
+                                ? job?.requestContainer.Container_Number
+                                : job?.Container_Number,
+                              Start: 0,
+                              End: 0,
+                              Date: null,
+                              Terminal_Name: dataTCA?.Terminal_Name,
+                              index: key,
+                            }}
+                            updateData={getDataFromChild}
+                          />
+                        </div>
+                      ) : (
+                        <div className="flex place-content-center">
+                          <button className="flex gap-3 items-center" disabled>
+                            <svg
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M12 2C6.49 2 2 6.49 2 12C2 17.51 6.49 22 12 22C17.51 22 22 17.51 22 12C22 6.49 17.51 2 12 2ZM16 12.75H12.75V16C12.75 16.41 12.41 16.75 12 16.75C11.59 16.75 11.25 16.41 11.25 16V12.75H8C7.59 12.75 7.25 12.41 7.25 12C7.25 11.59 7.59 11.25 8 11.25H11.25V8C11.25 7.59 11.59 7.25 12 7.25C12.41 7.25 12.75 7.59 12.75 8V11.25H16C16.41 11.25 16.75 11.59 16.75 12C16.75 12.41 16.41 12.75 16 12.75Z"
+                                fill="#DCDCDC"
+                              />
+                            </svg>
+                            <p className="text-gray-400">Add Timeslot</p>
+                          </button>
+                        </div>
+                      )
                     ) : (
                       <div className="flex place-content-center">
                         <ChooseTimeslot
@@ -198,6 +246,8 @@ export default function TableValue({ data, dataTCA }) {
                             Start: 0,
                             End: 0,
                             Date: null,
+                            Terminal_Name: dataTCA?.Terminal_Name,
+                            index: key,
                           }}
                           updateData={getDataFromChild}
                         />
@@ -209,7 +259,17 @@ export default function TableValue({ data, dataTCA }) {
                       {openAssignJob === key && Role_ID === 2 ? (
                         <>
                           <ChooseSTID
-                            data={{ id: data.ID_Trucking, index: key, date: job?.detailSlot?.slot.Date ? job?.detailSlot.slot.Date: null, Size: job?.requestContainer?.Container_Size ? job?.requestContainer?.Container_Size : null}}
+                            data={{
+                              id: data.ID_Trucking,
+                              index: key,
+                              date: job?.detailSlot?.slot.Date
+                                ? job?.detailSlot.slot.Date
+                                : null,
+                              Size: job?.requestContainer?.Container_Size
+                                ? job?.requestContainer?.Container_Size
+                                : null,
+                              index: key,
+                            }}
                             getDataDetailSTID={getSTID}
                           />
                         </>
@@ -218,20 +278,57 @@ export default function TableValue({ data, dataTCA }) {
                         (job?.assignJob ? (
                           <>
                             <p>
-                              {job?.assignJob.masterSTID.STID_Number} - {" "}
+                              {job?.assignJob.masterSTID.STID_Number} -{" "}
                               {
                                 job?.assignJob.masterSTID.masterDriver
                                   .Driver_Name
-                              } - {" "}
-                              {
-                                job?.requestContainer.Container_Size
-                              }{`"`}
+                              }{" "}
+                              - {job?.requestContainer.Container_Size}
+                              {`"`}
                             </p>
                           </>
+                        ) : dataSTID.index ? (
+                          dataSTID.index !== key ? (
+                            <Button
+                              variant="outline"
+                              role="combobox"
+                              className="w-[250px] justify-between text-gray-500"
+                              disabled
+                            >
+                              STID
+                            </Button>
+                          ) : (
+                            <>
+                              <ChooseSTID
+                                data={{
+                                  id: data.ID_Trucking,
+                                  index: key,
+                                  date: job?.detailSlot?.slot.Date
+                                    ? job?.detailSlot.slot.Date
+                                    : null,
+                                  Size: job?.requestContainer?.Container_Size
+                                    ? job?.requestContainer?.Container_Size
+                                    : null,
+                                  index: key,
+                                }}
+                                getDataDetailSTID={getSTID}
+                              />
+                            </>
+                          )
                         ) : (
                           <>
                             <ChooseSTID
-                              data={{ id: data.ID_Trucking, index: key, date: job?.detailSlot?.slot.Date ? job?.detailSlot.slot.Date: null, Size: job?.requestContainer?.Container_Size ? job?.requestContainer?.Container_Size : null}}
+                              data={{
+                                id: data.ID_Trucking,
+                                index: key,
+                                date: job?.detailSlot?.slot.Date
+                                  ? job?.detailSlot.slot.Date
+                                  : null,
+                                Size: job?.requestContainer?.Container_Size
+                                  ? job?.requestContainer?.Container_Size
+                                  : null,
+                                index: key,
+                              }}
                               getDataDetailSTID={getSTID}
                             />
                           </>
@@ -245,10 +342,9 @@ export default function TableValue({ data, dataTCA }) {
                               {
                                 job?.assignJob.masterSTID.masterDriver
                                   .Driver_Name
-                              } - {" "}
-                              {
-                                job?.requestContainer.Container_Size
-                              }{`"`}
+                              }{" "}
+                              - {job?.requestContainer.Container_Size}
+                              {`"`}
                             </p>
                           </>
                         ) : (
@@ -304,17 +400,15 @@ export default function TableValue({ data, dataTCA }) {
                             >
                               <p className="text-primary">Edit</p>
                             </button>
-                          )} 
+                          )}
                           <PDFDownloadLink
-                              document={<Eticket data={{id_booking: job.id}}/>}
-                              fileName="Eticket"
-                            >
-                              <button
-                                className=" bg-primary text-white px-5 border-2 border-primary py-2 rounded-lg text-sm"
-                              >
-                                <p>View E-Ticket</p>
-                              </button>
-                            </PDFDownloadLink>
+                            document={<Eticket data={{ id_booking: job.id }} />}
+                            fileName="Eticket"
+                          >
+                            <button className=" bg-primary text-white px-5 border-2 border-primary py-2 rounded-lg text-sm">
+                              <p>View E-Ticket</p>
+                            </button>
+                          </PDFDownloadLink>
                         </div>
                       ) : (
                         <button
@@ -325,45 +419,69 @@ export default function TableValue({ data, dataTCA }) {
                         </button>
                       )
                     ) : Role_ID === 1 ? (
-                      <>
-                        <button
-                          className=" bg-primary text-white px-8 py-2 rounded-lg text-sm"
-                          onClick={() => submitData(job.id)}
-                        >
-                          <p>Save & Send</p>
-                        </button>
-                      </>
+                      timeslot.index == key ? (
+                        <>
+                          <button
+                            className=" bg-primary text-white px-8 py-2 rounded-lg text-sm"
+                            onClick={() => submitData(job.id)}
+                          >
+                            <p>Save & Send</p>
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <button
+                            className=" bg-gray-400 text-white px-8 py-2 rounded-lg text-sm"
+                            onClick={() => submitData(job.id)}
+                            disabled
+                          >
+                            <p>Save & Send</p>
+                          </button>
+                        </>
+                      )
                     ) : job?.requestContainer ? (
                       job?.assignJob ? (
                         <>
                           <div>
-                            { currentTime <= Closing_Time ? (
+                            {currentTime <= Closing_Time ? (
                               <>
-                              <button
-                                className=" bg-white mr-2 border-primary border-2 text-white px-8 py-2 rounded-lg text-sm"
-                                onClick={() => setOpenAssignJob(key)}
-                              >
-                                <p className="text-primary">Edit</p>
-                              </button>
+                                <button
+                                  className=" bg-white mr-2 border-primary border-2 text-white px-8 py-2 rounded-lg text-sm"
+                                  onClick={() => setOpenAssignJob(key)}
+                                >
+                                  <p className="text-primary">Edit</p>
+                                </button>
                               </>
-                            ): ""}
+                            ) : (
+                              ""
+                            )}
                             <PDFDownloadLink
-                              document={<Eticket data={{id_booking: job.id}}/>}
+                              document={
+                                <Eticket data={{ id_booking: job.id }} />
+                              }
                               fileName="Eticket"
                             >
-                              <button
-                                className=" bg-primary text-white px-5 border-2 border-primary py-2 rounded-lg text-sm"
-                              >
+                              <button className=" bg-primary text-white px-5 border-2 border-primary py-2 rounded-lg text-sm">
                                 <p>View E-Ticket</p>
                               </button>
                             </PDFDownloadLink>
                           </div>
                         </>
-                      ) : (
+                      ) : dataSTID.index === key ? (
                         <>
                           <button
                             className=" bg-primary text-white px-8 py-2 rounded-lg text-sm"
                             onClick={() => submitAssignJob(job.id, dataSTID.id)}
+                          >
+                            <p>Save & Send</p>
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <button
+                            className=" bg-gray-400 text-white px-8 py-2 rounded-lg text-sm"
+                            onClick={() => submitData(job.id)}
+                            disabled
                           >
                             <p>Save & Send</p>
                           </button>

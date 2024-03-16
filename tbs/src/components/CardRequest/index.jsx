@@ -12,6 +12,7 @@ export default function CardRequest({data}) {
                 url: `${API_LOCAL}/api/users/update/rejectAssignJob/${data.id}`
             })
             console.log(response);
+            window.location.reload();
         }
         catch(error){
             console.log(error);
@@ -24,6 +25,7 @@ export default function CardRequest({data}) {
                 url: `${API_LOCAL}/api/users/update/acceptAssignJob/${data.id}`
             })
             console.log(response);
+            window.location.reload();
         }
         catch(error){
             console.log(error);
@@ -39,7 +41,7 @@ export default function CardRequest({data}) {
                             <p className="font-medium text-gray text-md">Request ID : {data.No_Request}</p>
                         </div>
                         <div className="flex items-center bg-[#F3F3F3] rounded-md p-2">
-                            <p className="font-medium text-gray text-md px-8 text-primary">PT PRIMA INDONESIA</p>
+                            <p className="font-medium text-gray text-md px-8 text-primary">{data.Company_Name}</p>
                         </div>
                     </div>
                     <div className="flex gap-2 items-center">
