@@ -88,6 +88,15 @@ export default function SlotSchedule() {
     }
   }
 
+  useEffect(()=>{
+    if(open){
+      document.body.style.overflowY = 'hidden'
+    }else{
+      document.body.style.overflowY = 'scroll'
+    }
+    return() => {document.body.style.overflowY = 'scroll'}
+  }, [open])
+
   return (
     <>
       <div className="bg-primary w-full h-auto p-[44px] rounded-lg">
@@ -118,7 +127,7 @@ export default function SlotSchedule() {
           })}
         </div>
         {open && selectedDetail && (
-          <div className="absolute inset-0 flex justify-center items-center bg-black backdrop-blur-sm bg-opacity-60">
+          <div className="fixed inset-0 flex justify-center items-center bg-black backdrop-blur-sm bg-opacity-60">
             <div className="bg-white w-[947px] max-h-[720px] rounded-xl py-[31px] px-[47px] flex flex-col gap-4">
               <div className="flex flex-row-reverse">
                 <button className="btn" onClick={() => setOpen(false)}>

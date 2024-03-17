@@ -1,7 +1,6 @@
 import { Input } from "src/components/ui/input";
 import { DatePickerWithRange } from "../DatePicker";
 import { useEffect, useState } from "react";
-
 import {
   Accordion,
   AccordionContent,
@@ -136,6 +135,15 @@ export function AddTimeSlot() {
     setEndDate(data.to);
   };
 
+  useEffect(()=>{
+    if(open){
+      document.body.style.overflowY = 'hidden'
+    }else{
+      document.body.style.overflowY = 'scroll'
+    }
+    return() => {document.body.style.overflowY = 'scroll'}
+  }, [open])
+
   return (
     <>
       <button
@@ -162,7 +170,7 @@ export function AddTimeSlot() {
       </button>
       {open ? (
         <form onSubmit={submitTimeSlot}>
-          <div className="absolute inset-0 bg-opacity-60 backdrop-blur-sm flex justify-center items-center bg-black">
+          <div className="fixed inset-0 bg-opacity-60 backdrop-blur-sm flex justify-center items-center bg-black">
             <div className=" bg-white w-[947px] max-h-[720px] rounded-xl py-[31px] px-[47px] flex flex-col gap-4">
               <div className="flex flex-row-reverse">
                 <button className="btn" onClick={() => setOpen(false)}>

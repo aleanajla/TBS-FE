@@ -89,6 +89,15 @@ export function AddSTID() {
     }
   };
 
+  useEffect(()=>{
+    if(open){
+      document.body.style.overflowY = 'hidden'
+    }else{
+      document.body.style.overflowY = 'scroll'
+    }
+    return() => {document.body.style.overflowY = 'scroll'}
+  }, [open])
+
   useEffect(() => {
     getDataDriver();
     getDataTruck();
@@ -123,8 +132,8 @@ export function AddSTID() {
         <p className="font-medium text-white">Add STID</p>
       </button>
       {open ? (
-        <form onSubmit={onSubmitForm}>
-          <div className="absolute inset-0 bg-opacity-60 backdrop-blur-sm flex justify-center items-center bg-black">
+        <form onSubmit={onSubmitForm} className="fixed inset-0 bg-opacity-60 backdrop-blur-sm flex justify-center items-center bg-black">
+          {/* <div className="fixed inset-0 bg-opacity-60 backdrop-blur-sm flex justify-center items-center bg-black"> */}
             <div className=" bg-white w-[700px] max-h-[720px] rounded-xl py-[31px] px-[47px] flex flex-col gap-2">
               <div className="flex flex-row-reverse">
                 <button
@@ -282,7 +291,7 @@ export function AddSTID() {
                 </button>
               </div>
             </div>
-          </div>
+          {/* </div> */}
         </form>
       ) : (
         ""

@@ -4,6 +4,8 @@ import { useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { Check } from "lucide-react";
+import {useEffect} from "react";
+
 
 import { cn } from "src/lib/utils";
 import {
@@ -73,6 +75,15 @@ export function EditSTID({ data }) {
         }
     };
 
+    useEffect(()=>{
+        if(open){
+          document.body.style.overflowY = 'hidden'
+        }else{
+          document.body.style.overflowY = 'scroll'
+        }
+        return() => {document.body.style.overflowY = 'scroll'}
+      }, [open])
+
     React.useEffect(() => {
         getDataDriver();
     }, []);
@@ -87,7 +98,7 @@ export function EditSTID({ data }) {
             </button>
             {open ? (
                 <form onSubmit={onSubmitForm}>
-                    <div className="absolute inset-0 bg-opacity-60 backdrop-blur-sm flex justify-center items-center bg-black">
+                    <div className="fixed inset-0 bg-opacity-60 backdrop-blur-sm flex justify-center items-center bg-black">
                         <div className=" bg-white w-[700px] max-h-[720px] rounded-xl py-[31px] px-[47px] flex flex-col gap-2">
                             <div className="flex flex-row-reverse">
                                 <button className="btn" onClick={() => {

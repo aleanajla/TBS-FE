@@ -102,6 +102,15 @@ export default function AssignTruck({ data }) {
     setButtonDisabled(false);
   };
 
+  useEffect(()=>{
+    if(open){
+      document.body.style.overflowY = 'hidden'
+    }else{
+      document.body.style.overflowY = 'scroll'
+    }
+    return() => {document.body.style.overflowY = 'scroll'}
+  }, [open])
+
   return (
     <>
       {Role_ID === 1 && (
@@ -126,7 +135,7 @@ export default function AssignTruck({ data }) {
       )}
       {open ? (
         <form onSubmit={onSubmitForm}>
-          <div className="absolute inset-0 bg-opacity-60 backdrop-blur-sm flex justify-center items-center bg-black">
+          <div className="fixed inset-0 bg-opacity-60 backdrop-blur-sm flex justify-center items-center bg-black">
             <div className="bg-white flex place-content-center w-1/2 h-auto rounded-xl py-7 px-11">
               <div className="rounded-lg w-full p-2">
                 <div className="flex flex-row-reverse">

@@ -26,6 +26,15 @@ export default function ChooseTimeslot({ data, updateData }) {
     return `${year}-${month}-${day}`;
   };
 
+  useEffect(()=>{
+    if(open){
+      document.body.style.overflowY = 'hidden'
+    }else{
+      document.body.style.overflowY = 'scroll'
+    }
+    return() => {document.body.style.overflowY = 'scroll'}
+  }, [open])
+
   return (
     <>
       {data?.Start ? (
